@@ -1,0 +1,5 @@
+python-chess>=1.999
+openai>=1.0.0
+rich>=13.0.0
+aiohttp>=3.9.0
+matplotlib>=3.7.0

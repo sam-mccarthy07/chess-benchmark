@@ -1,0 +1,55 @@
+{
+  "orgs": [
+    {
+      "id": "nano-consensus",
+      "name": "Nano Consensus",
+      "description": "All small llama-8b models, democratic round-robin deliberation",
+      "agents": [
+        {"model": "meta-llama/llama-3.1-8b-instruct", "role": "strategist", "persona": "aggressive attacker who prefers tactical combinations and sharp openings"},
+        {"model": "meta-llama/llama-3.1-8b-instruct", "role": "analyst",    "persona": "defensive player who prioritizes piece safety and solid pawn structure"},
+        {"model": "meta-llama/llama-3.1-8b-instruct", "role": "critic",     "persona": "balanced player who evaluates long-term positional advantages"}
+      ],
+      "deliberation_style": "consensus",
+      "submitter_rotation": "round_robin"
+    },
+    {
+      "id": "nano-autocratic",
+      "name": "Nano Autocratic",
+      "description": "All small llama-8b models, fixed-leader authoritative deliberation",
+      "agents": [
+        {"model": "meta-llama/llama-3.1-8b-instruct", "role": "leader",     "persona": "experienced strategist who weighs advisor input but trusts own judgement"},
+        {"model": "meta-llama/llama-3.1-8b-instruct", "role": "advisor_a",  "persona": "tactical specialist focused on immediate material gain and threats"},
+        {"model": "meta-llama/llama-3.1-8b-instruct", "role": "advisor_b",  "persona": "positional expert who prefers strategic maneuvering and piece coordination"}
+      ],
+      "deliberation_style": "advisory",
+      "submitter_rotation": "fixed_leader"
+    },
+    {
+      "id": "qwen-consensus",
+      "name": "Qwen Consensus",
+      "description": "All Qwen-2.5-7b models, round-robin deliberation — different small model baseline",
+      "agents": [
+        {"model": "qwen/qwen-2.5-7b-instruct", "role": "strategist", "persona": "bold attacker who hunts for combinations and sacrifices"},
+        {"model": "qwen/qwen-2.5-7b-instruct", "role": "analyst",    "persona": "solid defender who avoids weaknesses and simplifies when ahead"},
+        {"model": "qwen/qwen-2.5-7b-instruct", "role": "critic",     "persona": "endgame specialist who evaluates long-term pawn structure and king safety"}
+      ],
+      "deliberation_style": "consensus",
+      "submitter_rotation": "round_robin"
+    },
+    {
+      "id": "apex-consensus",
+      "name": "Apex Consensus",
+      "description": "Large mixed models (Claude-3-Haiku + GPT-4o-mini + Llama-70b), democratic deliberation",
+      "agents": [
+        {"model": "anthropic/claude-3-haiku",           "role": "strategist", "persona": "grandmaster-level strategist who plans deep and evaluates positions accurately"},
+        {"model": "openai/gpt-4o-mini",                 "role": "analyst",    "persona": "tactical wizard who calculates variations accurately and finds hidden resources"},
+        {"model": "meta-llama/llama-3.1-70b-instruct",  "role": "critic",     "persona": "positional genius who understands pawn structures and piece coordination deeply"}
+      ],
+      "deliberation_style": "consensus",
+      "submitter_rotation": "round_robin"
+    }
+  ],
+  "monitor_model": "meta-llama/llama-3.1-8b-instruct",
+  "max_moves": 80,
+  "thinking_timeout_seconds": 30
+}

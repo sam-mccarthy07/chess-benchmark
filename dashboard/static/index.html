@@ -1,0 +1,80 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Chess Benchmark Dashboard</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<header>
+  <h1>Chess Benchmark <span class="sub">Multi-Agent Orchestration</span></h1>
+  <nav id="tabs">
+    <button class="tab-btn active" data-tab="games">Game Replay</button>
+    <button class="tab-btn" data-tab="leaderboard">Leaderboard</button>
+    <button class="tab-btn" data-tab="analysis">Deliberation Analysis</button>
+    <button class="tab-btn" data-tab="orgs">Orgs</button>
+  </nav>
+</header>
+
+<main>
+
+<section id="tab-games" class="tab-panel active">
+  <div class="games-layout">
+    <div class="board-column">
+      <select id="game-select"></select>
+      <div id="board" class="board"></div>
+      <div id="file-labels" class="file-labels"></div>
+      <div class="board-controls">
+        <button id="btn-first">|&lt;</button>
+        <button id="btn-prev">&lt; Prev</button>
+        <button id="btn-play">Play</button>
+        <button id="btn-next">Next &gt;</button>
+        <button id="btn-last">&gt;|</button>
+      </div>
+      <div id="game-meta" class="game-meta"></div>
+    </div>
+    <div class="side-column">
+      <div id="move-analysis-card" class="analysis-card">
+        <p class="placeholder">Select a game and step through moves to see each team's deliberation.</p>
+      </div>
+      <div class="move-list-wrap">
+        <table id="move-list">
+          <thead><tr><th>#</th><th>Org</th><th>Move</th><th>Agreement</th><th>Behavior</th></tr></thead>
+          <tbody></tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="tab-leaderboard" class="tab-panel">
+  <table id="leaderboard-table">
+    <thead>
+      <tr><th>Org</th><th>Games</th><th>W</th><th>L</th><th>D</th><th>Win %</th><th>Score</th><th>Avg Tokens</th></tr>
+    </thead>
+    <tbody></tbody>
+  </table>
+</section>
+
+<section id="tab-analysis" class="tab-panel">
+  <div class="chart-grid">
+    <div class="chart-box"><h3>Agreement Level Distribution</h3><canvas id="chart-agreement"></canvas></div>
+    <div class="chart-box"><h3>Dominant Behavior Distribution</h3><canvas id="chart-behavior"></canvas></div>
+    <div class="chart-box"><h3>Dissent Rate by Org</h3><canvas id="chart-dissent"></canvas></div>
+    <div class="chart-box"><h3>Avg Tokens per Move</h3><canvas id="chart-tokens"></canvas></div>
+  </div>
+  <p class="note">Note: a small number of moves have a corrupted <code>agreement_level</code> value (the monitor model occasionally returned an org id instead of a level) — these are bucketed as "other" rather than dropped.</p>
+</section>
+
+<section id="tab-orgs" class="tab-panel">
+  <div id="orgs-grid" class="orgs-grid"></div>
+</section>
+
+</main>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/chess.js/0.10.3/chess.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.4/dist/chart.umd.min.js"></script>
+<script src="app.js"></script>
+</body>
+</html>
