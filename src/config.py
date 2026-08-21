@@ -81,6 +81,29 @@ HARNESS_PARAMS = {
 }
 
 
+# ---------------------------------------------------------------------------
+# Oracle (analysis-side) parameters
+#
+# Deliberately NOT part of config_fingerprint. That fingerprint answers "were
+# these games generated the same way, so may they be pooled?" — and a game is
+# the same game regardless of which engine scores it afterwards. Whether two
+# CPL numbers are comparable is a separate question, answered by the engine
+# provenance block written into each analysis (see oracle.Oracle.provenance).
+#
+# Depth 20 matches LLM Chess (arXiv:2512.01992) so our severity rates line up
+# with their published single-agent baselines. Threads is pinned to 1 because
+# Stockfish is not deterministic across differing thread counts at fixed depth,
+# and reproducible offline analysis is worth more than analysis speed.
+# ---------------------------------------------------------------------------
+
+ENGINE_PARAMS = {
+    "engine_path": os.environ.get("STOCKFISH_PATH", "stockfish"),
+    "depth": int(os.environ.get("STOCKFISH_DEPTH", "20")),
+    "threads": 1,
+    "hash_mb": 64,
+}
+
+
 def load_ablations():
     with open(CONFIGS_DIR / "ablations.json") as f:
         return json.load(f)

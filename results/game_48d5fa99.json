@@ -302,5 +302,215 @@
       "latency_total_ms": 4184.591293334961
     }
   ],
-  "pgn": "[Event \"?\"]\n[Site \"?\"]\n[Date \"????.??.??\"]\n[Round \"?\"]\n[White \"Nano Autocratic\"]\n[Black \"Qwen Consensus\"]\n[Result \"1/2-1/2\"]\n\n1. e4 Nf6 2. Nf3 Ng4 3. Ng5 g6 4. e5 Nh6 5. Nxh7 Rg8 6. e6 Rg7 7. Bc4 Nc6 8. Bd5 Rg8 9. Nc3 Rh8 10. Bc4 Ng4 11. Bd5 Nb4 12. Bc4 Rg8 1/2-1/2"
+  "pgn": "[Event \"?\"]\n[Site \"?\"]\n[Date \"????.??.??\"]\n[Round \"?\"]\n[White \"Nano Autocratic\"]\n[Black \"Qwen Consensus\"]\n[Result \"1/2-1/2\"]\n\n1. e4 Nf6 2. Nf3 Ng4 3. Ng5 g6 4. e5 Nh6 5. Nxh7 Rg8 6. e6 Rg7 7. Bc4 Nc6 8. Bd5 Rg8 9. Nc3 Rh8 10. Bc4 Ng4 11. Bd5 Nb4 12. Bc4 Rg8 1/2-1/2",
+  "oracle_analysis": {
+    "schema": "pgn_only",
+    "provenance": {
+      "engine_id": "Stockfish 18",
+      "depth": 16,
+      "threads": 1,
+      "hash_mb": 64,
+      "mate_score": 10000,
+      "thresholds": {
+        "blunder": 30.0,
+        "mistake": 20.0,
+        "inaccuracy": 10.0
+      }
+    },
+    "plies": [
+      {
+        "ply": 1,
+        "color": "white",
+        "move": "e2e4",
+        "cpl": 0,
+        "severity": "ok",
+        "mate_involved": false
+      },
+      {
+        "ply": 2,
+        "color": "black",
+        "move": "g8f6",
+        "cpl": 16,
+        "severity": "ok",
+        "mate_involved": false
+      },
+      {
+        "ply": 3,
+        "color": "white",
+        "move": "g1f3",
+        "cpl": 140,
+        "severity": "inaccuracy",
+        "mate_involved": false
+      },
+      {
+        "ply": 4,
+        "color": "black",
+        "move": "f6g4",
+        "cpl": 224,
+        "severity": "mistake",
+        "mate_involved": false
+      },
+      {
+        "ply": 5,
+        "color": "white",
+        "move": "f3g5",
+        "cpl": 84,
+        "severity": "ok",
+        "mate_involved": false
+      },
+      {
+        "ply": 6,
+        "color": "black",
+        "move": "g7g6",
+        "cpl": 298,
+        "severity": "mistake",
+        "mate_involved": false
+      },
+      {
+        "ply": 7,
+        "color": "white",
+        "move": "e4e5",
+        "cpl": 410,
+        "severity": "blunder",
+        "mate_involved": false
+      },
+      {
+        "ply": 8,
+        "color": "black",
+        "move": "g4h6",
+        "cpl": 82,
+        "severity": "ok",
+        "mate_involved": false
+      },
+      {
+        "ply": 9,
+        "color": "white",
+        "move": "g5h7",
+        "cpl": 354,
+        "severity": "mistake",
+        "mate_involved": false
+      },
+      {
+        "ply": 10,
+        "color": "black",
+        "move": "h8g8",
+        "cpl": 551,
+        "severity": "blunder",
+        "mate_involved": false
+      },
+      {
+        "ply": 11,
+        "color": "white",
+        "move": "e5e6",
+        "cpl": 201,
+        "severity": "inaccuracy",
+        "mate_involved": false
+      },
+      {
+        "ply": 12,
+        "color": "black",
+        "move": "g8g7",
+        "cpl": 212,
+        "severity": "inaccuracy",
+        "mate_involved": false
+      },
+      {
+        "ply": 13,
+        "color": "white",
+        "move": "f1c4",
+        "cpl": 529,
+        "severity": "blunder",
+        "mate_involved": false
+      },
+      {
+        "ply": 14,
+        "color": "black",
+        "move": "b8c6",
+        "cpl": 472,
+        "severity": "blunder",
+        "mate_involved": false
+      },
+      {
+        "ply": 15,
+        "color": "white",
+        "move": "c4d5",
+        "cpl": 535,
+        "severity": "blunder",
+        "mate_involved": false
+      },
+      {
+        "ply": 16,
+        "color": "black",
+        "move": "g7g8",
+        "cpl": 601,
+        "severity": "blunder",
+        "mate_involved": false
+      },
+      {
+        "ply": 17,
+        "color": "white",
+        "move": "b1c3",
+        "cpl": 139,
+        "severity": "inaccuracy",
+        "mate_involved": false
+      },
+      {
+        "ply": 18,
+        "color": "black",
+        "move": "g8h8",
+        "cpl": 149,
+        "severity": "inaccuracy",
+        "mate_involved": false
+      },
+      {
+        "ply": 19,
+        "color": "white",
+        "move": "d5c4",
+        "cpl": 554,
+        "severity": "blunder",
+        "mate_involved": false
+      },
+      {
+        "ply": 20,
+        "color": "black",
+        "move": "h6g4",
+        "cpl": 10288,
+        "severity": "blunder",
+        "mate_involved": true
+      },
+      {
+        "ply": 21,
+        "color": "white",
+        "move": "c4d5",
+        "cpl": 9909,
+        "severity": "blunder",
+        "mate_involved": true
+      },
+      {
+        "ply": 22,
+        "color": "black",
+        "move": "c6b4",
+        "cpl": 9909,
+        "severity": "blunder",
+        "mate_involved": true
+      },
+      {
+        "ply": 23,
+        "color": "white",
+        "move": "d5c4",
+        "cpl": 9972,
+        "severity": "blunder",
+        "mate_involved": true
+      },
+      {
+        "ply": 24,
+        "color": "black",
+        "move": "h8g8",
+        "cpl": 9972,
+        "severity": "blunder",
+        "mate_involved": true
+      }
+    ],
+    "caveat": "Generated before the integrity fix; proposals were silently coerced, so this is pipeline validation only, not results."
+  }
 }
