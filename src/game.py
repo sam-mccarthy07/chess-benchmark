@@ -11,7 +11,7 @@ from rich.table import Table
 from rich.panel import Panel
 from rich import print as rprint
 
-from team import Team, build_team
+from team import Team, DeliberationRound, build_team, drift_summary
 from agents import (
     MoveProposal,
     SubmitterDecision,
@@ -153,14 +153,20 @@ async def play_game(
         if verbose:
             console.rule(f"[bold]Move {full_move_number} - {color.upper()} ({current_team.org_name})[/bold]")
 
-        decision, proposals = await current_team.deliberate(board, color)
+        decision, rounds = await current_team.deliberate(board, color)
+        # The submitter chose from the final round, so that is the slate every
+        # decision-side metric is measured against.
+        proposals = rounds[-1].proposals
 
         played, resolution = resolve_move(decision, proposals, board)
         board.push(played)
         node = node.add_variation(played)
 
-        move_tokens = sum(p.tokens_used for p in proposals) + decision.tokens_used
-        move_latency = sum(p.latency_ms for p in proposals) + decision.latency_ms
+        # Cost is summed over every round, not just the final one — discussion
+        # rounds are most of the spend, and a per-turn token figure that
+        # ignored them would understate the cost of the deliberation arm.
+        move_tokens = sum(p.tokens_used for r in rounds for p in r.proposals) + decision.tokens_used
+        move_latency = sum(p.latency_ms for r in rounds for p in r.proposals) + decision.latency_ms
 
         if is_white:
             white_tokens_total += move_tokens
@@ -180,6 +186,15 @@ async def play_game(
             "legal_move_count": len(legal_before),
             "submitter_role": decision.submitter_role,
             "submitter_model": decision.model,
+            # Every round, so position trajectories can be reconstructed.
+            # Round 0 is the independent anchor the influence metrics need.
+            "rounds": [
+                {"round_index": r.round_index, "proposals": [asdict(p) for p in r.proposals]}
+                for r in rounds
+            ],
+            "drift": drift_summary(rounds),
+            # Final round, duplicated under the name every decision-side
+            # consumer already reads.
             "proposals": [asdict(p) for p in proposals],
             "decision": {
                 "submitted_move": decision.submitted_move,
@@ -214,6 +229,13 @@ async def play_game(
                     (p.reasoning[:100] + "...") if len(p.reasoning) > 100 else p.reasoning,
                 )
             console.print(table)
+            if len(rounds) > 1:
+                d = drift_summary(rounds)
+                console.print(
+                    f"[dim]Deliberation: distinct moves by round "
+                    f"{d['distinct_moves_by_round']} | {d['drifted_agents']} agent(s) "
+                    f"changed position{' | converged' if d['converged'] else ''}[/dim]"
+                )
             dec_style = "green" if decision.legal else "red"
             console.print(
                 f"[bold {dec_style}]DECIDED: {decision.submitted_move or '—'} "
@@ -280,13 +302,34 @@ async def play_game(
     chess_game.headers["Result"] = {"white": "1-0", "black": "0-1", "draw": "1/2-1/2"}[result]
     pgn_str = str(chess_game)
 
+    def _all_round_proposals(m):
+        return [p for r in m.get("rounds", []) for p in r["proposals"]]
+
     totals = {
+        # Final-round counts: what the submitter was actually looking at.
         "illegal_proposals": sum(m["integrity"]["illegal_proposals"] for m in moves),
         "unparseable_proposals": sum(m["integrity"]["unparseable_proposals"] for m in moves),
         "api_error_proposals": sum(m["integrity"]["api_error_proposals"] for m in moves),
+        # Across every round, including discussion — the true call-level rates.
+        "illegal_proposals_all_rounds": sum(
+            1 for m in moves for p in _all_round_proposals(m) if p["status"] == STATUS_ILLEGAL
+        ),
+        "api_error_proposals_all_rounds": sum(
+            1 for m in moves for p in _all_round_proposals(m) if p["status"] == STATUS_API_ERROR
+        ),
         "false_consensus_events": sum(1 for m in moves if m["integrity"]["false_consensus"]),
         "off_slate_decisions": sum(1 for m in moves if m["integrity"]["off_slate"]),
         "unresolved_decisions": sum(1 for m in moves if m["resolution"]["method"] != "as_decided"),
+        # Deliberation dynamics. Convergence rising while quality does not is
+        # the conformity signature H8 predicts.
+        "converged_turns": sum(1 for m in moves if m.get("drift", {}).get("converged")),
+        "drifted_agent_turns": sum(m.get("drift", {}).get("drifted_agents", 0) for m in moves),
+        "unanimous_first_round": sum(
+            1 for m in moves if (m.get("drift", {}).get("unanimous_by_round") or [False])[0]
+        ),
+        "unanimous_final_round": sum(
+            1 for m in moves if (m.get("drift", {}).get("unanimous_by_round") or [False])[-1]
+        ),
         "total_turns": len(moves),
     }
 
@@ -304,7 +347,10 @@ async def play_game(
             f"unparseable: {totals['unparseable_proposals']} | "
             f"api errors: {totals['api_error_proposals']} | "
             f"false consensus: {totals['false_consensus_events']} | "
-            f"fallbacks: {totals['unresolved_decisions']}/{totals['total_turns']}[/dim]",
+            f"fallbacks: {totals['unresolved_decisions']}/{totals['total_turns']}\n"
+            f"unanimity: {totals['unanimous_first_round']} -> "
+            f"{totals['unanimous_final_round']} of {totals['total_turns']} turns | "
+            f"converged: {totals['converged_turns']}[/dim]",
             title=f"Game {game_id} Complete"
         ))
 

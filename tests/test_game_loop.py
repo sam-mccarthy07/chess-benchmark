@@ -26,7 +26,7 @@ from agents import (
     STATUS_ILLEGAL,
 )
 from monitor import MoveAnalysis
-from team import Team
+from team import DeliberationRound, Team
 
 
 def _team(org_id="test-org"):
@@ -63,11 +63,14 @@ class FakeDeliberation:
     """Deterministic stand-in for a team's deliberation.
 
     Every `illegal_every` turns the team decides on an illegal move, so the
-    resolution and false-consensus paths are exercised.
+    resolution and false-consensus paths are exercised. Returns the same
+    (decision, rounds) shape as the real protocol, with `rounds` discussion
+    rounds after the independent opening.
     """
 
-    def __init__(self, illegal_every=3):
+    def __init__(self, illegal_every=3, rounds=2):
         self.illegal_every = illegal_every
+        self.rounds = rounds
         self.turn = 0
 
     async def __call__(self, board, color):
@@ -110,7 +113,12 @@ class FakeDeliberation:
                 status=STATUS_OK,
                 legal=True,
             )
-        return decision, proposals
+
+        rounds = [
+            DeliberationRound(round_index=i, proposals=list(proposals))
+            for i in range(self.rounds + 1)
+        ]
+        return decision, rounds
 
 
 class TestGameLoop(unittest.TestCase):

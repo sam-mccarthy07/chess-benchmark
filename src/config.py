@@ -49,12 +49,20 @@ RESULTS_DIR.mkdir(exist_ok=True)
 # model and logged rather than capped uniformly, so that reasoning budget is
 # not confounded with experimental condition.
 MAX_TOKENS_PROPOSAL = 800
+MAX_TOKENS_DISCUSSION = 500  # revisions are responses, not fresh analyses
 MAX_TOKENS_SUBMITTER = 800
 MAX_TOKENS_MONITOR = 400
+
+# Discussion rounds after the independent opening proposals. 0 reproduces the
+# original propose-then-submit behaviour, which is retained as an ablation arm:
+# comparing 0 against 2 is how we test whether extra rounds buy agreement
+# without buying quality.
+DELIBERATION_ROUNDS = 2
 
 # Temperatures. Held fixed across conditions and reported, because temperature
 # is a direct confound on proposal diversity — which is a headline metric.
 TEMPERATURE_PROPOSAL = 0.7
+TEMPERATURE_DISCUSSION = 0.7  # matched to proposal: a revision is the same act
 TEMPERATURE_SUBMITTER = 0.5
 TEMPERATURE_MONITOR = 0.3
 
@@ -62,17 +70,21 @@ TEMPERATURE_MONITOR = 0.3
 # covers these so runs made under different prompts never silently pool.
 PROMPT_VERSIONS = {
     "proposal": "p1",
+    "discussion": "d1",
     "submitter": "s1",
     "monitor": "m1",
 }
 
 HARNESS_PARAMS = {
     "max_tokens_proposal": MAX_TOKENS_PROPOSAL,
+    "max_tokens_discussion": MAX_TOKENS_DISCUSSION,
     "max_tokens_submitter": MAX_TOKENS_SUBMITTER,
     "max_tokens_monitor": MAX_TOKENS_MONITOR,
     "temperature_proposal": TEMPERATURE_PROPOSAL,
+    "temperature_discussion": TEMPERATURE_DISCUSSION,
     "temperature_submitter": TEMPERATURE_SUBMITTER,
     "temperature_monitor": TEMPERATURE_MONITOR,
+    "deliberation_rounds": DELIBERATION_ROUNDS,
     "prompt_versions": PROMPT_VERSIONS,
     # Full legal move list is always sent. The previous 30-move truncation was
     # a systematic bias: python-chess generates moves in deterministic order,
