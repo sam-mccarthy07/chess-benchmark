@@ -73,6 +73,7 @@ TEMPERATURE_MONITOR = 0.3
 # covers these so runs made under different prompts never silently pool.
 PROMPT_VERSIONS = {
     "proposal": "p1",
+    "solo": "solo1",
     "discussion": "d2",  # d2 adds the private block
     "submitter": "s1",
     "monitor": "m1",

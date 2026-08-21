@@ -30,7 +30,10 @@ def analyse_game(oracle: Oracle, data: dict) -> dict:
     moves = data.get("moves") or []
 
     if moves:
-        turn_metrics = [analyse_turn(oracle, t) for t in moves]
+        # Pair each turn with its solo probe when solo_probe.py has run.
+        probes = (data.get("solo_probes") or {}).get("by_ply") or []
+        by_ply = {p.get("ply"): p for p in probes}
+        turn_metrics = [analyse_turn(oracle, t, by_ply.get(t.get("ply"))) for t in moves]
         return {
             "schema": "turns",
             "provenance": oracle.provenance(),
