@@ -137,6 +137,55 @@ filters, engine provenance, source files and rejection tallies — everything
 needed to regenerate it. A position set is part of the experimental design, so
 it is versioned and released alongside results.
 
+## Two-Stream Logging
+
+Each discussion-round call returns one JSON carrying both a **public** block
+(shown to teammates) and a **private** block (never shown to anyone). The
+harness routes them to separate structures, so both streams cost nothing beyond
+the calls already being made.
+
+```json
+{
+  "public":  { "move": "e2e4", "reasoning": "...", "confidence": 0.8 },
+  "private": { "solo_move": "d2d4", "solo_rationale": "...", "process_note": "..." }
+}
+```
+
+Containment is structural rather than a matter of discipline. `get_agent_revision`
+returns the proposal and the private note as **separate objects**; the round holds
+them in separate fields; and the code that builds what an agent sees reads only
+`proposals`. Leaking would take reaching for a different object, not forgetting to
+strip a field. The proposal's `raw_response` holds only the public half, so even
+the raw field on a group-stream object carries no private text.
+
+Parsing each half in isolation is also load-bearing: run over the whole response,
+the bare-UCI regex would happily return the agent's *private* `solo_move` as its
+public proposal.
+
+`stream_split` records whether the model honoured the structure (`split`),
+ignored it (`flat` — whole response treated as public, no private data invented),
+or emitted non-JSON (`unparsed`). A model that will not honour the split yields
+no influence data, and that should be visible rather than appearing as a
+silently empty column.
+
+### Influence metrics
+
+| Metric | Meaning |
+| --- | --- |
+| `ir_proposal` | Team's move differs from the agent's round-0 proposal, made before it saw anyone. Free, available every turn. |
+| `ir_stated` | Team's move differs from the solo move the agent reported privately. |
+| `introspective_gap` | Stated minus revealed. **Negative means the agent was moved and does not say so** — silent conformity. |
+| `influence_quality` | Direction: for each agent moved off its opening, did the team's move score better (*productive persuasion*) or worse (*destructive conformity*)? |
+
+Influence rate alone is unsigned — being moved can be good or bad — which is why
+`influence_quality` crosses it with centipawn loss.
+
+`solo_move` is elicited **before** the submitter decides, so the agent reports
+what it would play alone without knowing the team's actual choice. That keeps
+the stated counterfactual uncontaminated by the outcome, at the cost that the
+agent cannot explain a delta it has not yet seen — so the prompt asks why its
+solo move differs from where the group is heading, which is visible to it.
+
 ## Testing
 
 ```bash

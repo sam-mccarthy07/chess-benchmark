@@ -115,6 +115,12 @@ async def play_game(
     # plies. start_fen=None falls back to the standard start, which is kept
     # only for smoke tests.
     board = chess.Board(start_fen) if start_fen else chess.Board()
+    if not start_fen and verbose:
+        console.print(
+            "[yellow]No start position given — playing from the standard opening. "
+            "Opening play is largely recall, so deliberation carries little signal "
+            "here. Use --positions for anything intended as results.[/yellow]"
+        )
 
     chess_game = chess.pgn.Game()
     if start_fen:
@@ -215,11 +221,19 @@ async def play_game(
             "legal_move_count": len(legal_before),
             "submitter_role": decision.submitter_role,
             "submitter_model": decision.model,
-            # Every round, so position trajectories can be reconstructed.
-            # Round 0 is the independent anchor the influence metrics need.
+            # Group stream: every round, so position trajectories can be
+            # reconstructed. Round 0 is the independent anchor the influence
+            # metrics need.
             "rounds": [
                 {"round_index": r.round_index, "proposals": [asdict(p) for p in r.proposals]}
                 for r in rounds
+            ],
+            # Solo stream: written and read only by the agent that produced it.
+            # Kept as a sibling of `rounds` rather than nested inside it, so
+            # anything rendering the group stream cannot show private content
+            # by walking one level too deep.
+            "private_notes": [
+                asdict(n) for r in rounds for n in r.private_notes
             ],
             "drift": drift_summary(rounds),
             # Final round, duplicated under the name every decision-side

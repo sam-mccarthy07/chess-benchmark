@@ -21,7 +21,10 @@ import chess
 
 import agents as agents_mod
 import team as team_mod
-from agents import AgentConfig, MoveProposal, SubmitterDecision, STATUS_OK, STATUS_API_ERROR
+from agents import (
+    AgentConfig, MoveProposal, PrivateNote, SubmitterDecision,
+    STATUS_OK, STATUS_API_ERROR,
+)
 from team import DeliberationRound, Team, drift_summary
 
 
@@ -71,7 +74,11 @@ class Recorder:
             "others": sorted(p.agent_role for p in others),
         })
         move = self.script.get(round_index, {}).get(agent.role, own.proposed_move)
-        return _proposal(agent.role, move)
+        # Revisions return (public proposal, private note) — the split is what
+        # keeps private content out of what teammates are shown.
+        return _proposal(agent.role, move), PrivateNote(
+            agent_role=agent.role, round_index=round_index, present=False,
+        )
 
     async def submit(self, submitter, proposals, board_fen, legal_moves,
                      color, move_number, deliberation_style):

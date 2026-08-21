@@ -23,6 +23,7 @@ import chess
 from agents import (
     AgentConfig,
     MoveProposal,
+    PrivateNote,
     SubmitterDecision,
     get_agent_proposal,
     get_agent_revision,
@@ -34,9 +35,15 @@ from config import DELIBERATION_ROUNDS
 
 @dataclass
 class DeliberationRound:
-    """One synchronous round of positions, one per agent."""
+    """One synchronous round of positions, one per agent.
+
+    `proposals` is the group stream — the only thing ever shown to another
+    agent. `private_notes` is the solo stream, held here so it travels with
+    the round for logging, but never read when building what agents see.
+    """
     round_index: int  # 0 == independent opening proposals
     proposals: list[MoveProposal]
+    private_notes: list[PrivateNote] = field(default_factory=list)
 
     def moves(self) -> list[str]:
         return [p.proposed_move for p in self.proposals if p.proposed_move]
@@ -112,6 +119,9 @@ class Team:
 
         # Discussion rounds — simultaneous revision.
         for round_index in range(1, self.deliberation_rounds + 1):
+            # `others` is built from proposals only. The private notes are not
+            # in scope here, so a leak would require reaching for a different
+            # object rather than forgetting to strip a field.
             current = rounds[-1].proposals
             revised = await asyncio.gather(*[
                 get_agent_revision(
@@ -126,7 +136,11 @@ class Team:
                 )
                 for i, agent in enumerate(deliberators)
             ])
-            rounds.append(DeliberationRound(round_index=round_index, proposals=list(revised)))
+            rounds.append(DeliberationRound(
+                round_index=round_index,
+                proposals=[p for p, _ in revised],
+                private_notes=[n for _, n in revised],
+            ))
 
         decision = await get_submitter_decision(
             submitter=self.get_submitter(),
