@@ -21,8 +21,9 @@ from agents import (
     STATUS_API_ERROR,
 )
 from monitor import analyze_move, MoveAnalysis
-from leaderboard import GameResult, save_game
+from leaderboard import GameResult, load_all_games, save_game
 from config import load_ablations, build_manifest, set_seed
+from throttle import BudgetExceeded, set_gate
 
 console = Console()
 
@@ -436,6 +437,8 @@ async def run_position_series(
     verbose: bool = True,
     seed: int | None = None,
     swap_colors: bool = True,
+    gate=None,
+    resume: bool = False,
 ):
     """Play a pair of orgs across a fixed set of start positions.
 
@@ -448,30 +451,69 @@ async def run_position_series(
     set_seed(seed)
     results = []
 
+    # Rate-limited runs are long, so a run must be resumable. Completion is
+    # keyed on (position, white org, black org) rather than a counter, so
+    # resuming after an interruption cannot silently replay or skip a cell.
+    done = completed_games() if resume else set()
+    if resume and done and verbose:
+        console.print(f"[dim]Resuming: {len(done)} games already on disk[/dim]")
+
+    if gate is not None:
+        set_gate(gate)
+
+    skipped = 0
     for i, pos in enumerate(positions, start=1):
         orderings = [(white_org, black_org)]
         if swap_colors:
             orderings.append((black_org, white_org))
 
         for w_org, b_org in orderings:
+            key = (pos["position_id"], w_org["id"], b_org["id"])
+            if key in done:
+                skipped += 1
+                continue
+
             if verbose:
                 console.print(
                     f"\n[bold]Position {i}/{len(positions)} "
                     f"({pos['position_id']}) — {w_org['id']} as white[/bold]"
                 )
-            results.append(await play_game(
-                white_team=build_team(w_org, "white"),
-                black_team=build_team(b_org, "black"),
-                max_moves=max_moves,
-                monitor_model=monitor_model,
-                verbose=verbose,
-                seed=seed,
-                start_fen=pos["fen"],
-                position_id=pos["position_id"],
-                position_set=position_set_meta,
-            ))
+            try:
+                result = await play_game(
+                    white_team=build_team(w_org, "white"),
+                    black_team=build_team(b_org, "black"),
+                    max_moves=max_moves,
+                    monitor_model=monitor_model,
+                    verbose=verbose,
+                    seed=seed,
+                    start_fen=pos["fen"],
+                    position_id=pos["position_id"],
+                    position_set=position_set_meta,
+                )
+            except BudgetExceeded as e:
+                # Stop cleanly rather than half-writing the grid. Everything
+                # already saved stays valid, and --resume picks up here.
+                console.print(f"\n[yellow]Stopping: {e}[/yellow]")
+                return results
+            results.append(result)
+
+    if verbose and skipped:
+        console.print(f"[dim]Skipped {skipped} games already present[/dim]")
 
     return results
+
+
+def completed_games() -> set[tuple[str, str, str]]:
+    """(position_id, white_org, black_org) for every game already saved.
+
+    Read from disk rather than tracked in memory so a resumed run sees work
+    done by an earlier process.
+    """
+    out = set()
+    for g in load_all_games(warn=False):
+        if g.position_id:
+            out.add((g.position_id, g.white_org, g.black_org))
+    return out
 
 
 async def run_tournament(

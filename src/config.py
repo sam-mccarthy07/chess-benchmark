@@ -111,6 +111,26 @@ HARNESS_PARAMS = {
 # and reproducible offline analysis is worth more than analysis speed.
 # ---------------------------------------------------------------------------
 
+# ---------------------------------------------------------------------------
+# Transport parameters
+#
+# These do not change what a model says, only whether we managed to ask it, so
+# they are NOT part of config_fingerprint — a run that needed retries is the
+# same experiment as one that did not. Retry counts are recorded in the run
+# stats instead, where they belong: as a fact about the run, not the design.
+#
+# Defaults are tuned for free tiers, which are the tightest case. Raise
+# REQUESTS_PER_MINUTE (or set it to None) on paid tiers.
+# ---------------------------------------------------------------------------
+
+MAX_RETRIES = 5
+RETRY_BASE_DELAY_S = 2.0
+RETRY_MAX_DELAY_S = 60.0
+MAX_CONCURRENT_CALLS = int(os.environ.get("MAX_CONCURRENT_CALLS", "4"))
+_rpm = os.environ.get("REQUESTS_PER_MINUTE", "20")
+REQUESTS_PER_MINUTE = None if _rpm.lower() in ("", "none", "0") else int(_rpm)
+
+
 ENGINE_PARAMS = {
     "engine_path": os.environ.get("STOCKFISH_PATH", "stockfish"),
     "depth": int(os.environ.get("STOCKFISH_DEPTH", "20")),
@@ -119,8 +139,26 @@ ENGINE_PARAMS = {
 }
 
 
+# Which org config the run uses. Set once by the CLI before anything reads it,
+# because config_fingerprint hashes the ablation file: two runs under different
+# configs must never share a fingerprint.
+_ACTIVE_CONFIG = CONFIGS_DIR / "ablations.json"
+
+
+def set_active_config(path) -> Path:
+    global _ACTIVE_CONFIG
+    _ACTIVE_CONFIG = Path(path)
+    if not _ACTIVE_CONFIG.is_file():
+        raise FileNotFoundError(f"config not found: {_ACTIVE_CONFIG}")
+    return _ACTIVE_CONFIG
+
+
+def active_config_path() -> Path:
+    return _ACTIVE_CONFIG
+
+
 def load_ablations():
-    with open(CONFIGS_DIR / "ablations.json") as f:
+    with open(_ACTIVE_CONFIG) as f:
         return json.load(f)
 
 
@@ -139,6 +177,7 @@ def config_fingerprint(extra: dict | None = None) -> str:
     runs with the same fingerprint are poolable; two runs without are not.
     """
     payload = {
+        "config_file": _ACTIVE_CONFIG.name,
         "ablations": load_ablations(),
         "harness": HARNESS_PARAMS,
     }

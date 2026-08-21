@@ -1,0 +1,71 @@
+{
+  "_comment": "The fully crossed grid the pilot is a subset of. Not run yet — shipped so the capability is demonstrably present and so the pilot config can be diffed against it. Swap the model ids for an eligible tier before running (see _models).",
+  "_design": {
+    "axes": {
+      "A_decision_rule": ["consensus", "advisory"],
+      "B_submitter_rotation": ["round_robin", "fixed_leader"],
+      "C_composition": ["homogeneous", "heterogeneous"],
+      "D_deliberation_rounds": [0, 2]
+    },
+    "crossing": "A x B fully crossed is the contribution: Architecture Matters (arXiv:2604.23459) explicitly notes its own axes were varied independently without systematic crossing. The four orgs below are that crossing at one composition; add C and D by duplicating with the model set or deliberation_rounds changed.",
+    "cells": "A x B = 4 (below). A x B x C = 8. A x B x C x D = 16."
+  },
+  "_models": "Placeholders are free-tier so the file runs as-is, but free tier is below the eligibility gate. Replace with a tier that clears the gate before treating any output as results.",
+  "orgs": [
+    {
+      "id": "consensus-rotating",
+      "name": "Consensus / Rotating",
+      "description": "A=consensus, B=round_robin",
+      "agents": [
+        {"model": "z-ai/glm-5.2:free", "role": "strategist", "persona": "aggressive attacker who prefers tactical combinations and sharp openings"},
+        {"model": "google/gemma-4-31b-it:free", "role": "analyst", "persona": "defensive player who prioritizes piece safety and solid pawn structure"},
+        {"model": "openai/gpt-oss-20b:free", "role": "critic", "persona": "balanced player who evaluates long-term positional advantages"}
+      ],
+      "deliberation_style": "consensus",
+      "submitter_rotation": "round_robin",
+      "deliberation_rounds": 2
+    },
+    {
+      "id": "consensus-fixed",
+      "name": "Consensus / Fixed",
+      "description": "A=consensus, B=fixed_leader — the cell the original repo never ran",
+      "agents": [
+        {"model": "z-ai/glm-5.2:free", "role": "strategist", "persona": "aggressive attacker who prefers tactical combinations and sharp openings"},
+        {"model": "google/gemma-4-31b-it:free", "role": "analyst", "persona": "defensive player who prioritizes piece safety and solid pawn structure"},
+        {"model": "openai/gpt-oss-20b:free", "role": "critic", "persona": "balanced player who evaluates long-term positional advantages"}
+      ],
+      "deliberation_style": "consensus",
+      "submitter_rotation": "fixed_leader",
+      "deliberation_rounds": 2
+    },
+    {
+      "id": "advisory-rotating",
+      "name": "Advisory / Rotating",
+      "description": "A=advisory, B=round_robin — the other cell the original repo never ran",
+      "agents": [
+        {"model": "z-ai/glm-5.2:free", "role": "leader", "persona": "experienced strategist who weighs advisor input but trusts own judgement"},
+        {"model": "google/gemma-4-31b-it:free", "role": "advisor_a", "persona": "tactical specialist focused on immediate material gain and threats"},
+        {"model": "openai/gpt-oss-20b:free", "role": "advisor_b", "persona": "positional expert who prefers strategic maneuvering and piece coordination"}
+      ],
+      "deliberation_style": "advisory",
+      "submitter_rotation": "round_robin",
+      "deliberation_rounds": 2
+    },
+    {
+      "id": "advisory-fixed",
+      "name": "Advisory / Fixed",
+      "description": "A=advisory, B=fixed_leader",
+      "agents": [
+        {"model": "z-ai/glm-5.2:free", "role": "leader", "persona": "experienced strategist who weighs advisor input but trusts own judgement"},
+        {"model": "google/gemma-4-31b-it:free", "role": "advisor_a", "persona": "tactical specialist focused on immediate material gain and threats"},
+        {"model": "openai/gpt-oss-20b:free", "role": "advisor_b", "persona": "positional expert who prefers strategic maneuvering and piece coordination"}
+      ],
+      "deliberation_style": "advisory",
+      "submitter_rotation": "fixed_leader",
+      "deliberation_rounds": 2
+    }
+  ],
+  "monitor_model": "google/gemma-4-26b-a4b-it:free",
+  "max_moves": 30,
+  "thinking_timeout_seconds": 60
+}
