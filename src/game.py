@@ -102,11 +102,25 @@ async def play_game(
     monitor_model: str = "meta-llama/llama-3.1-8b-instruct",
     verbose: bool = True,
     seed: int | None = None,
+    start_fen: str | None = None,
+    position_id: str | None = None,
+    position_set: dict | None = None,
 ) -> GameResult:
     """Play a full chess game between two multi-agent teams."""
     game_id = str(uuid.uuid4())[:8]
-    board = chess.Board()
+
+    # Games normally begin from a sampled balanced middlegame position rather
+    # than move 1: opening play is largely recall, so agents propose the same
+    # book move and deliberation carries no signal for the first twenty-odd
+    # plies. start_fen=None falls back to the standard start, which is kept
+    # only for smoke tests.
+    board = chess.Board(start_fen) if start_fen else chess.Board()
+
     chess_game = chess.pgn.Game()
+    if start_fen:
+        # Without SetUp/FEN the PGN replays from the standard opening and every
+        # recorded move becomes illegal — including in the oracle's PGN path.
+        chess_game.setup(board)
     chess_game.headers["White"] = white_team.org_name
     chess_game.headers["Black"] = black_team.org_name
     node = chess_game
@@ -118,6 +132,15 @@ async def play_game(
             "max_moves": max_moves,
             "white_org": white_team.org_id,
             "black_org": black_team.org_id,
+            # Which position this game started from, and which released set it
+            # came from. Games from different position sets must never pool.
+            "start_fen": start_fen,
+            "position_id": position_id,
+            "position_set": position_set,
+            "deliberation_rounds": {
+                white_team.org_id: white_team.deliberation_rounds,
+                black_team.org_id: black_team.deliberation_rounds,
+            },
         },
     )
 
@@ -136,11 +159,17 @@ async def play_game(
             f"[bold cyan]GAME {game_id}[/bold cyan]\n"
             f"[white]{white_team.org_name}[/white] (White) vs [yellow]{black_team.org_name}[/yellow] (Black)\n"
             f"White style: {white_team.deliberation_style} | Black style: {black_team.deliberation_style}\n"
+            f"Start: {('position ' + position_id) if position_id else 'standard opening'}"
+            f" (move {board.fullmove_number}, {'white' if board.turn == chess.WHITE else 'black'} to play)\n"
             f"[dim]config {manifest['config_fingerprint']} | seed {seed}[/dim]",
             title="Chess Benchmark"
         ))
 
-    full_move_number = 1
+    # Continue the source game's numbering rather than restarting at 1, so a
+    # logged move number matches the position it was actually played in.
+    full_move_number = board.fullmove_number
+    # move_stack counts only plies played in *this* game, so max_moves is
+    # always moves-from-the-start-position regardless of where we began.
     while not board.is_game_over() and len(board.move_stack) < max_moves * 2:
         is_white = board.turn == chess.WHITE
         current_team = white_team if is_white else black_team
@@ -270,6 +299,7 @@ async def play_game(
             "deliberation_quality": analysis.deliberation_quality,
             "key_insight": analysis.key_insight,
             "dissent_detected": analysis.dissent_detected,
+            "scope": analysis.scope,
             "tokens_total": analysis.tokens_total,
             "latency_total_ms": analysis.latency_total_ms,
         })
@@ -370,6 +400,8 @@ async def play_game(
         black_latency_ms=black_latency_total,
         move_analyses=move_analyses,
         pgn=pgn_str,
+        start_fen=start_fen or "",
+        position_id=position_id or "",
         manifest=manifest,
         moves=moves,
         integrity_totals=totals,
@@ -377,6 +409,55 @@ async def play_game(
 
     save_game(game_result)
     return game_result
+
+
+async def run_position_series(
+    white_org: dict,
+    black_org: dict,
+    positions: list[dict],
+    position_set: dict | None = None,
+    position_set_meta: dict | None = None,
+    max_moves: int = 30,
+    monitor_model: str = "meta-llama/llama-3.1-8b-instruct",
+    verbose: bool = True,
+    seed: int | None = None,
+    swap_colors: bool = True,
+):
+    """Play a pair of orgs across a fixed set of start positions.
+
+    Each position is played twice with colours swapped, so a position that
+    happens to favour the side to move cannot advantage one org. Teams are
+    rebuilt per game: a Team carries submitter rotation state, and reusing one
+    across positions would leak rotation phase between otherwise independent
+    games.
+    """
+    set_seed(seed)
+    results = []
+
+    for i, pos in enumerate(positions, start=1):
+        orderings = [(white_org, black_org)]
+        if swap_colors:
+            orderings.append((black_org, white_org))
+
+        for w_org, b_org in orderings:
+            if verbose:
+                console.print(
+                    f"\n[bold]Position {i}/{len(positions)} "
+                    f"({pos['position_id']}) — {w_org['id']} as white[/bold]"
+                )
+            results.append(await play_game(
+                white_team=build_team(w_org, "white"),
+                black_team=build_team(b_org, "black"),
+                max_moves=max_moves,
+                monitor_model=monitor_model,
+                verbose=verbose,
+                seed=seed,
+                start_fen=pos["fen"],
+                position_id=pos["position_id"],
+                position_set=position_set_meta,
+            ))
+
+    return results
 
 
 async def run_tournament(

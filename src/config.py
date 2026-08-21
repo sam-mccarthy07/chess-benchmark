@@ -148,7 +148,9 @@ def config_fingerprint(extra: dict | None = None) -> str:
 def build_manifest(seed: int | None = None, extra: dict | None = None) -> dict:
     """Run manifest embedded in every saved game."""
     manifest = {
-        "schema_version": 2,
+        # 1: original. 2: integrity fields + per-turn records (PR 1).
+        # 3: deliberation rounds, drift, and sampled start positions.
+        "schema_version": 3,
         "config_fingerprint": config_fingerprint(extra),
         "harness": HARNESS_PARAMS,
         "seed": seed,

@@ -17,7 +17,8 @@ from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).parent))
 
-from game import run_tournament, play_game
+from game import run_tournament, run_position_series, play_game
+from positions import load_position_set, position_set_provenance
 from team import build_team
 from tournament import run_round_robin
 from leaderboard import print_leaderboard, load_all_games
@@ -38,6 +39,13 @@ async def main():
     parser.add_argument("--charts", action="store_true", help="Generate charts from existing results")
     parser.add_argument("--quiet", action="store_true", help="Minimal output")
     parser.add_argument("--seed", type=int, default=None, help="Seed for reproducible runs")
+    parser.add_argument("--positions", type=Path, default=None,
+                        help="Position set JSON. Games start from these sampled "
+                             "balanced middlegame positions instead of move 1.")
+    parser.add_argument("--limit-positions", type=int, default=None,
+                        help="Use only the first N positions (for pilots)")
+    parser.add_argument("--no-swap-colors", action="store_true",
+                        help="Play each position once instead of twice with colours swapped")
     args = parser.parse_args()
 
     if args.leaderboard:
@@ -58,6 +66,42 @@ async def main():
     verbose = not args.quiet
 
     set_seed(args.seed)
+
+    if args.positions:
+        config = load_ablations()
+        orgs = config["orgs"]
+        if len(orgs) < 2:
+            console.print("[red]Need at least 2 org configs[/red]")
+            return
+        try:
+            pset = load_position_set(args.positions)
+        except Exception as e:
+            console.print(f"[red]Could not load position set: {e}[/red]")
+            return
+
+        positions = pset["positions"]
+        if args.limit_positions:
+            positions = positions[: args.limit_positions]
+
+        meta = position_set_provenance(pset, args.positions)
+        console.print(
+            f"[bold]{len(positions)} positions from {meta['file']} "
+            f"(version {meta['version']}, seed {meta['seed']})[/bold]"
+        )
+        results = await run_position_series(
+            white_org=orgs[0],
+            black_org=orgs[1],
+            positions=positions,
+            position_set_meta=meta,
+            max_moves=args.moves,
+            monitor_model=config.get("monitor_model", "meta-llama/llama-3.1-8b-instruct"),
+            verbose=verbose,
+            seed=args.seed,
+            swap_colors=not args.no_swap_colors,
+        )
+        print_leaderboard()
+        console.print(f"\n[green]Played {len(results)} games[/green]")
+        return
 
     if args.single:
         config = load_ablations()

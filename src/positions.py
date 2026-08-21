@@ -308,6 +308,46 @@ def sample_positions(
     return out, stats
 
 
+def load_position_set(path: Path) -> dict:
+    """Load a released position set, failing loudly on anything malformed.
+
+    A position set is part of the experimental design, so a truncated or
+    hand-edited file must not quietly produce a shorter run.
+    """
+    import json
+
+    data = json.loads(path.read_text())
+    positions = data.get("positions")
+    if not positions:
+        raise RuntimeError(f"{path.name} contains no positions")
+    if data.get("count") != len(positions):
+        raise RuntimeError(
+            f"{path.name} declares count={data.get('count')} but holds "
+            f"{len(positions)} positions"
+        )
+    for p in positions:
+        if not p.get("fen") or not p.get("position_id"):
+            raise RuntimeError(f"{path.name} has a position missing fen/position_id")
+        chess.Board(p["fen"])  # raises if unparseable
+    return data
+
+
+def position_set_provenance(data: dict, path: Path) -> dict:
+    """Identity of a position set, for the run manifest.
+
+    Without this, games started from different position sets would carry
+    indistinguishable manifests and could be pooled by mistake — the same
+    failure mode the engine provenance block exists to prevent.
+    """
+    return {
+        "file": path.name,
+        "version": data.get("version"),
+        "seed": data.get("seed"),
+        "count": data.get("count"),
+        "filters": data.get("filters"),
+    }
+
+
 def build_position_set(
     positions: list[SampledPosition],
     filters: PositionFilters,

@@ -111,6 +111,27 @@ At most one position is taken per source game, chosen at random within the ply
 window: positions from the same game share structure and would not be
 independent samples.
 
+### Running games from a position set
+
+```bash
+python3 src/main.py --positions positions/positions_v1.json --moves 30
+python3 src/main.py --positions positions/positions_v1.json --limit-positions 20   # pilot
+```
+
+Each position is played **twice with colours swapped**, so a position that
+happens to favour the side to move cannot advantage one org. Every condition
+plays the same positions, which is what makes between-condition comparisons
+paired rather than independent.
+
+Each game records `position_id`, `start_fen`, and the identity of the position
+set it came from. Games started from different position sets must never be
+pooled, so that provenance travels in the manifest — the same reasoning behind
+the engine provenance block on the analysis side.
+
+Without `--positions`, games begin from the standard opening. That path is
+retained for smoke tests only: opening play is largely recall, so agents
+propose the same book move and deliberation carries no signal.
+
 Output lands in `positions/positions_<version>.json` carrying the seed,
 filters, engine provenance, source files and rejection tallies — everything
 needed to regenerate it. A position set is part of the experimental design, so
