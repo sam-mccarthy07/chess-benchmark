@@ -31,6 +31,8 @@ class GameResult:
     # Full per-turn record: proposals, decision, resolution, integrity counters.
     moves: list[dict] = field(default_factory=list)
     integrity_totals: dict = field(default_factory=dict)
+    # Stockfish ground truth, written by backfill.py as a separate offline pass.
+    oracle_analysis: dict = field(default_factory=dict)
 
 
 def save_game(result: GameResult):

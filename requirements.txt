@@ -3,3 +3,8 @@ openai>=1.0.0
 rich>=13.0.0
 aiohttp>=3.9.0
 matplotlib>=3.7.0
+
+# Stockfish is an external binary, not a pip package.
+# Install via: brew install stockfish  /  apt-get install stockfish
+# Do NOT install the PyPI package named "stockfish" — the engine is driven
+# through python-chess (chess.engine), which is already listed above.

@@ -39,6 +39,52 @@ Set your OpenRouter API key:
 export OPENROUTER_API_KEY=sk-or-v1-...
 ```
 
+## Move Quality Analysis
+
+Stored games are scored against Stockfish in a separate offline pass, so a game
+can be re-analysed under a different engine or depth without replaying it and
+without spending API credit.
+
+Stockfish is an external binary, not a Python package — do **not** install the
+PyPI package named `stockfish`. The engine is driven through `python-chess`,
+which is already a dependency.
+
+```bash
+brew install stockfish          # or apt-get install stockfish
+
+python3 src/backfill.py                 # analyse every unanalysed game
+python3 src/backfill.py --force         # re-analyse everything
+python3 src/backfill.py --depth 12      # faster, shallower pass
+python3 src/backfill.py --game 2d5e8f8a # a single game
+```
+
+Results are written into each `results/game_*.json` under `oracle_analysis`,
+alongside an engine provenance block. Centipawn numbers are only comparable
+across games analysed with the same engine build at the same depth.
+
+Per turn, the analysis reports:
+
+| Field | Meaning |
+| --- | --- |
+| `delta_ceiling` | Centipawn loss of the best proposal on the table — how good were the team's ideas? |
+| `delta_selection` | Decision CPL minus `delta_ceiling` — did aggregation discard value the team already had? |
+| `cpl_decision` | Loss of the move the team chose (`null` if illegal) |
+| `cpl_played` | Loss of the move the board actually received |
+| `submitter_picked_best` | Whether the submitter took the strongest move available to it |
+| `mate_involved` | Forced mate on either side of the comparison; CPL is then off-scale and excluded from means |
+
+`delta_selection` is negative only when the submitter played something nobody
+proposed that beat every proposal, so it is not clamped.
+
+## Testing
+
+```bash
+python3 -W ignore::DeprecationWarning -m unittest discover -s tests -v
+```
+
+Engine-dependent tests skip automatically when Stockfish is absent. The `-W`
+flag suppresses an upstream `python-chess` deprecation warning on Python 3.14.
+
 ## Dashboard
 
 ![Dashboard: move-by-move deliberation replay](dashboard/screenshot.jpg)

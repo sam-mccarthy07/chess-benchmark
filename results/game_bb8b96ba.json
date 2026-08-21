@@ -254,5 +254,183 @@
       "latency_total_ms": 14671.675443649292
     }
   ],
-  "pgn": "[Event \"?\"]\n[Site \"?\"]\n[Date \"????.??.??\"]\n[Round \"?\"]\n[White \"Consensus Collective\"]\n[Black \"Autocratic Council\"]\n[Result \"1/2-1/2\"]\n\n1. e4 e6 2. e5 Ne7 3. Bc4 Nec6 4. Bxe6 Nxe5 5. Nf3 Bc5 6. Ng5 Nc4 7. Nf3 Bd4 8. Bd5 Qf6 9. Bxf7+ Qxf7 10. Ng5 Bf6 1/2-1/2"
+  "pgn": "[Event \"?\"]\n[Site \"?\"]\n[Date \"????.??.??\"]\n[Round \"?\"]\n[White \"Consensus Collective\"]\n[Black \"Autocratic Council\"]\n[Result \"1/2-1/2\"]\n\n1. e4 e6 2. e5 Ne7 3. Bc4 Nec6 4. Bxe6 Nxe5 5. Nf3 Bc5 6. Ng5 Nc4 7. Nf3 Bd4 8. Bd5 Qf6 9. Bxf7+ Qxf7 10. Ng5 Bf6 1/2-1/2",
+  "oracle_analysis": {
+    "schema": "pgn_only",
+    "provenance": {
+      "engine_id": "Stockfish 18",
+      "depth": 16,
+      "threads": 1,
+      "hash_mb": 64,
+      "mate_score": 10000,
+      "thresholds": {
+        "blunder": 30.0,
+        "mistake": 20.0,
+        "inaccuracy": 10.0
+      }
+    },
+    "plies": [
+      {
+        "ply": 1,
+        "color": "white",
+        "move": "e2e4",
+        "cpl": 0,
+        "severity": "ok",
+        "mate_involved": false
+      },
+      {
+        "ply": 2,
+        "color": "black",
+        "move": "e7e6",
+        "cpl": 0,
+        "severity": "ok",
+        "mate_involved": false
+      },
+      {
+        "ply": 3,
+        "color": "white",
+        "move": "e4e5",
+        "cpl": 72,
+        "severity": "ok",
+        "mate_involved": false
+      },
+      {
+        "ply": 4,
+        "color": "black",
+        "move": "g8e7",
+        "cpl": 53,
+        "severity": "ok",
+        "mate_involved": false
+      },
+      {
+        "ply": 5,
+        "color": "white",
+        "move": "f1c4",
+        "cpl": 63,
+        "severity": "ok",
+        "mate_involved": false
+      },
+      {
+        "ply": 6,
+        "color": "black",
+        "move": "e7c6",
+        "cpl": 75,
+        "severity": "ok",
+        "mate_involved": false
+      },
+      {
+        "ply": 7,
+        "color": "white",
+        "move": "c4e6",
+        "cpl": 465,
+        "severity": "blunder",
+        "mate_involved": false
+      },
+      {
+        "ply": 8,
+        "color": "black",
+        "move": "c6e5",
+        "cpl": 458,
+        "severity": "blunder",
+        "mate_involved": false
+      },
+      {
+        "ply": 9,
+        "color": "white",
+        "move": "g1f3",
+        "cpl": 490,
+        "severity": "blunder",
+        "mate_involved": false
+      },
+      {
+        "ply": 10,
+        "color": "black",
+        "move": "f8c5",
+        "cpl": 482,
+        "severity": "blunder",
+        "mate_involved": false
+      },
+      {
+        "ply": 11,
+        "color": "white",
+        "move": "f3g5",
+        "cpl": 474,
+        "severity": "blunder",
+        "mate_involved": false
+      },
+      {
+        "ply": 12,
+        "color": "black",
+        "move": "e5c4",
+        "cpl": 803,
+        "severity": "blunder",
+        "mate_involved": false
+      },
+      {
+        "ply": 13,
+        "color": "white",
+        "move": "g5f3",
+        "cpl": 775,
+        "severity": "blunder",
+        "mate_involved": false
+      },
+      {
+        "ply": 14,
+        "color": "black",
+        "move": "c5d4",
+        "cpl": 925,
+        "severity": "blunder",
+        "mate_involved": false
+      },
+      {
+        "ply": 15,
+        "color": "white",
+        "move": "e6d5",
+        "cpl": 434,
+        "severity": "blunder",
+        "mate_involved": false
+      },
+      {
+        "ply": 16,
+        "color": "black",
+        "move": "d8f6",
+        "cpl": 373,
+        "severity": "mistake",
+        "mate_involved": false
+      },
+      {
+        "ply": 17,
+        "color": "white",
+        "move": "d5f7",
+        "cpl": 659,
+        "severity": "blunder",
+        "mate_involved": false
+      },
+      {
+        "ply": 18,
+        "color": "black",
+        "move": "f6f7",
+        "cpl": 308,
+        "severity": "mistake",
+        "mate_involved": false
+      },
+      {
+        "ply": 19,
+        "color": "white",
+        "move": "f3g5",
+        "cpl": 10084,
+        "severity": "blunder",
+        "mate_involved": true
+      },
+      {
+        "ply": 20,
+        "color": "black",
+        "move": "d4f6",
+        "cpl": 10409,
+        "severity": "blunder",
+        "mate_involved": true
+      }
+    ],
+    "caveat": "Generated before the integrity fix; proposals were silently coerced, so this is pipeline validation only, not results."
+  }
 }
