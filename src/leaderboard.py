@@ -26,6 +26,11 @@ class GameResult:
     black_latency_ms: float
     move_analyses: list[dict] = field(default_factory=list)
     pgn: str = ""
+    # Start position. Promoted out of the manifest because the paired design
+    # joins on it: the same position played under every condition is what makes
+    # between-condition comparisons paired rather than independent.
+    start_fen: str = ""
+    position_id: str = ""
     # Run provenance. Games with different fingerprints must not be pooled.
     manifest: dict = field(default_factory=dict)
     # Full per-turn record: proposals, decision, resolution, integrity counters.

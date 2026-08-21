@@ -207,7 +207,9 @@ class TestManifest(unittest.TestCase):
     def test_manifest_records_seed_and_fingerprint(self):
         m = build_manifest(seed=42)
         self.assertEqual(m["seed"], 42)
-        self.assertEqual(m["schema_version"], 2)
+        # Bumped whenever the record shape changes so consumers can tell a
+        # PR-1-era record from one carrying rounds and start positions.
+        self.assertGreaterEqual(m["schema_version"], 3)
         self.assertIn("config_fingerprint", m)
         self.assertFalse(m["harness"]["legal_moves_truncated"])
 

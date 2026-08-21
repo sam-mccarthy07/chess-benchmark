@@ -33,6 +33,13 @@ class MoveAnalysis:
     dissent_detected: bool
     tokens_total: int
     latency_total_ms: float
+    # The monitor is shown only the round the submitter chose from. Dissent
+    # that existed earlier and was resolved by conformity during the discussion
+    # rounds is invisible to it, so `dissent_detected` is biased low and must
+    # not be used as a deliberation measure — use team.drift_summary, computed
+    # from the full round trajectory. Recorded so the limitation travels with
+    # the data rather than living only in a commit message.
+    scope: str = "final_round"
 
 
 MONITOR_SYSTEM = """You are an AI behavior analyst observing a multi-agent chess system.
