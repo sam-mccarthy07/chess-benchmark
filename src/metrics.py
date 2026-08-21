@@ -95,7 +95,7 @@ def analyse_turn(oracle: Oracle, turn: dict) -> dict:
 
     played_eval = evals.get(played_move)
 
-    return {
+    out = {
         "engine_best_move": engine_best,
         "engine_best_cp": best_cp,
         "proposals": per_proposal,
@@ -115,10 +115,143 @@ def analyse_turn(oracle: Oracle, turn: dict) -> dict:
         # while this does not improve, deliberation is producing conformity
         # rather than insight — the H8 signature.
         "ceiling_by_round": _ceiling_by_round(oracle, board, turn),
+        "influence": influence_metrics(turn),
         # Centipawn loss is not on a centipawn scale once a forced mate is on
         # either side of the comparison. Flagged here so aggregates can exclude
         # these turns; win-probability severity remains valid throughout.
         "mate_involved": any(e.mate_involved for e in evals.values() if e.legal),
+    }
+    # Needs the metrics above, so it is attached rather than inlined.
+    out["influence_quality"] = influence_quality(oracle, turn, out)
+    return out
+
+
+def influence_metrics(turn: dict) -> dict:
+    """Did the team's decision differ from what each agent held on its own?
+
+    Two anchors, both computed offline from the log:
+
+      IR_proposal   team move vs the agent's round-0 proposal, made before it
+                    saw anybody. Free, and available for every turn.
+      IR_stated     team move vs the solo move the agent reported privately in
+                    the final discussion round.
+
+    `introspective_gap` is stated minus revealed. Negative means the agent
+    under-reports having been moved — silent conformity, where an agent
+    changed position and does not say so. The fully revealed anchor needs
+    actual solo runs and arrives with them; until then IR_proposal stands in,
+    and the gap computed here is stated-vs-round-0, which is weaker but
+    directionally the same quantity.
+
+    Unsigned on its own: being moved can be good or bad. Cross with move
+    quality via `influence_quality` for direction.
+    """
+    rounds = turn.get("rounds") or []
+    if not rounds:
+        return {}
+
+    decision_move = (turn.get("decision") or {}).get("submitted_move") or ""
+    if not decision_move:
+        return {"decision_move": "", "by_agent": {}, "note": "no decision move to compare against"}
+
+    opening = {p["agent_role"]: p.get("proposed_move") or "" for p in rounds[0]["proposals"]}
+
+    # Private notes come from the final round in which the agent supplied one.
+    stated: dict[str, str] = {}
+    for note in turn.get("private_notes") or []:
+        if note.get("present") and note.get("solo_move"):
+            stated[note["agent_role"]] = note["solo_move"]
+
+    by_agent = {}
+    for role, first in opening.items():
+        ir_proposal = (first != decision_move) if first else None
+        solo = stated.get(role, "")
+        ir_stated = (solo != decision_move) if solo else None
+        by_agent[role] = {
+            "round0_move": first,
+            "stated_solo_move": solo,
+            "ir_proposal": ir_proposal,
+            "ir_stated": ir_stated,
+            "agrees_with_own_opening": (solo == first) if (solo and first) else None,
+        }
+
+    def _rate(key):
+        vals = [v[key] for v in by_agent.values() if v[key] is not None]
+        return round(sum(vals) / len(vals), 3) if vals else None
+
+    ir_p, ir_s = _rate("ir_proposal"), _rate("ir_stated")
+    return {
+        "decision_move": decision_move,
+        "ir_proposal_rate": ir_p,
+        "ir_stated_rate": ir_s,
+        "introspective_gap": (
+            round(ir_s - ir_p, 3) if (ir_p is not None and ir_s is not None) else None
+        ),
+        "private_notes_present": len(stated),
+        "by_agent": by_agent,
+    }
+
+
+def influence_quality(oracle: Oracle, turn: dict, turn_metrics: dict) -> dict:
+    """Direction for the influence measures.
+
+    For each agent whose opening position the team did not adopt, did the
+    team's move score better or worse than what that agent proposed alone?
+    That separates productive persuasion from destructive conformity — the
+    distinction influence rate cannot make, since being moved is unsigned.
+
+    The oracle is needed because an agent's round-0 move is often not among
+    the final-round proposals and so was never scored. Lookups are cached, so
+    in practice this costs nothing beyond the first evaluation.
+    """
+    rounds = turn.get("rounds") or []
+    cpl_decision = turn_metrics.get("cpl_decision")
+    if not rounds or cpl_decision is None:
+        return {}
+
+    decision_move = (turn.get("decision") or {}).get("submitted_move") or ""
+    board = chess.Board(turn["fen_before"])
+
+    productive = destructive = neutral = 0
+    detail: dict[str, dict] = {}
+
+    for p in rounds[0]["proposals"]:
+        role = p["agent_role"]
+        first = p.get("proposed_move") or ""
+
+        if not first or first == decision_move:
+            detail[role] = {"moved": False, "outcome": None}
+            continue
+
+        ev = oracle.evaluate_move(board, first)
+        if not ev.legal:
+            # An agent whose opening move was illegal had no position to be
+            # moved off, so the comparison is undefined rather than neutral.
+            detail[role] = {"moved": True, "own_cpl": None, "outcome": "opening_illegal"}
+            continue
+
+        if cpl_decision < ev.cpl:
+            outcome = "productive_persuasion"
+            productive += 1
+        elif cpl_decision > ev.cpl:
+            outcome = "destructive_conformity"
+            destructive += 1
+        else:
+            outcome = "neutral"
+            neutral += 1
+
+        detail[role] = {
+            "moved": True,
+            "own_cpl": ev.cpl,
+            "decision_cpl": cpl_decision,
+            "outcome": outcome,
+        }
+
+    return {
+        "productive_persuasion": productive,
+        "destructive_conformity": destructive,
+        "neutral": neutral,
+        "by_agent": detail,
     }
 
 

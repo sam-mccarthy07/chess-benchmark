@@ -49,7 +49,10 @@ RESULTS_DIR.mkdir(exist_ok=True)
 # model and logged rather than capped uniformly, so that reasoning budget is
 # not confounded with experimental condition.
 MAX_TOKENS_PROPOSAL = 800
-MAX_TOKENS_DISCUSSION = 500  # revisions are responses, not fresh analyses
+# Revisions are responses rather than fresh analyses, but each one now also
+# carries the private block (solo counterfactual + rationale), so the budget is
+# larger than a bare revision would need.
+MAX_TOKENS_DISCUSSION = 700
 MAX_TOKENS_SUBMITTER = 800
 MAX_TOKENS_MONITOR = 400
 
@@ -70,7 +73,7 @@ TEMPERATURE_MONITOR = 0.3
 # covers these so runs made under different prompts never silently pool.
 PROMPT_VERSIONS = {
     "proposal": "p1",
-    "discussion": "d1",
+    "discussion": "d2",  # d2 adds the private block
     "submitter": "s1",
     "monitor": "m1",
 }

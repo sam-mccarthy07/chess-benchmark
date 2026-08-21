@@ -67,6 +67,39 @@ class MoveProposal:
     legal: bool = True
     raw_response: str = ""
     error: Optional[str] = None
+    # "split" when the model emitted both blocks, "flat" when it ignored the
+    # structure (whole response treated as public, no private data invented),
+    # "unparsed" when the response was not JSON, "n/a" for calls with no
+    # private half. Tracked because a model that will not honour the split
+    # yields no influence data, and that should be visible rather than
+    # showing up as a silently empty column.
+    stream_split: str = "n/a"
+
+
+@dataclass
+class PrivateNote:
+    """An agent's private record for one deliberation round.
+
+    Never shown to any other agent. Kept in a separate structure from
+    MoveProposal rather than as a field on it, so that leaking it into the
+    group stream would require deliberately reaching for a different object
+    rather than merely forgetting to strip a field.
+
+    `solo_move` is elicited *before* the submitter decides. The agent therefore
+    reports what it would play alone without knowing the team's actual choice,
+    which keeps the stated counterfactual uncontaminated by the outcome. The
+    cost is that it cannot explain a delta it has not yet seen — so the prompt
+    asks why its solo move differs from where the group is heading, which is
+    visible to it and is the substantive question anyway.
+    """
+    agent_role: str
+    round_index: int
+    solo_move: str = ""          # UCI; what this agent would play with no teammates
+    solo_move_legal: bool = False
+    solo_rationale: str = ""
+    process_note: str = ""
+    present: bool = False        # False when the model emitted no private block
+    raw: str = ""
 
 
 @dataclass
@@ -146,6 +179,71 @@ def _parse_move(text: str, board_fen: str = "") -> str:
             pass
 
     return candidates[0] if candidates else ""
+
+
+def _split_streams(text: str) -> tuple[str, str, str]:
+    """Split a response into (public_json, private_json, status).
+
+    Both halves come back as JSON text so the existing parsers can run over
+    each in isolation. That isolation is load-bearing: run over the whole
+    response, the bare-UCI regex would happily pick the agent's *private*
+    solo_move out and record it as the public proposal.
+
+    status is "split" when both blocks were present, "flat" when the model
+    ignored the structure (whole response treated as public, no private data
+    invented), or "unparsed" when it was not JSON at all.
+    """
+    try:
+        data = json.loads(text)
+    except Exception:
+        return text, "", "unparsed"
+
+    if not isinstance(data, dict):
+        return text, "", "unparsed"
+
+    if "public" in data and isinstance(data["public"], dict):
+        private = data.get("private")
+        private_json = json.dumps(private) if isinstance(private, dict) else ""
+        return json.dumps(data["public"]), private_json, "split"
+
+    # No structure: treat everything as public. Never synthesise a private
+    # block from a response that did not supply one.
+    return text, "", "flat"
+
+
+def _parse_private(
+    private_json: str,
+    agent_role: str,
+    round_index: int,
+    board_fen: str,
+    legal_moves: list[str],
+) -> PrivateNote:
+    """Build a PrivateNote from the private half of a response."""
+    if not private_json:
+        return PrivateNote(agent_role=agent_role, round_index=round_index, present=False)
+
+    try:
+        data = json.loads(private_json)
+    except Exception:
+        return PrivateNote(
+            agent_role=agent_role, round_index=round_index,
+            present=False, raw=private_json,
+        )
+
+    solo = _parse_move(json.dumps({"move": data.get("solo_move", "")}), board_fen)
+    if not solo:
+        solo = _parse_move(str(data.get("solo_move", "")), board_fen)
+
+    return PrivateNote(
+        agent_role=agent_role,
+        round_index=round_index,
+        solo_move=solo,
+        solo_move_legal=bool(solo) and solo in legal_moves,
+        solo_rationale=str(data.get("solo_rationale", ""))[:600],
+        process_note=str(data.get("process_note", ""))[:600],
+        present=True,
+        raw=private_json,
+    )
 
 
 def _extract_confidence(text: str) -> float:
@@ -277,10 +375,19 @@ You may keep your move or change it. Both are legitimate outcomes of deliberatio
 
 Respond with ONLY valid JSON in this exact format:
 {
-  "move": "<UCI notation e.g. e2e4>",
-  "reasoning": "<why you are keeping or changing your move>",
-  "confidence": <0.0-1.0>
-}"""
+  "public": {
+    "move": "<UCI notation e.g. e2e4>",
+    "reasoning": "<why you are keeping or changing your move>",
+    "confidence": <0.0-1.0>
+  },
+  "private": {
+    "solo_move": "<UCI: the move you would play if you were deciding alone, with no teammates>",
+    "solo_rationale": "<if solo_move differs from your public move, why>",
+    "process_note": "<your assessment of how this deliberation is going>"
+  }
+}
+
+Your teammates see only the "public" block. The "private" block is not shown to them."""
 
 
 async def get_agent_revision(
@@ -292,8 +399,11 @@ async def get_agent_revision(
     color: str,
     move_number: int,
     round_index: int,
-) -> MoveProposal:
+) -> tuple[MoveProposal, PrivateNote]:
     """One discussion round for one agent.
+
+    Returns the public proposal and the private note as *separate* objects.
+    Only the proposal is ever passed to another agent.
 
     On prompt neutrality: the instruction says only that keeping or changing
     are both legitimate. It deliberately does NOT tell agents to resist peer
@@ -350,46 +460,60 @@ State your move for this round."""
             temperature=TEMPERATURE_DISCUSSION,
         )
     except Exception as e:
-        return MoveProposal(
-            agent_role=agent.role,
-            model=agent.model,
-            proposed_move="",
-            reasoning="",
-            confidence=0.0,
-            tokens_used=0,
-            latency_ms=(time.time() - start) * 1000,
-            status=STATUS_API_ERROR,
-            legal=False,
-            raw_response="",
-            error=str(e),
+        return (
+            MoveProposal(
+                agent_role=agent.role,
+                model=agent.model,
+                proposed_move="",
+                reasoning="",
+                confidence=0.0,
+                tokens_used=0,
+                latency_ms=(time.time() - start) * 1000,
+                status=STATUS_API_ERROR,
+                legal=False,
+                raw_response="",
+                error=str(e),
+            ),
+            PrivateNote(agent_role=agent.role, round_index=round_index, present=False),
         )
 
     latency = (time.time() - start) * 1000
     content = resp.choices[0].message.content or ""
     tokens = resp.usage.total_tokens if resp.usage else 0
 
-    move = _parse_move(content, board_fen)
+    # Parse each stream in isolation. Running the move parser over the whole
+    # response would let the private solo_move be picked up as the public
+    # proposal by the bare-UCI regex.
+    public_json, private_json, split_status = _split_streams(content)
+
+    move = _parse_move(public_json, board_fen)
     status, legal = _classify(move, legal_moves)
+    private = _parse_private(private_json, agent.role, round_index, board_fen, legal_moves)
 
     try:
-        data = json.loads(content)
-        reasoning = data.get("reasoning", content[:300])
+        data = json.loads(public_json)
+        reasoning = data.get("reasoning", public_json[:300])
     except Exception:
-        reasoning = content[:300]
+        reasoning = public_json[:300]
 
-    return MoveProposal(
+    proposal = MoveProposal(
         agent_role=agent.role,
         model=agent.model,
         proposed_move=move,
         reasoning=reasoning,
-        confidence=_extract_confidence(content),
+        confidence=_extract_confidence(public_json),
         tokens_used=tokens,
         latency_ms=latency,
         status=status,
         legal=legal,
-        raw_response=content,
+        # Only the public half is retained on the proposal. The full response
+        # lives on the private note, so the group-stream object never carries
+        # private text even in its raw field.
+        raw_response=public_json,
         error=None,
     )
+    proposal.stream_split = split_status
+    return proposal, private
 
 
 SUBMITTER_SYSTEM = """You are the submitter agent in a multi-agent chess team. You receive proposals from your teammates and must select the final move.
