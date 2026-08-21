@@ -3,7 +3,7 @@
 import json
 import uuid
 from datetime import datetime, timezone
-from dataclasses import dataclass, asdict, field
+from dataclasses import dataclass, asdict, field, fields
 from pathlib import Path
 
 from config import RESULTS_DIR
@@ -26,6 +26,11 @@ class GameResult:
     black_latency_ms: float
     move_analyses: list[dict] = field(default_factory=list)
     pgn: str = ""
+    # Run provenance. Games with different fingerprints must not be pooled.
+    manifest: dict = field(default_factory=dict)
+    # Full per-turn record: proposals, decision, resolution, integrity counters.
+    moves: list[dict] = field(default_factory=list)
+    integrity_totals: dict = field(default_factory=dict)
 
 
 def save_game(result: GameResult):
@@ -37,16 +42,26 @@ def save_game(result: GameResult):
     return path
 
 
-def load_all_games() -> list[GameResult]:
-    """Load all game results."""
+def load_all_games(warn: bool = True) -> list[GameResult]:
+    """Load all game results.
+
+    Unreadable files are reported rather than silently dropped — a results
+    directory that quietly loses games is how you end up analysing a biased
+    subset without knowing it.
+    """
     games = []
-    for path in RESULTS_DIR.glob("game_*.json"):
+    for path in sorted(RESULTS_DIR.glob("game_*.json")):
         try:
             with open(path) as f:
                 data = json.load(f)
-            games.append(GameResult(**data))
-        except Exception:
-            pass
+            known = {f.name for f in fields(GameResult)}
+            unknown = set(data) - known
+            if unknown and warn:
+                print(f"[warn] {path.name}: ignoring unknown fields {sorted(unknown)}")
+            games.append(GameResult(**{k: v for k, v in data.items() if k in known}))
+        except Exception as e:
+            if warn:
+                print(f"[warn] could not load {path.name}: {e}")
     return sorted(games, key=lambda g: g.timestamp, reverse=True)
 
 
