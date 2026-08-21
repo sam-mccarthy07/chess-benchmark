@@ -30,8 +30,10 @@ from config import (
     OPENROUTER_API_KEY,
     OPENROUTER_BASE_URL,
     MAX_TOKENS_PROPOSAL,
+    MAX_TOKENS_DISCUSSION,
     MAX_TOKENS_SUBMITTER,
     TEMPERATURE_PROPOSAL,
+    TEMPERATURE_DISCUSSION,
     TEMPERATURE_SUBMITTER,
     PROMPT_VERSIONS,
 )
@@ -223,6 +225,129 @@ Analyze the position and propose your best move."""
             ],
             max_tokens=MAX_TOKENS_PROPOSAL,
             temperature=TEMPERATURE_PROPOSAL,
+        )
+    except Exception as e:
+        return MoveProposal(
+            agent_role=agent.role,
+            model=agent.model,
+            proposed_move="",
+            reasoning="",
+            confidence=0.0,
+            tokens_used=0,
+            latency_ms=(time.time() - start) * 1000,
+            status=STATUS_API_ERROR,
+            legal=False,
+            raw_response="",
+            error=str(e),
+        )
+
+    latency = (time.time() - start) * 1000
+    content = resp.choices[0].message.content or ""
+    tokens = resp.usage.total_tokens if resp.usage else 0
+
+    move = _parse_move(content, board_fen)
+    status, legal = _classify(move, legal_moves)
+
+    try:
+        data = json.loads(content)
+        reasoning = data.get("reasoning", content[:300])
+    except Exception:
+        reasoning = content[:300]
+
+    return MoveProposal(
+        agent_role=agent.role,
+        model=agent.model,
+        proposed_move=move,
+        reasoning=reasoning,
+        confidence=_extract_confidence(content),
+        tokens_used=tokens,
+        latency_ms=latency,
+        status=status,
+        legal=legal,
+        raw_response=content,
+        error=None,
+    )
+
+
+DISCUSSION_SYSTEM = """You are a chess player in a multi-agent team deliberating on the next move.
+
+You have already proposed a move. You can now see what your teammates proposed and why.
+
+You may keep your move or change it. Both are legitimate outcomes of deliberation.
+
+Respond with ONLY valid JSON in this exact format:
+{
+  "move": "<UCI notation e.g. e2e4>",
+  "reasoning": "<why you are keeping or changing your move>",
+  "confidence": <0.0-1.0>
+}"""
+
+
+async def get_agent_revision(
+    agent: AgentConfig,
+    own: MoveProposal,
+    others: list[MoveProposal],
+    board_fen: str,
+    legal_moves: list[str],
+    color: str,
+    move_number: int,
+    round_index: int,
+) -> MoveProposal:
+    """One discussion round for one agent.
+
+    On prompt neutrality: the instruction says only that keeping or changing
+    are both legitimate. It deliberately does NOT tell agents to resist peer
+    pressure. An anti-conformity nudge would suppress exactly the behaviour
+    H8 is trying to measure — and it belongs in the mechanism-treatment axis
+    as a manipulation, not baked into the baseline protocol. The one thing
+    the prompt does assert is that holding is a valid outcome, without which
+    a model may infer that it is expected to produce a change.
+    """
+    lines = []
+    for p in others:
+        if p.status in (STATUS_API_ERROR, STATUS_UNPARSEABLE):
+            lines.append(f"- {p.agent_role}: no usable proposal this round")
+            continue
+        flag = "" if p.legal else "  [NOTE: not legal in this position]"
+        lines.append(
+            f"- {p.agent_role} proposes {p.proposed_move} "
+            f"[confidence {p.confidence:.2f}]: {p.reasoning}{flag}"
+        )
+    others_text = "\n".join(lines) if lines else "(no teammate proposals available)"
+
+    own_text = (
+        f"{own.proposed_move} [confidence {own.confidence:.2f}]: {own.reasoning}"
+        if own.proposed_move
+        else "(you did not produce a usable proposal)"
+    )
+
+    moves_str = ", ".join(legal_moves)
+
+    user_msg = f"""Move {move_number}, playing as {color}. Discussion round {round_index}.
+
+Board (FEN): {board_fen}
+Legal moves available ({len(legal_moves)} total): {moves_str}
+
+Your current proposal:
+{own_text}
+
+Your teammates:
+{others_text}
+
+Your persona: {agent.persona}
+
+State your move for this round."""
+
+    start = time.time()
+    try:
+        resp = await client.chat.completions.create(
+            model=agent.model,
+            messages=[
+                {"role": "system", "content": DISCUSSION_SYSTEM},
+                {"role": "user", "content": user_msg},
+            ],
+            max_tokens=MAX_TOKENS_DISCUSSION,
+            temperature=TEMPERATURE_DISCUSSION,
         )
     except Exception as e:
         return MoveProposal(

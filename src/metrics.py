@@ -27,6 +27,21 @@ import chess
 from oracle import Oracle, MoveEval
 
 
+def _ceiling_by_round(oracle: Oracle, board: chess.Board, turn: dict) -> list[Optional[int]]:
+    """Best legal proposal, in centipawn loss, for each deliberation round.
+
+    None for a round in which no agent produced a legal move. Empty when the
+    record predates round logging.
+    """
+    out: list[Optional[int]] = []
+    for rnd in turn.get("rounds", []):
+        moves = [p.get("proposed_move") for p in rnd.get("proposals", []) if p.get("proposed_move")]
+        evals = oracle.evaluate_moves(board, moves)
+        legal = [e.cpl for e in evals.values() if e.legal]
+        out.append(min(legal) if legal else None)
+    return out
+
+
 def analyse_turn(oracle: Oracle, turn: dict) -> dict:
     """Oracle metrics for one turn of a schema-v2 game record."""
     board = chess.Board(turn["fen_before"])
@@ -96,6 +111,10 @@ def analyse_turn(oracle: Oracle, turn: dict) -> dict:
         "cpl_played": played_eval.cpl if played_eval and played_eval.legal else None,
         "played_severity": played_eval.severity if played_eval else "illegal",
         "distinct_candidates": len(set(candidate_moves)),
+        # Best idea available at each round. If agreement climbs across rounds
+        # while this does not improve, deliberation is producing conformity
+        # rather than insight — the H8 signature.
+        "ceiling_by_round": _ceiling_by_round(oracle, board, turn),
         # Centipawn loss is not on a centipawn scale once a forced mate is on
         # either side of the comparison. Flagged here so aggregates can exclude
         # these turns; win-probability severity remains valid throughout.
