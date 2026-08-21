@@ -29,6 +29,7 @@ import gzip
 import hashlib
 import io
 import random
+import zipfile
 from dataclasses import dataclass, asdict, field
 from pathlib import Path
 from typing import Iterator, Optional
@@ -82,12 +83,26 @@ class SampledPosition:
 
 
 def open_pgn(path: Path) -> io.TextIOBase:
-    """Open a PGN, transparently handling the compressions Lichess ships.
+    """Open a PGN, transparently handling the compressions the sources ship.
 
-    Lichess dumps are .zst, which needs the optional `zstandard` package; gz
-    and bz2 are stdlib. Uncompressed .pgn always works.
+    Lichess Elite ships .zip; the full Lichess dumps ship .zst, which needs the
+    optional `zstandard` package. zip, gz and bz2 are all stdlib. Uncompressed
+    .pgn always works.
+
+    Everything streams — a monthly Elite file is ~270MB of PGN uncompressed and
+    the full dumps are far larger, so nothing is read into memory whole.
     """
     suffix = path.suffix.lower()
+    if suffix == ".zip":
+        zf = zipfile.ZipFile(path)
+        members = [n for n in zf.namelist() if n.lower().endswith(".pgn")]
+        if not members:
+            raise RuntimeError(f"{path.name} contains no .pgn file")
+        if len(members) > 1:
+            raise RuntimeError(
+                f"{path.name} contains {len(members)} PGN files; extract the one you want"
+            )
+        return io.TextIOWrapper(zf.open(members[0]), encoding="utf-8", errors="replace")
     if suffix == ".bz2":
         return io.TextIOWrapper(bz2.open(path, "rb"), encoding="utf-8", errors="replace")
     if suffix == ".gz":

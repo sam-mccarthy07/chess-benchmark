@@ -14,6 +14,7 @@ import sys
 import tempfile
 import unittest
 import warnings
+import zipfile
 from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).parent.parent / "src"))
@@ -74,6 +75,9 @@ def write_pgn(path: Path, games) -> Path:
         path.write_bytes(gzip.compress(text.encode()))
     elif path.suffix == ".bz2":
         path.write_bytes(bz2.compress(text.encode()))
+    elif path.suffix == ".zip":
+        with zipfile.ZipFile(path, "w", zipfile.ZIP_DEFLATED) as zf:
+            zf.writestr("games.pgn", text)
     else:
         path.write_text(text)
     return path
@@ -87,11 +91,34 @@ class TestPgnIO(unittest.TestCase):
     def tearDown(self):
         shutil.rmtree(self.tmp, ignore_errors=True)
 
-    def test_reads_plain_gzip_and_bzip2(self):
-        for name in ("g.pgn", "g.pgn.gz", "g.pgn.bz2"):
+    def test_reads_plain_gzip_bzip2_and_zip(self):
+        # zip is the format Lichess Elite ships, so it must work natively
+        # rather than requiring a 270MB manual decompression step.
+        for name in ("g.pgn", "g.pgn.gz", "g.pgn.bz2", "g.zip"):
             path = write_pgn(self.tmp / name, self.games)
             with open_pgn(path) as fh:
                 self.assertIn("[Event", fh.read(200), f"failed for {name}")
+
+    def test_zip_without_a_pgn_member_is_rejected(self):
+        path = self.tmp / "empty.zip"
+        with zipfile.ZipFile(path, "w") as zf:
+            zf.writestr("readme.txt", "no games here")
+        with self.assertRaises(RuntimeError) as ctx:
+            open_pgn(path)
+        self.assertIn("no .pgn", str(ctx.exception))
+
+    def test_ambiguous_zip_is_rejected_rather_than_guessed(self):
+        path = self.tmp / "two.zip"
+        with zipfile.ZipFile(path, "w") as zf:
+            zf.writestr("a.pgn", "x")
+            zf.writestr("b.pgn", "y")
+        with self.assertRaises(RuntimeError) as ctx:
+            open_pgn(path)
+        self.assertIn("2 PGN files", str(ctx.exception))
+
+    def test_zip_games_parse_end_to_end(self):
+        path = write_pgn(self.tmp / "g.zip", self.games)
+        self.assertEqual(len(list(iter_games(path, min_elo=2000))), len(self.games))
 
     def test_zst_without_library_explains_itself(self):
         path = self.tmp / "g.pgn.zst"
