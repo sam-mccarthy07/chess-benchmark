@@ -37,6 +37,7 @@ from config import (
     TEMPERATURE_SUBMITTER,
     PROMPT_VERSIONS,
 )
+from throttle import get_gate
 
 # Proposal / decision status values.
 STATUS_OK = "ok"                    # parsed a move, and it is legal
@@ -315,7 +316,7 @@ Analyze the position and propose your best move."""
 
     start = time.time()
     try:
-        resp = await client.chat.completions.create(
+        resp, _attempts = await get_gate().run(lambda: client.chat.completions.create(
             model=agent.model,
             messages=[
                 {"role": "system", "content": PROPOSAL_SYSTEM},
@@ -323,7 +324,7 @@ Analyze the position and propose your best move."""
             ],
             max_tokens=MAX_TOKENS_PROPOSAL,
             temperature=TEMPERATURE_PROPOSAL,
-        )
+        ))
     except Exception as e:
         return MoveProposal(
             agent_role=agent.role,
@@ -450,7 +451,7 @@ State your move for this round."""
 
     start = time.time()
     try:
-        resp = await client.chat.completions.create(
+        resp, _attempts = await get_gate().run(lambda: client.chat.completions.create(
             model=agent.model,
             messages=[
                 {"role": "system", "content": DISCUSSION_SYSTEM},
@@ -458,7 +459,7 @@ State your move for this round."""
             ],
             max_tokens=MAX_TOKENS_DISCUSSION,
             temperature=TEMPERATURE_DISCUSSION,
-        )
+        ))
     except Exception as e:
         return (
             MoveProposal(
@@ -573,7 +574,7 @@ Select the final move for your team."""
 
     start = time.time()
     try:
-        resp = await client.chat.completions.create(
+        resp, _attempts = await get_gate().run(lambda: client.chat.completions.create(
             model=submitter.model,
             messages=[
                 {"role": "system", "content": SUBMITTER_SYSTEM},
@@ -581,7 +582,7 @@ Select the final move for your team."""
             ],
             max_tokens=MAX_TOKENS_SUBMITTER,
             temperature=TEMPERATURE_SUBMITTER,
-        )
+        ))
     except Exception as e:
         return SubmitterDecision(
             submitted_move="",

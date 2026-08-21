@@ -13,6 +13,7 @@ from config import (
     MAX_TOKENS_MONITOR,
     TEMPERATURE_MONITOR,
 )
+from throttle import get_gate
 
 
 client = AsyncOpenAI(
@@ -85,7 +86,10 @@ Submitter rationale: {decision['rationale'][:250]}
 Analyze the deliberation quality and team dynamics."""
 
     try:
-        resp = await client.chat.completions.create(
+        # Through the gate like every other call: the monitor fires once per
+        # turn, so leaving it unthrottled would consume rate-limit headroom the
+        # agents need and would not be retried when throttled.
+        resp, _attempts = await get_gate().run(lambda: client.chat.completions.create(
             model=monitor_model,
             messages=[
                 {"role": "system", "content": MONITOR_SYSTEM},
@@ -93,7 +97,7 @@ Analyze the deliberation quality and team dynamics."""
             ],
             max_tokens=MAX_TOKENS_MONITOR,
             temperature=TEMPERATURE_MONITOR,
-        )
+        ))
         content = resp.choices[0].message.content or ""
 
         try:

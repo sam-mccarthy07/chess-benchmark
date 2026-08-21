@@ -1,0 +1,39 @@
+{
+  "_comment": "Pilot config. Purpose is harness and reporting validation, NOT results. Two cells testing decision rule only, on free-tier models. See _caveats.",
+  "_caveats": {
+    "confounded": "consensus is paired with round_robin and advisory with fixed_leader, so an outcome difference cannot be attributed to either factor. This reproduces the bundling the original repo had. Acceptable here because the pilot tests plumbing, not hypotheses. Use configs/ablations.json for the crossed grid.",
+    "models": "Free-tier models are heavily rate limited and are non-reasoning or small-reasoning. LLM Chess (arXiv:2512.01992) puts this class near 71.9% instruction-following errors, so expect high illegal-move rates. For validation that is a feature: it exercises the illegal-move, false-consensus and resolution-fallback paths that good models would rarely touch.",
+    "not_for_results": "Nothing produced under this config should be reported as a finding."
+  },
+  "orgs": [
+    {
+      "id": "pilot-consensus",
+      "name": "Pilot Consensus",
+      "description": "Heterogeneous free-tier trio, consensus rule, rotating submitter",
+      "agents": [
+        {"model": "z-ai/glm-5.2:free", "role": "strategist", "persona": "aggressive attacker who prefers tactical combinations and sharp openings"},
+        {"model": "google/gemma-4-31b-it:free", "role": "analyst", "persona": "defensive player who prioritizes piece safety and solid pawn structure"},
+        {"model": "openai/gpt-oss-20b:free", "role": "critic", "persona": "balanced player who evaluates long-term positional advantages"}
+      ],
+      "deliberation_style": "consensus",
+      "submitter_rotation": "round_robin",
+      "deliberation_rounds": 2
+    },
+    {
+      "id": "pilot-advisory",
+      "name": "Pilot Advisory",
+      "description": "Same heterogeneous trio, advisory rule, fixed leader",
+      "agents": [
+        {"model": "z-ai/glm-5.2:free", "role": "leader", "persona": "experienced strategist who weighs advisor input but trusts own judgement"},
+        {"model": "google/gemma-4-31b-it:free", "role": "advisor_a", "persona": "tactical specialist focused on immediate material gain and threats"},
+        {"model": "openai/gpt-oss-20b:free", "role": "advisor_b", "persona": "positional expert who prefers strategic maneuvering and piece coordination"}
+      ],
+      "deliberation_style": "advisory",
+      "submitter_rotation": "fixed_leader",
+      "deliberation_rounds": 2
+    }
+  ],
+  "monitor_model": "google/gemma-4-26b-a4b-it:free",
+  "max_moves": 10,
+  "thinking_timeout_seconds": 60
+}

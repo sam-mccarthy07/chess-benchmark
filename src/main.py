@@ -23,7 +23,11 @@ from team import build_team
 from tournament import run_round_robin
 from leaderboard import print_leaderboard, load_all_games
 from charts import generate_all_charts
-from config import load_ablations, set_seed
+from config import (
+    load_ablations, set_seed, set_active_config,
+    REQUESTS_PER_MINUTE, MAX_CONCURRENT_CALLS,
+)
+from throttle import CallGate
 from rich.console import Console
 
 console = Console()
@@ -46,7 +50,25 @@ async def main():
                         help="Use only the first N positions (for pilots)")
     parser.add_argument("--no-swap-colors", action="store_true",
                         help="Play each position once instead of twice with colours swapped")
+    parser.add_argument("--config", type=Path, default=None,
+                        help="Org config to run (default configs/ablations.json). "
+                             "Use configs/pilot.json for the free-tier pilot.")
+    parser.add_argument("--resume", action="store_true",
+                        help="Skip position/org combinations already in results/")
+    parser.add_argument("--max-calls", type=int, default=None,
+                        help="Stop cleanly after this many API calls")
+    parser.add_argument("--rpm", type=int, default=None,
+                        help="Requests per minute ceiling (0 or omit for the config default)")
+    parser.add_argument("--concurrency", type=int, default=None,
+                        help="Maximum simultaneous API calls")
     args = parser.parse_args()
+
+    if args.config:
+        try:
+            set_active_config(args.config)
+        except FileNotFoundError as e:
+            console.print(f"[red]{e}[/red]")
+            return
 
     if args.leaderboard:
         games = load_all_games()
@@ -88,19 +110,45 @@ async def main():
             f"[bold]{len(positions)} positions from {meta['file']} "
             f"(version {meta['version']}, seed {meta['seed']})[/bold]"
         )
+        gate = CallGate(
+            per_minute=args.rpm if args.rpm else REQUESTS_PER_MINUTE,
+            max_concurrent=args.concurrency or MAX_CONCURRENT_CALLS,
+            max_calls=args.max_calls,
+        )
+        max_moves = args.moves if args.moves != 15 else config.get("max_moves", args.moves)
+        planned = len(positions) * (1 if args.no_swap_colors else 2)
+        per_game = len(orgs[0]["agents"]) * (1 + orgs[0].get("deliberation_rounds", 2)) + 1
+        console.print(
+            f"[dim]Plan: {planned} games x {max_moves*2} turns x {per_game} calls "
+            f"= ~{planned*max_moves*2*per_game:,} calls"
+            + (f" | limit {gate.limiter.per_minute}/min -> ~"
+               f"{planned*max_moves*2*per_game/gate.limiter.per_minute/60:.1f}h"
+               if gate.limiter.per_minute else "")
+            + "[/dim]"
+        )
+
         results = await run_position_series(
             white_org=orgs[0],
             black_org=orgs[1],
             positions=positions,
             position_set_meta=meta,
-            max_moves=args.moves,
+            max_moves=max_moves,
             monitor_model=config.get("monitor_model", "meta-llama/llama-3.1-8b-instruct"),
             verbose=verbose,
             seed=args.seed,
             swap_colors=not args.no_swap_colors,
+            gate=gate,
+            resume=args.resume,
         )
         print_leaderboard()
         console.print(f"\n[green]Played {len(results)} games[/green]")
+        s = gate.stats.as_dict()
+        console.print(
+            f"[dim]Calls: {s['succeeded']:,} ok, {s['failed']:,} failed, "
+            f"{s['retried']:,} needed retries ({s['retry_attempts']:,} extra attempts), "
+            f"{s['rate_limited']:,} rate-limited | {s['total_tokens']:,} tokens | "
+            f"{s['elapsed_s']:.0f}s at {s['calls_per_minute']}/min[/dim]"
+        )
         return
 
     if args.single:
