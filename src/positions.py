@@ -279,7 +279,21 @@ def sample_positions(
                 material_diff=diff,
                 source={
                     "event": game.headers.get("Event", ""),
-                    "site": game.headers.get("Site", ""),
+                    # Lichess Elite strips Site to "?" but carries LichessURL,
+                    # which is the only header that uniquely identifies the
+                    # game. Without it a position cannot be traced back to its
+                    # source, and independence cannot be audited.
+                    "game_url": (
+                        game.headers.get("LichessURL")
+                        or game.headers.get("Site", "")
+                    ),
+                    # Opening identity matters as much as game identity: 200
+                    # positions drawn from 200 distinct games are still
+                    # correlated if they are all the same opening.
+                    "eco": game.headers.get("ECO", ""),
+                    "opening": game.headers.get("Opening", ""),
+                    "time_control": game.headers.get("TimeControl", ""),
+                    "date": game.headers.get("UTCDate", "") or game.headers.get("Date", ""),
                     "white_elo": _elo(game.headers, "WhiteElo"),
                     "black_elo": _elo(game.headers, "BlackElo"),
                 },
