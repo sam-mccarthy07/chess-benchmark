@@ -76,6 +76,46 @@ Per turn, the analysis reports:
 `delta_selection` is negative only when the submitter played something nobody
 proposed that beat every proposal, so it is not clamped.
 
+## Start Positions
+
+Games start from balanced middlegame positions rather than move 1. Opening play
+is largely recall, so every agent proposes the same book move and there is no
+deliberative signal for the first twenty-odd plies — full API cost, no data. And
+a team handed a winning position is not being measured on coordination.
+
+Source PGN is not bundled; Lichess dumps are far too large to vendor.
+
+- Full monthly dumps: <https://database.lichess.org/> (very large, `.zst`)
+- Lichess Elite database: <https://database.nikonoel.fr/> (2300+ only, much smaller)
+
+`.pgn`, `.pgn.gz` and `.pgn.bz2` work out of the box. `.zst` needs
+`pip install zstandard`, or decompress first with `zstd -d`.
+
+```bash
+# Size up a source without spending engine time
+python3 src/sample_positions.py --pgn games.pgn --describe
+
+# Build a versioned set
+python3 src/sample_positions.py --pgn games.pgn --target 200 --seed 1
+```
+
+Filters apply cheapest-first — Elo floor, ply window, piece count, material
+symmetry, then the two engine gates:
+
+| Filter | Default | Why |
+| --- | --- | --- |
+| `--max-eval` | 50cp | Neither side already better. 50 rather than 0, because White's first-move advantage is worth roughly +30 to +50cp — the starting position is +44 at depth 20, so a tighter gate would select positions where White has *underperformed*. |
+| `--max-margin` | 200cp | The best move must **not** dominate the alternatives. A position with one obviously correct move has nothing to deliberate about. |
+
+At most one position is taken per source game, chosen at random within the ply
+window: positions from the same game share structure and would not be
+independent samples.
+
+Output lands in `positions/positions_<version>.json` carrying the seed,
+filters, engine provenance, source files and rejection tallies — everything
+needed to regenerate it. A position set is part of the experimental design, so
+it is versioned and released alongside results.
+
 ## Testing
 
 ```bash

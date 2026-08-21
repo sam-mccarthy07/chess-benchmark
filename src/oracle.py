@@ -90,7 +90,8 @@ class Oracle:
         self.threads = threads or ENGINE_PARAMS["threads"]
         self.hash_mb = hash_mb or ENGINE_PARAMS["hash_mb"]
         self._engine: Optional[chess.engine.SimpleEngine] = None
-        self._cache: dict[tuple[str, int], tuple[int, str]] = {}
+        self._cache: dict[tuple[str, int], tuple[int, str, bool]] = {}
+        self._multipv_cache: dict[tuple[str, int, int], list[tuple[str, int]]] = {}
         self.engine_id: str = ""
 
     def __enter__(self) -> "Oracle":
@@ -134,6 +135,45 @@ class Oracle:
         """Engine's evaluation and best move for the side to move."""
         score, best, _ = self._analyse(board)
         return score, best
+
+    def top_moves(self, board: chess.Board, n: int = 2) -> list[tuple[str, int]]:
+        """Top-n moves as (uci, cp) from the side-to-move's perspective.
+
+        Used to measure how far the best move stands clear of the alternatives.
+        A position where one move dominates has no deliberative content — there
+        is nothing for a team to disagree about — so those are filtered out of
+        the position set.
+        """
+        key = (board.fen(), self.depth, n)
+        if key in self._multipv_cache:
+            return self._multipv_cache[key]
+
+        if board.is_game_over():
+            self._multipv_cache[key] = []
+            return []
+
+        infos = self._engine.analyse(
+            board, chess.engine.Limit(depth=self.depth), multipv=n
+        )
+        out: list[tuple[str, int]] = []
+        for info in infos:
+            pv = info.get("pv") or []
+            if not pv:
+                continue
+            cp = info["score"].pov(board.turn).score(mate_score=MATE_SCORE)
+            out.append((pv[0].uci(), cp))
+        self._multipv_cache[key] = out
+        return out
+
+    def best_move_margin(self, board: chess.Board) -> Optional[int]:
+        """How many centipawns the best move beats the second-best by.
+
+        None when the position has fewer than two legal moves.
+        """
+        top = self.top_moves(board, n=2)
+        if len(top) < 2:
+            return None
+        return top[0][1] - top[1][1]
 
     def evaluate_move(self, board: chess.Board, uci: str) -> MoveEval:
         """Score a single candidate move in `board`.

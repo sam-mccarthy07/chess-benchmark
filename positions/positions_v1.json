@@ -1,0 +1,4041 @@
+{
+  "version": "v1",
+  "seed": 1,
+  "count": 200,
+  "filters": {
+    "min_elo": 2000,
+    "ply_min": 20,
+    "ply_max": 30,
+    "min_piece_count": 20,
+    "max_material_diff": 2,
+    "max_abs_eval_cp": 50,
+    "min_best_move_margin_cp": 0,
+    "max_best_move_margin_cp": 200
+  },
+  "engine_provenance": {
+    "engine_id": "Stockfish 18",
+    "depth": 20,
+    "threads": 1,
+    "hash_mb": 64,
+    "mate_score": 10000,
+    "thresholds": {
+      "blunder": 30.0,
+      "mistake": 20.0,
+      "inaccuracy": 10.0
+    }
+  },
+  "sources": [
+    "elite.zip"
+  ],
+  "sampling_stats": {
+    "games_read": 382,
+    "rejected_no_eligible_ply": 3,
+    "rejected_duplicate": 0,
+    "rejected_eval": 175,
+    "rejected_margin": 4,
+    "accepted": 200
+  },
+  "notes": "One position per source game, chosen at random within the ply window. Positions from the same game are not independent samples.",
+  "positions": [
+    {
+      "position_id": "ea454b5ed893",
+      "fen": "r3k1nr/ppbn1ppp/2p5/4p3/P3P3/3N4/1PPNKPPP/R1B4R b kq - 0 11",
+      "ply": 21,
+      "eval_cp": -44,
+      "best_move": "f7f5",
+      "best_move_margin_cp": 0,
+      "piece_count": 24,
+      "material_diff": 0,
+      "source": {
+        "event": "Rated Blitz game",
+        "game_url": "https://lichess.org/qvIjONFO",
+        "eco": "B10",
+        "opening": "Caro-Kann Defense: Endgame Variation",
+        "time_control": "180+0",
+        "date": "2025.11.01",
+        "white_elo": 2616,
+        "black_elo": 2597
+      }
+    },
+    {
+      "position_id": "8565cb7854d0",
+      "fen": "r2qk2r/3bppb1/p2p1np1/1pn4p/3NP3/1BN1BP2/PPPQ2PP/1K1R3R w kq - 2 13",
+      "ply": 24,
+      "eval_cp": 48,
+      "best_move": "h1e1",
+      "best_move_margin_cp": 11,
+      "piece_count": 28,
+      "material_diff": 0,
+      "source": {
+        "event": "Rated Blitz game",
+        "game_url": "https://lichess.org/FxH49UYt",
+        "eco": "B72",
+        "opening": "Sicilian Defense: Dragon Variation",
+        "time_control": "180+0",
+        "date": "2025.11.01",
+        "white_elo": 2568,
+        "black_elo": 2431
+      }
+    },
+    {
+      "position_id": "fcc4ad02847f",
+      "fen": "r1bq1rk1/1p2ppbp/p1np1npB/2p5/4P3/2PP2PP/PP1Q1PB1/R2NK1NR b KQ - 2 11",
+      "ply": 21,
+      "eval_cp": 19,
+      "best_move": "g7h6",
+      "best_move_margin_cp": 13,
+      "piece_count": 30,
+      "material_diff": 0,
+      "source": {
+        "event": "Rated Blitz game",
+        "game_url": "https://lichess.org/lMetLVEE",
+        "eco": "B23",
+        "opening": "Sicilian Defense: Closed",
+        "time_control": "180+0",
+        "date": "2025.11.01",
+        "white_elo": 2322,
+        "black_elo": 2504
+      }
+    },
+    {
+      "position_id": "8da36374574b",
+      "fen": "r2q1rk1/1p1nbppb/5n1p/p1pp4/3P4/PPB2NP1/3NPPBP/R1Q2RK1 b - - 0 14",
+      "ply": 27,
+      "eval_cp": 40,
+      "best_move": "b7b6",
+      "best_move_margin_cp": 18,
+      "piece_count": 28,
+      "material_diff": 0,
+      "source": {
+        "event": "Rated Blitz game",
+        "game_url": "https://lichess.org/X2OTFYnv",
+        "eco": "A01",
+        "opening": "Nimzo-Larsen Attack: Classical Variation",
+        "time_control": "180+0",
+        "date": "2025.11.01",
+        "white_elo": 2559,
+        "black_elo": 2735
+      }
+    },
+    {
+      "position_id": "0089fc2def31",
+      "fen": "rnbq1rk1/4b1pp/p2p4/3Ppp2/1p4PP/1N2BQ2/PPP2P2/2KR1B1R w - - 0 15",
+      "ply": 28,
+      "eval_cp": 28,
+      "best_move": "g4f5",
+      "best_move_margin_cp": 50,
+      "piece_count": 26,
+      "material_diff": 0,
+      "source": {
+        "event": "Rated Rapid game",
+        "game_url": "https://lichess.org/CxEnax5k",
+        "eco": "B90",
+        "opening": "Sicilian Defense: Najdorf Variation, English Attack",
+        "time_control": "480+1",
+        "date": "2025.11.01",
+        "white_elo": 3063,
+        "black_elo": 2785
+      }
+    },
+    {
+      "position_id": "3df2e8bf25ed",
+      "fen": "r3k2r/ppp1qpb1/3p1npp/1B1Pp3/4P2P/4BP2/PPPQ1P2/R3K2R b KQkq - 0 14",
+      "ply": 27,
+      "eval_cp": -37,
+      "best_move": "e8f8",
+      "best_move_margin_cp": 58,
+      "piece_count": 26,
+      "material_diff": 0,
+      "source": {
+        "event": "Rated Blitz game",
+        "game_url": "https://lichess.org/IMWz64tl",
+        "eco": "C56",
+        "opening": "Italian Game: Scotch Invitation Declined",
+        "time_control": "180+0",
+        "date": "2025.11.01",
+        "white_elo": 2440,
+        "black_elo": 2555
+      }
+    },
+    {
+      "position_id": "009ed304522c",
+      "fen": "rnb1kb1r/1p3ppp/pq2p3/1p1P4/3P4/1Q3NB1/PP3PPP/R3KB1R b KQkq - 1 11",
+      "ply": 21,
+      "eval_cp": 20,
+      "best_move": "e6d5",
+      "best_move_margin_cp": 11,
+      "piece_count": 26,
+      "material_diff": 0,
+      "source": {
+        "event": "Rated Blitz game",
+        "game_url": "https://lichess.org/b2dWjnLX",
+        "eco": "B01",
+        "opening": "Scandinavian Defense: Gubinsky-Melts Defense",
+        "time_control": "180+0",
+        "date": "2025.11.01",
+        "white_elo": 2454,
+        "black_elo": 2537
+      }
+    },
+    {
+      "position_id": "111092643788",
+      "fen": "r4rk1/1bpnqppp/1p1pp3/p7/1PPP4/P1Q1PNP1/5PBP/R4RK1 b - - 0 14",
+      "ply": 27,
+      "eval_cp": 16,
+      "best_move": "e7f6",
+      "best_move_margin_cp": 0,
+      "piece_count": 26,
+      "material_diff": 0,
+      "source": {
+        "event": "Rated Blitz game",
+        "game_url": "https://lichess.org/QkVaPTH4",
+        "eco": "A50",
+        "opening": "Queen's Indian Accelerated",
+        "time_control": "180+0",
+        "date": "2025.11.01",
+        "white_elo": 2447,
+        "black_elo": 2536
+      }
+    },
+    {
+      "position_id": "0f6ed31c1b7e",
+      "fen": "r2q1rk1/p3b1pp/bpp1pn2/3p1p2/2PP4/1PB3P1/P1QNPPBP/R4RK1 w - - 2 14",
+      "ply": 26,
+      "eval_cp": 26,
+      "best_move": "a2a4",
+      "best_move_margin_cp": 3,
+      "piece_count": 28,
+      "material_diff": 0,
+      "source": {
+        "event": "Rated Blitz game",
+        "game_url": "https://lichess.org/wcNkNIWa",
+        "eco": "E15",
+        "opening": "Queen's Indian Defense: Fianchetto Variation, Check Variation, Intermezzo Line",
+        "time_control": "180+0",
+        "date": "2025.11.01",
+        "white_elo": 2564,
+        "black_elo": 2569
+      }
+    },
+    {
+      "position_id": "cb513ee68369",
+      "fen": "r1b1k2r/ppp2p1p/2N3p1/8/4p3/2N5/PPP2PPP/3RK2R b Kkq - 0 11",
+      "ply": 21,
+      "eval_cp": -33,
+      "best_move": "b7c6",
+      "best_move_margin_cp": 184,
+      "piece_count": 20,
+      "material_diff": 2,
+      "source": {
+        "event": "Rated Blitz game",
+        "game_url": "https://lichess.org/x4gVMmTt",
+        "eco": "C60",
+        "opening": "Ruy Lopez: Fianchetto Defense",
+        "time_control": "180+1",
+        "date": "2025.11.01",
+        "white_elo": 2377,
+        "black_elo": 2952
+      }
+    },
+    {
+      "position_id": "f6dce9076456",
+      "fen": "r2qk2r/3bbpp1/p3pn2/1p2Q2p/8/2NBBP2/PPP3PP/2KR3R b kq - 1 14",
+      "ply": 27,
+      "eval_cp": -6,
+      "best_move": "d8b8",
+      "best_move_margin_cp": 16,
+      "piece_count": 24,
+      "material_diff": 0,
+      "source": {
+        "event": "Rated Blitz game",
+        "game_url": "https://lichess.org/hudby5Cb",
+        "eco": "B66",
+        "opening": "Sicilian Defense: Richter-Rauzer Variation, Neo-Modern Variation, Early Deviations",
+        "time_control": "180+0",
+        "date": "2025.11.01",
+        "white_elo": 2722,
+        "black_elo": 2611
+      }
+    },
+    {
+      "position_id": "f93d941f2ac3",
+      "fen": "r1bq1rk1/pp4bp/3p1np1/2p1pp2/2PnPP2/1PNP2P1/PB2N1BP/R2Q1RK1 b - - 0 11",
+      "ply": 21,
+      "eval_cp": 41,
+      "best_move": "e5f4",
+      "best_move_margin_cp": 59,
+      "piece_count": 30,
+      "material_diff": 0,
+      "source": {
+        "event": "Rated Blitz game",
+        "game_url": "https://lichess.org/EVFzgFJ9",
+        "eco": "A10",
+        "opening": "English Opening: Great Snake Variation",
+        "time_control": "180+0",
+        "date": "2025.11.01",
+        "white_elo": 2377,
+        "black_elo": 2524
+      }
+    },
+    {
+      "position_id": "90752033fc7a",
+      "fen": "r1bq1rk1/1p2ppbp/2np1np1/p7/2P1P3/1NN1BP2/PP2B1PP/R2QK2R w KQ - 0 15",
+      "ply": 28,
+      "eval_cp": 50,
+      "best_move": "b3d4",
+      "best_move_margin_cp": 2,
+      "piece_count": 28,
+      "material_diff": 0,
+      "source": {
+        "event": "Rated Blitz game",
+        "game_url": "https://lichess.org/sVovreI1",
+        "eco": "B38",
+        "opening": "Sicilian Defense: Accelerated Dragon, Mar\u00f3czy Bind",
+        "time_control": "180+0",
+        "date": "2025.11.01",
+        "white_elo": 2621,
+        "black_elo": 2687
+      }
+    },
+    {
+      "position_id": "b06b277d90e6",
+      "fen": "2r2rk1/pb2qppp/1ppbp3/3pN3/2PPn3/1P2P2P/PB2BPP1/2RQ1RK1 b - - 0 14",
+      "ply": 27,
+      "eval_cp": 29,
+      "best_move": "f7f6",
+      "best_move_margin_cp": 1,
+      "piece_count": 28,
+      "material_diff": 0,
+      "source": {
+        "event": "Rated Blitz game",
+        "game_url": "https://lichess.org/IXGbnsCX",
+        "eco": "A09",
+        "opening": "R\u00e9ti Opening",
+        "time_control": "180+0",
+        "date": "2025.11.01",
+        "white_elo": 2507,
+        "black_elo": 2415
+      }
+    },
+    {
+      "position_id": "107dab58efe1",
+      "fen": "1rbq1rk1/3nbppp/4p3/p2pP3/3p4/1P2BNN1/P4PPP/R2QR1K1 w - - 0 16",
+      "ply": 30,
+      "eval_cp": 5,
+      "best_move": "f3d4",
+      "best_move_margin_cp": 10,
+      "piece_count": 25,
+      "material_diff": 1,
+      "source": {
+        "event": "Rated Blitz game",
+        "game_url": "https://lichess.org/Up6V4zNe",
+        "eco": "C04",
+        "opening": "French Defense: Tarrasch Variation, Guimard Defense, Main Line",
+        "time_control": "180+2",
+        "date": "2025.11.01",
+        "white_elo": 2610,
+        "black_elo": 2430
+      }
+    },
+    {
+      "position_id": "0011f1de1f23",
+      "fen": "rn1qk2r/3bppbp/5np1/3P4/pP1P4/5N2/BP3PPP/RNBQK2R b KQkq - 0 12",
+      "ply": 23,
+      "eval_cp": -46,
+      "best_move": "b8a6",
+      "best_move_margin_cp": 34,
+      "piece_count": 26,
+      "material_diff": 2,
+      "source": {
+        "event": "Rated Rapid game",
+        "game_url": "https://lichess.org/MxTAnWUs",
+        "eco": "B27",
+        "opening": "Sicilian Defense: Hyperaccelerated Dragon",
+        "time_control": "600+1",
+        "date": "2025.11.01",
+        "white_elo": 2669,
+        "black_elo": 2446
+      }
+    },
+    {
+      "position_id": "7e3d58ce4661",
+      "fen": "3q1rk1/1p1bbppp/p2ppn2/8/P1rNP3/1PN1B2P/2PQ1PP1/R4RK1 b - - 0 15",
+      "ply": 29,
+      "eval_cp": 44,
+      "best_move": "c4c8",
+      "best_move_margin_cp": 18,
+      "piece_count": 26,
+      "material_diff": 0,
+      "source": {
+        "event": "Rated Blitz game",
+        "game_url": "https://lichess.org/mNHyMCzR",
+        "eco": "B90",
+        "opening": "Sicilian Defense: Najdorf Variation, Lipnitsky Attack",
+        "time_control": "180+2",
+        "date": "2025.11.01",
+        "white_elo": 2547,
+        "black_elo": 2538
+      }
+    },
+    {
+      "position_id": "c1c398516796",
+      "fen": "r1bq2k1/p1pnbrpp/1pp2p2/4p3/PPN1P2P/3P1N2/2PB1PP1/R2Q1RK1 b - - 0 12",
+      "ply": 23,
+      "eval_cp": 12,
+      "best_move": "c6c5",
+      "best_move_margin_cp": 0,
+      "piece_count": 28,
+      "material_diff": 0,
+      "source": {
+        "event": "Rated Blitz game",
+        "game_url": "https://lichess.org/VxkjfQBE",
+        "eco": "C65",
+        "opening": "Ruy Lopez: Berlin Defense",
+        "time_control": "180+2",
+        "date": "2025.11.01",
+        "white_elo": 2973,
+        "black_elo": 2998
+      }
+    },
+    {
+      "position_id": "2fe92c223540",
+      "fen": "r2qr1k1/1p3ppp/p4n2/2bp4/b2B4/1N1B4/PPP1QPPP/R4RK1 w - - 0 15",
+      "ply": 28,
+      "eval_cp": 8,
+      "best_move": "e2d2",
+      "best_move_margin_cp": 14,
+      "piece_count": 24,
+      "material_diff": 0,
+      "source": {
+        "event": "Rated Blitz game",
+        "game_url": "https://lichess.org/WIRYk1ua",
+        "eco": "C08",
+        "opening": "French Defense: Tarrasch Variation, Open System",
+        "time_control": "300+1",
+        "date": "2025.11.01",
+        "white_elo": 2460,
+        "black_elo": 2638
+      }
+    },
+    {
+      "position_id": "4506dba409fa",
+      "fen": "r2qkbr1/1b1n1p1p/pppppn2/8/P2NP1p1/2PP4/1PQN1PPP/R1B1RBK1 b q - 0 12",
+      "ply": 23,
+      "eval_cp": 8,
+      "best_move": "c6c5",
+      "best_move_margin_cp": 24,
+      "piece_count": 30,
+      "material_diff": 0,
+      "source": {
+        "event": "Rated Blitz game",
+        "game_url": "https://lichess.org/Qz8rVbA7",
+        "eco": "A00",
+        "opening": "Saragossa Opening",
+        "time_control": "180+0",
+        "date": "2025.11.01",
+        "white_elo": 2749,
+        "black_elo": 2695
+      }
+    },
+    {
+      "position_id": "6fc4f6a3763a",
+      "fen": "1rbq1rk1/p1n1ppbp/2np2p1/2p2PB1/2P1P3/2N3P1/PP1QN1BP/R4RK1 b - - 0 13",
+      "ply": 25,
+      "eval_cp": 2,
+      "best_move": "a7a5",
+      "best_move_margin_cp": 2,
+      "piece_count": 28,
+      "material_diff": 0,
+      "source": {
+        "event": "Rated Blitz game",
+        "game_url": "https://lichess.org/jMGdydQD",
+        "eco": "A30",
+        "opening": "English Opening: Symmetrical Variation",
+        "time_control": "180+2",
+        "date": "2025.11.01",
+        "white_elo": 2558,
+        "black_elo": 2585
+      }
+    },
+    {
+      "position_id": "92d906a94071",
+      "fen": "r2q1rk1/1n1bppbp/3p1np1/1ppP4/1P2P3/PN4P1/1B2NPBP/R2Q1RK1 b - - 4 14",
+      "ply": 27,
+      "eval_cp": -40,
+      "best_move": "d8b6",
+      "best_move_margin_cp": 13,
+      "piece_count": 28,
+      "material_diff": 0,
+      "source": {
+        "event": "Rated Blitz game",
+        "game_url": "https://lichess.org/DICcwFlV",
+        "eco": "E60",
+        "opening": "Indian Defense: King's Indian Variation, Fianchetto Variation",
+        "time_control": "180+0",
+        "date": "2025.11.01",
+        "white_elo": 2553,
+        "black_elo": 2657
+      }
+    },
+    {
+      "position_id": "1755882d35f6",
+      "fen": "r2q1rk1/pp3ppp/3b4/3p1b2/1n1Pn3/1QNB1N2/PP3PPP/R1B1R1K1 w - - 2 13",
+      "ply": 24,
+      "eval_cp": 45,
+      "best_move": "d3e4",
+      "best_move_margin_cp": 24,
+      "piece_count": 26,
+      "material_diff": 0,
+      "source": {
+        "event": "Rated Blitz game",
+        "game_url": "https://lichess.org/3VVJWa8x",
+        "eco": "C42",
+        "opening": "Petrov's Defense: Classical Attack, Staunton Variation",
+        "time_control": "180+2",
+        "date": "2025.11.01",
+        "white_elo": 2775,
+        "black_elo": 2797
+      }
+    },
+    {
+      "position_id": "2828030f9e4f",
+      "fen": "rn1q1rk1/5ppp/1p1bbn2/2pp4/3P1B2/2NB4/PP2NPPP/R2QK2R w KQ - 0 11",
+      "ply": 20,
+      "eval_cp": -22,
+      "best_move": "f4g3",
+      "best_move_margin_cp": 0,
+      "piece_count": 26,
+      "material_diff": 0,
+      "source": {
+        "event": "Rated Blitz game",
+        "game_url": "https://lichess.org/jqN0R5Oe",
+        "eco": "C01",
+        "opening": "French Defense: Exchange Variation, Monte Carlo Variation",
+        "time_control": "180+0",
+        "date": "2025.11.01",
+        "white_elo": 2559,
+        "black_elo": 2678
+      }
+    },
+    {
+      "position_id": "dbbceed22309",
+      "fen": "1r3rk1/1p1nqpbp/p2p1np1/2pP4/P7/2N1P2P/1PQBBPP1/R4RK1 b - - 4 15",
+      "ply": 29,
+      "eval_cp": -21,
+      "best_move": "f6e8",
+      "best_move_margin_cp": 11,
+      "piece_count": 26,
+      "material_diff": 0,
+      "source": {
+        "event": "Rated Rapid game",
+        "game_url": "https://lichess.org/TbvmM1vs",
+        "eco": "E60",
+        "opening": "King's Indian Defense: Normal Variation, King's Knight Variation",
+        "time_control": "600+5",
+        "date": "2025.11.01",
+        "white_elo": 2736,
+        "black_elo": 2999
+      }
+    },
+    {
+      "position_id": "ba204629dce4",
+      "fen": "r2q1rk1/p4pp1/2pb1n1p/n3p3/8/3P3P/PPP1BP1P/RNBQK2R w KQ - 1 12",
+      "ply": 22,
+      "eval_cp": 21,
+      "best_move": "b1c3",
+      "best_move_margin_cp": 19,
+      "piece_count": 25,
+      "material_diff": 1,
+      "source": {
+        "event": "Rated Blitz game",
+        "game_url": "https://lichess.org/Gm5J5oVD",
+        "eco": "C59",
+        "opening": "Italian Game: Two Knights Defense, Steinitz Variation",
+        "time_control": "180+0",
+        "date": "2025.11.01",
+        "white_elo": 2691,
+        "black_elo": 2514
+      }
+    },
+    {
+      "position_id": "1a6a1ab746bf",
+      "fen": "r1bq1rk1/4ppbp/1pp1n1p1/p1p1P3/P3N3/3P1N1P/1PP2PP1/R1BQR1K1 w - - 0 13",
+      "ply": 24,
+      "eval_cp": 17,
+      "best_move": "c1d2",
+      "best_move_margin_cp": 2,
+      "piece_count": 28,
+      "material_diff": 0,
+      "source": {
+        "event": "Rated Blitz game",
+        "game_url": "https://lichess.org/9ykljVyT",
+        "eco": "B31",
+        "opening": "Sicilian Defense: Nyezhmetdinov-Rossolimo Attack, Fianchetto Variation",
+        "time_control": "180+0",
+        "date": "2025.11.01",
+        "white_elo": 2542,
+        "black_elo": 2536
+      }
+    },
+    {
+      "position_id": "3458a0533612",
+      "fen": "r1b1kb1r/5ppp/p1p1p3/8/1n6/N7/PPP2PPP/R1BR1BK1 b kq - 1 12",
+      "ply": 23,
+      "eval_cp": -34,
+      "best_move": "a6a5",
+      "best_move_margin_cp": 27,
+      "piece_count": 22,
+      "material_diff": 0,
+      "source": {
+        "event": "Rated Blitz game",
+        "game_url": "https://lichess.org/eXn93lKW",
+        "eco": "B30",
+        "opening": "Sicilian Defense: Nyezhmetdinov-Rossolimo Attack",
+        "time_control": "180+2",
+        "date": "2025.11.01",
+        "white_elo": 2375,
+        "black_elo": 2541
+      }
+    },
+    {
+      "position_id": "ecebc66f3c7c",
+      "fen": "2rqrnk1/pp3pp1/2p1bp2/7p/1bPP4/2NBB3/PPQ2PPP/1K1R3R w - - 3 15",
+      "ply": 28,
+      "eval_cp": 31,
+      "best_move": "c3e2",
+      "best_move_margin_cp": 28,
+      "piece_count": 26,
+      "material_diff": 0,
+      "source": {
+        "event": "Rated Blitz game",
+        "game_url": "https://lichess.org/kLJ9wTpD",
+        "eco": "B15",
+        "opening": "Caro-Kann Defense: Tartakower Variation",
+        "time_control": "180+0",
+        "date": "2025.11.01",
+        "white_elo": 2626,
+        "black_elo": 2626
+      }
+    },
+    {
+      "position_id": "1deb4bf286ea",
+      "fen": "r4rk1/p3ppbp/2p3p1/q7/3PP3/4BP2/P4P1P/1R1Q1RK1 w - - 1 15",
+      "ply": 28,
+      "eval_cp": 33,
+      "best_move": "d1b3",
+      "best_move_margin_cp": 4,
+      "piece_count": 20,
+      "material_diff": 0,
+      "source": {
+        "event": "Rated Blitz game",
+        "game_url": "https://lichess.org/qzHKiRZ8",
+        "eco": "D85",
+        "opening": "Gr\u00fcnfeld Defense: Exchange Variation, Modern Exchange Variation",
+        "time_control": "180+0",
+        "date": "2025.11.01",
+        "white_elo": 2596,
+        "black_elo": 2425
+      }
+    },
+    {
+      "position_id": "69162d86b8c5",
+      "fen": "r4rk1/1pq2pbp/p1np1np1/P1p1p3/2N1P1b1/2PP1N2/1PB2PPP/R1BQR1K1 b - - 0 12",
+      "ply": 23,
+      "eval_cp": 16,
+      "best_move": "g4e6",
+      "best_move_margin_cp": 15,
+      "piece_count": 30,
+      "material_diff": 0,
+      "source": {
+        "event": "Rated Blitz game",
+        "game_url": "https://lichess.org/isxTY6Qp",
+        "eco": "B50",
+        "opening": "Sicilian Defense: Delayed Alapin Variation, with d6",
+        "time_control": "180+2",
+        "date": "2025.11.01",
+        "white_elo": 2404,
+        "black_elo": 2523
+      }
+    },
+    {
+      "position_id": "d9be7e037491",
+      "fen": "rn3rk1/pb2qpp1/1pp4p/4P3/4BP2/1Q4P1/PP5P/R1B2RK1 b - - 0 15",
+      "ply": 29,
+      "eval_cp": -23,
+      "best_move": "b8a6",
+      "best_move_margin_cp": 9,
+      "piece_count": 22,
+      "material_diff": 0,
+      "source": {
+        "event": "Rated Blitz game",
+        "game_url": "https://lichess.org/nqxdORtn",
+        "eco": "D30",
+        "opening": "Queen's Gambit Declined",
+        "time_control": "180+0",
+        "date": "2025.11.01",
+        "white_elo": 2594,
+        "black_elo": 2587
+      }
+    },
+    {
+      "position_id": "8fca186b6833",
+      "fen": "r4rk1/p1q1pp1p/1pnpbnp1/8/2PNP3/2P1BP2/P3B1PP/R2Q1RK1 w - - 4 14",
+      "ply": 26,
+      "eval_cp": 32,
+      "best_move": "d4e6",
+      "best_move_margin_cp": 1,
+      "piece_count": 26,
+      "material_diff": 0,
+      "source": {
+        "event": "Rated Blitz game",
+        "game_url": "https://lichess.org/DxuZUSkE",
+        "eco": "B38",
+        "opening": "Sicilian Defense: Accelerated Dragon, Mar\u00f3czy Bind",
+        "time_control": "180+0",
+        "date": "2025.11.01",
+        "white_elo": 2607,
+        "black_elo": 2694
+      }
+    },
+    {
+      "position_id": "469e336b9317",
+      "fen": "r3kb1r/pp1q1ppp/2n1bn2/3p2B1/3N4/2N1Q3/PP2PPPP/R3KB1R w KQkq - 6 11",
+      "ply": 20,
+      "eval_cp": 0,
+      "best_move": "g5f6",
+      "best_move_margin_cp": 30,
+      "piece_count": 26,
+      "material_diff": 0,
+      "source": {
+        "event": "Rated Rapid game",
+        "game_url": "https://lichess.org/C2XZXQnD",
+        "eco": "D41",
+        "opening": "Queen's Gambit Declined: Semi-Tarrasch Defense",
+        "time_control": "900+1",
+        "date": "2025.11.01",
+        "white_elo": 2826,
+        "black_elo": 2736
+      }
+    },
+    {
+      "position_id": "5817edb68211",
+      "fen": "r2qk2r/1b2bppp/2n1p1n1/p1pp4/P3P3/1NpPBN2/1PB1QPPP/R4RK1 w kq - 0 14",
+      "ply": 26,
+      "eval_cp": -35,
+      "best_move": "b2c3",
+      "best_move_margin_cp": 89,
+      "piece_count": 29,
+      "material_diff": 1,
+      "source": {
+        "event": "Rated Rapid game",
+        "game_url": "https://lichess.org/SGrMBdyh",
+        "eco": "B30",
+        "opening": "Sicilian Defense: Nyezhmetdinov-Rossolimo Attack",
+        "time_control": "900+3",
+        "date": "2025.11.01",
+        "white_elo": 2736,
+        "black_elo": 2827
+      }
+    },
+    {
+      "position_id": "6c9a7de38241",
+      "fen": "r4rk1/1p2qpbp/p3b1p1/4p2n/1nPpP3/3P1NP1/2QNBP1P/1RB1R1K1 w - - 0 16",
+      "ply": 30,
+      "eval_cp": -27,
+      "best_move": "c2a4",
+      "best_move_margin_cp": 5,
+      "piece_count": 27,
+      "material_diff": 1,
+      "source": {
+        "event": "Rated Blitz game",
+        "game_url": "https://lichess.org/CWBfFW6l",
+        "eco": "A00",
+        "opening": "Saragossa Opening",
+        "time_control": "180+0",
+        "date": "2025.11.01",
+        "white_elo": 2742,
+        "black_elo": 2699
+      }
+    },
+    {
+      "position_id": "6ff609b87fe6",
+      "fen": "r2qkb1r/pp1n1pp1/2p1pn1p/7P/3P4/3Q1NN1/PPPB1PP1/R3K2R w KQkq - 0 12",
+      "ply": 22,
+      "eval_cp": 37,
+      "best_move": "e1c1",
+      "best_move_margin_cp": 2,
+      "piece_count": 26,
+      "material_diff": 0,
+      "source": {
+        "event": "Rated Blitz game",
+        "game_url": "https://lichess.org/RM72jDXp",
+        "eco": "B19",
+        "opening": "Caro-Kann Defense: Classical Variation, Lobron System",
+        "time_control": "180+0",
+        "date": "2025.11.01",
+        "white_elo": 2465,
+        "black_elo": 2575
+      }
+    },
+    {
+      "position_id": "90b42bae802c",
+      "fen": "r1bqn1k1/ppp2ppp/5b2/3p4/3P1B2/2P5/PP3PPP/RN2QBK1 w - - 0 14",
+      "ply": 26,
+      "eval_cp": 26,
+      "best_move": "f1d3",
+      "best_move_margin_cp": 0,
+      "piece_count": 24,
+      "material_diff": 0,
+      "source": {
+        "event": "Rated Rapid game",
+        "game_url": "https://lichess.org/lxMgFh4t",
+        "eco": "C67",
+        "opening": "Ruy Lopez: Berlin Defense, Rio Gambit Accepted",
+        "time_control": "600+5",
+        "date": "2025.11.01",
+        "white_elo": 3001,
+        "black_elo": 3046
+      }
+    },
+    {
+      "position_id": "e8c002bc9ad7",
+      "fen": "r3qrk1/1b1p1pbp/n4np1/2pP4/P7/2N2N2/1P2BPPP/R1BQ1RK1 b - - 4 14",
+      "ply": 27,
+      "eval_cp": -23,
+      "best_move": "f6d5",
+      "best_move_margin_cp": 65,
+      "piece_count": 25,
+      "material_diff": 1,
+      "source": {
+        "event": "Rated Blitz game",
+        "game_url": "https://lichess.org/MSp3uarW",
+        "eco": "A57",
+        "opening": "Benko Gambit Accepted: Modern Variation",
+        "time_control": "180+0",
+        "date": "2025.11.01",
+        "white_elo": 2458,
+        "black_elo": 2555
+      }
+    },
+    {
+      "position_id": "8506b4e81da3",
+      "fen": "r1b1qrk1/1p2bppp/p2p4/4p1PQ/3BP3/1PN3R1/1PP2P1P/R3K3 w Q - 0 16",
+      "ply": 30,
+      "eval_cp": 17,
+      "best_move": "d4e3",
+      "best_move_margin_cp": 16,
+      "piece_count": 24,
+      "material_diff": 0,
+      "source": {
+        "event": "Rated Blitz game",
+        "game_url": "https://lichess.org/VYa73Xts",
+        "eco": "B90",
+        "opening": "Sicilian Defense: Najdorf Variation, Lipnitsky Attack",
+        "time_control": "180+0",
+        "date": "2025.11.01",
+        "white_elo": 2682,
+        "black_elo": 2608
+      }
+    },
+    {
+      "position_id": "fb0de94accea",
+      "fen": "r2qkb1r/1b1n1pp1/p3pn1p/1p1p4/P1pP4/1PP1PN1P/4BPP1/RNBQ1RK1 b kq - 0 11",
+      "ply": 21,
+      "eval_cp": 20,
+      "best_move": "b7c6",
+      "best_move_margin_cp": 0,
+      "piece_count": 30,
+      "material_diff": 0,
+      "source": {
+        "event": "Rated Rapid game",
+        "game_url": "https://lichess.org/l3ABzdMJ",
+        "eco": "A45",
+        "opening": "Indian Defense",
+        "time_control": "600+1",
+        "date": "2025.11.01",
+        "white_elo": 2802,
+        "black_elo": 2607
+      }
+    },
+    {
+      "position_id": "fdd8f76df960",
+      "fen": "r1b1k2r/p4ppp/1qp2n2/3p4/1b6/6P1/P1Q1PPBP/RNB2RK1 w kq - 0 12",
+      "ply": 22,
+      "eval_cp": -38,
+      "best_move": "c1e3",
+      "best_move_margin_cp": 3,
+      "piece_count": 23,
+      "material_diff": 1,
+      "source": {
+        "event": "Rated Blitz game",
+        "game_url": "https://lichess.org/NTc3137R",
+        "eco": "D30",
+        "opening": "Queen's Gambit Declined",
+        "time_control": "180+0",
+        "date": "2025.11.01",
+        "white_elo": 2492,
+        "black_elo": 2599
+      }
+    },
+    {
+      "position_id": "cdc7964e8423",
+      "fen": "r1bqk2r/pp3pb1/2n4p/3p2pB/8/2P1P1B1/P2N1PPP/R2QK2R b KQkq - 0 14",
+      "ply": 27,
+      "eval_cp": 35,
+      "best_move": "g7c3",
+      "best_move_margin_cp": 28,
+      "piece_count": 24,
+      "material_diff": 0,
+      "source": {
+        "event": "Rated Blitz game",
+        "game_url": "https://lichess.org/5FCTrCVk",
+        "eco": "D15",
+        "opening": "Slav Defense: Schlechter Variation",
+        "time_control": "180+0",
+        "date": "2025.11.01",
+        "white_elo": 2685,
+        "black_elo": 2450
+      }
+    },
+    {
+      "position_id": "964909835366",
+      "fen": "3rk2r/1bq1bpp1/p1nppn2/1pp5/4PPPp/3PB2P/PPP1NNB1/R2Q1RK1 b k - 4 14",
+      "ply": 27,
+      "eval_cp": 41,
+      "best_move": "d6d5",
+      "best_move_margin_cp": 76,
+      "piece_count": 30,
+      "material_diff": 0,
+      "source": {
+        "event": "Rated Blitz game",
+        "game_url": "https://lichess.org/X0lw4zHw",
+        "eco": "A00",
+        "opening": "Hungarian Opening",
+        "time_control": "180+0",
+        "date": "2025.11.01",
+        "white_elo": 2399,
+        "black_elo": 2517
+      }
+    },
+    {
+      "position_id": "8fd0f803de2b",
+      "fen": "r3kb1r/ppqb1pp1/1nn1p2p/2ppP1B1/3P4/1BP2N2/PP3PPP/RN1QR1K1 w kq - 0 11",
+      "ply": 20,
+      "eval_cp": 35,
+      "best_move": "g5e3",
+      "best_move_margin_cp": 18,
+      "piece_count": 30,
+      "material_diff": 0,
+      "source": {
+        "event": "Rated Blitz game",
+        "game_url": "https://lichess.org/aAoAgQz8",
+        "eco": "B40",
+        "opening": "Sicilian Defense: Delayed Alapin Variation, with e6",
+        "time_control": "180+0",
+        "date": "2025.11.01",
+        "white_elo": 2598,
+        "black_elo": 2551
+      }
+    },
+    {
+      "position_id": "d55bed5a0dfa",
+      "fen": "r2q1rk1/1p2bppb/2p1pn1p/p2p4/Pn2P3/1P1P1NPP/1BPN1PB1/R2QR1K1 w - - 1 13",
+      "ply": 24,
+      "eval_cp": -20,
+      "best_move": "f3e5",
+      "best_move_margin_cp": 4,
+      "piece_count": 30,
+      "material_diff": 0,
+      "source": {
+        "event": "Rated Blitz game",
+        "game_url": "https://lichess.org/wT2b702c",
+        "eco": "A07",
+        "opening": "King's Indian Attack",
+        "time_control": "180+0",
+        "date": "2025.11.01",
+        "white_elo": 2612,
+        "black_elo": 2560
+      }
+    },
+    {
+      "position_id": "81857ea33251",
+      "fen": "rnbq1rk1/4bppp/p4n2/1p2N3/2pP4/2N1P3/P3BPPP/R1BQ1RK1 w - - 4 12",
+      "ply": 22,
+      "eval_cp": 24,
+      "best_move": "e2f3",
+      "best_move_margin_cp": 39,
+      "piece_count": 26,
+      "material_diff": 0,
+      "source": {
+        "event": "Rated Blitz game",
+        "game_url": "https://lichess.org/SJrlIzul",
+        "eco": "A40",
+        "opening": "Horwitz Defense",
+        "time_control": "180+2",
+        "date": "2025.11.01",
+        "white_elo": 2312,
+        "black_elo": 2543
+      }
+    },
+    {
+      "position_id": "40d8c1a1729a",
+      "fen": "r1bqr1k1/pp3ppp/1bpp1n2/4p3/3PP3/4B1PP/PPP1NPB1/R2Q1RK1 w - - 2 12",
+      "ply": 22,
+      "eval_cp": -13,
+      "best_move": "e2c3",
+      "best_move_margin_cp": 14,
+      "piece_count": 28,
+      "material_diff": 0,
+      "source": {
+        "event": "Rated Blitz game",
+        "game_url": "https://lichess.org/nhPgG2rg",
+        "eco": "C25",
+        "opening": "Vienna Game: Paulsen Variation",
+        "time_control": "180+2",
+        "date": "2025.11.01",
+        "white_elo": 2527,
+        "black_elo": 2400
+      }
+    },
+    {
+      "position_id": "cf3eb0cdcb95",
+      "fen": "r2q1rk1/3bbpp1/2nppn1p/1pp3B1/4P3/1BPP1N2/1P2QPPP/R3RNK1 w - - 0 15",
+      "ply": 28,
+      "eval_cp": -16,
+      "best_move": "g5f4",
+      "best_move_margin_cp": 0,
+      "piece_count": 28,
+      "material_diff": 0,
+      "source": {
+        "event": "Rated Blitz game",
+        "game_url": "https://lichess.org/gouhHirN",
+        "eco": "B50",
+        "opening": "Sicilian Defense: Modern Variations",
+        "time_control": "180+0",
+        "date": "2025.11.01",
+        "white_elo": 2519,
+        "black_elo": 2604
+      }
+    },
+    {
+      "position_id": "9ad59181fb7c",
+      "fen": "r1bqr1k1/1pp2ppp/3b1nn1/p2p4/3P4/2PB1N1P/PP3PPB/R2QRNK1 w - - 1 15",
+      "ply": 28,
+      "eval_cp": 39,
+      "best_move": "f3e5",
+      "best_move_margin_cp": 9,
+      "piece_count": 28,
+      "material_diff": 0,
+      "source": {
+        "event": "Rated Blitz game",
+        "game_url": "https://lichess.org/sVu56vd8",
+        "eco": "C42",
+        "opening": "Petrov's Defense: Classical Attack",
+        "time_control": "300+1",
+        "date": "2025.11.01",
+        "white_elo": 2864,
+        "black_elo": 2996
+      }
+    },
+    {
+      "position_id": "ff7d62adcd1a",
+      "fen": "rn1q1rk1/1bp3pp/1p1pp3/p4p2/2PP4/P1Q2NP1/1P2PPBP/R4RK1 w - - 0 13",
+      "ply": 24,
+      "eval_cp": 43,
+      "best_move": "c4c5",
+      "best_move_margin_cp": 1,
+      "piece_count": 26,
+      "material_diff": 0,
+      "source": {
+        "event": "Rated Blitz game",
+        "game_url": "https://lichess.org/vyUXofjs",
+        "eco": "E20",
+        "opening": "Nimzo-Indian Defense",
+        "time_control": "180+0",
+        "date": "2025.11.01",
+        "white_elo": 2429,
+        "black_elo": 2510
+      }
+    },
+    {
+      "position_id": "9155bb6d8750",
+      "fen": "r1bq1rk1/ppp2ppp/3n1b2/3p4/3P4/2P2N2/PP3PPP/R1BQRBK1 b - - 3 13",
+      "ply": 25,
+      "eval_cp": -26,
+      "best_move": "a7a5",
+      "best_move_margin_cp": 1,
+      "piece_count": 26,
+      "material_diff": 0,
+      "source": {
+        "event": "Rated Blitz game",
+        "game_url": "https://lichess.org/qX9kEAo4",
+        "eco": "C67",
+        "opening": "Ruy Lopez: Berlin Defense, Rio Gambit Accepted",
+        "time_control": "180+2",
+        "date": "2025.11.01",
+        "white_elo": 2791,
+        "black_elo": 2942
+      }
+    },
+    {
+      "position_id": "19f0ba773735",
+      "fen": "r3r1k1/pp1nbpp1/1qp1bn1p/3pN3/3P1P1B/2PB4/PP1NQ1PP/R3R1K1 b - - 0 14",
+      "ply": 27,
+      "eval_cp": -21,
+      "best_move": "b6b2",
+      "best_move_margin_cp": 29,
+      "piece_count": 28,
+      "material_diff": 0,
+      "source": {
+        "event": "Rated Blitz game",
+        "game_url": "https://lichess.org/CzT9joNs",
+        "eco": "C01",
+        "opening": "French Defense: Exchange Variation",
+        "time_control": "180+2",
+        "date": "2025.11.01",
+        "white_elo": 2737,
+        "black_elo": 2963
+      }
+    },
+    {
+      "position_id": "64103b456a48",
+      "fen": "r1b2rk1/pp2pp1p/1q4p1/3P4/4P3/2Q5/P2BBPPP/5RK1 b - - 4 15",
+      "ply": 29,
+      "eval_cp": 0,
+      "best_move": "c8d7",
+      "best_move_margin_cp": 23,
+      "piece_count": 20,
+      "material_diff": 2,
+      "source": {
+        "event": "Rated Blitz game",
+        "game_url": "https://lichess.org/NzJHC8fO",
+        "eco": "D85",
+        "opening": "Gr\u00fcnfeld Defense: Exchange Variation, Modern Exchange Variation",
+        "time_control": "180+0",
+        "date": "2025.11.01",
+        "white_elo": 2531,
+        "black_elo": 2458
+      }
+    },
+    {
+      "position_id": "de65a3519613",
+      "fen": "r3k1nr/2q2pbp/bpp3p1/p1p1p3/P1N1P3/3P1N2/1PP2PPP/R1BQR1K1 w kq - 2 11",
+      "ply": 20,
+      "eval_cp": 49,
+      "best_move": "d1e2",
+      "best_move_margin_cp": 9,
+      "piece_count": 28,
+      "material_diff": 0,
+      "source": {
+        "event": "Rated Blitz game",
+        "game_url": "https://lichess.org/f3CEyAr0",
+        "eco": "B31",
+        "opening": "Sicilian Defense: Nyezhmetdinov-Rossolimo Attack, Fianchetto Variation",
+        "time_control": "180+0",
+        "date": "2025.11.01",
+        "white_elo": 2529,
+        "black_elo": 2447
+      }
+    },
+    {
+      "position_id": "3b15bf556459",
+      "fen": "2kr1b1r/1pp1p2p/p1b1qppn/7P/3Pp3/1PN2N2/PBP1QPP1/2KR3R w - - 0 14",
+      "ply": 26,
+      "eval_cp": 26,
+      "best_move": "h5g6",
+      "best_move_margin_cp": 3,
+      "piece_count": 27,
+      "material_diff": 1,
+      "source": {
+        "event": "Rated Blitz game",
+        "game_url": "https://lichess.org/JSpkQ637",
+        "eco": "B00",
+        "opening": "Pirc Defense",
+        "time_control": "180+0",
+        "date": "2025.11.01",
+        "white_elo": 2510,
+        "black_elo": 2406
+      }
+    },
+    {
+      "position_id": "55b7ec63c951",
+      "fen": "r2q1rk1/1pp3pp/p1nppn2/4p3/P3P3/2PPRN1P/1P3PP1/RN1Q2K1 b - - 0 12",
+      "ply": 23,
+      "eval_cp": -26,
+      "best_move": "d8d7",
+      "best_move_margin_cp": 10,
+      "piece_count": 26,
+      "material_diff": 0,
+      "source": {
+        "event": "Rated Rapid game",
+        "game_url": "https://lichess.org/uUns7eie",
+        "eco": "C54",
+        "opening": "Italian Game: Classical Variation, Giuoco Pianissimo",
+        "time_control": "600+5",
+        "date": "2025.11.01",
+        "white_elo": 3046,
+        "black_elo": 3002
+      }
+    },
+    {
+      "position_id": "cbd981d9bdaf",
+      "fen": "r1b1k2r/1p2bppp/2pp4/p1n5/2PN4/4P2P/PPB2PPB/R3K2R w KQkq - 0 16",
+      "ply": 30,
+      "eval_cp": 20,
+      "best_move": "e1c1",
+      "best_move_margin_cp": 5,
+      "piece_count": 24,
+      "material_diff": 0,
+      "source": {
+        "event": "Rated Blitz game",
+        "game_url": "https://lichess.org/kSoKeucz",
+        "eco": "A40",
+        "opening": "Queen's Pawn Game",
+        "time_control": "180+0",
+        "date": "2025.11.01",
+        "white_elo": 2726,
+        "black_elo": 2747
+      }
+    },
+    {
+      "position_id": "aa8e58edd7f7",
+      "fen": "r3k2r/1pqbbppp/p2ppn2/6B1/3QP1P1/2N2P2/PPP4P/1K1R1B1R b kq - 0 12",
+      "ply": 23,
+      "eval_cp": -41,
+      "best_move": "h7h5",
+      "best_move_margin_cp": 49,
+      "piece_count": 26,
+      "material_diff": 0,
+      "source": {
+        "event": "Rated Blitz game",
+        "game_url": "https://lichess.org/Y8PFoDIs",
+        "eco": "B67",
+        "opening": "Sicilian Defense: Richter-Rauzer Variation, Neo-Modern Variation",
+        "time_control": "180+0",
+        "date": "2025.11.01",
+        "white_elo": 2602,
+        "black_elo": 2597
+      }
+    },
+    {
+      "position_id": "e84512b5c65d",
+      "fen": "r1b2rk1/pp1nbpp1/2pp1q1p/4p3/2BPP3/2P1NN2/PP3PPP/R2QK2R w KQ - 2 11",
+      "ply": 20,
+      "eval_cp": -6,
+      "best_move": "e1g1",
+      "best_move_margin_cp": 2,
+      "piece_count": 28,
+      "material_diff": 0,
+      "source": {
+        "event": "Rated Blitz game",
+        "game_url": "https://lichess.org/YBAgxlvx",
+        "eco": "A46",
+        "opening": "Torre Attack: Classical Defense, Nimzowitsch Variation",
+        "time_control": "180+2",
+        "date": "2025.11.01",
+        "white_elo": 2482,
+        "black_elo": 2609
+      }
+    },
+    {
+      "position_id": "163b7e8040df",
+      "fen": "2rq1rk1/1b2bppp/pn1ppn2/1p4B1/3NP1PP/3B1P2/PPPQN3/1K1R3R b - - 6 14",
+      "ply": 27,
+      "eval_cp": -31,
+      "best_move": "f6d7",
+      "best_move_margin_cp": 3,
+      "piece_count": 28,
+      "material_diff": 0,
+      "source": {
+        "event": "Rated Blitz game",
+        "game_url": "https://lichess.org/UAStZZVI",
+        "eco": "B95",
+        "opening": "Sicilian Defense: Najdorf Variation",
+        "time_control": "180+0",
+        "date": "2025.11.01",
+        "white_elo": 2551,
+        "black_elo": 2687
+      }
+    },
+    {
+      "position_id": "4bea86e2201b",
+      "fen": "r1bqk2r/pp3p2/2pp2pb/5p1p/2PP1NnP/1QN1P1P1/PP3PB1/R3K2R b KQkq - 1 12",
+      "ply": 23,
+      "eval_cp": -40,
+      "best_move": "h6f4",
+      "best_move_margin_cp": 0,
+      "piece_count": 28,
+      "material_diff": 0,
+      "source": {
+        "event": "Rated Blitz game",
+        "game_url": "https://lichess.org/x6O2Z1rV",
+        "eco": "A45",
+        "opening": "Trompowsky Attack",
+        "time_control": "180+0",
+        "date": "2025.11.01",
+        "white_elo": 2385,
+        "black_elo": 2528
+      }
+    },
+    {
+      "position_id": "244ffef8d615",
+      "fen": "1r1q1rk1/1p2ppbp/p1bp1np1/8/2P1P3/1PNQ2P1/P2B1PBP/2R2RK1 b - - 0 14",
+      "ply": 27,
+      "eval_cp": -47,
+      "best_move": "b7b5",
+      "best_move_margin_cp": 19,
+      "piece_count": 26,
+      "material_diff": 0,
+      "source": {
+        "event": "Rated Blitz game",
+        "game_url": "https://lichess.org/5EiaH3zl",
+        "eco": "A39",
+        "opening": "English Opening: Symmetrical Variation, Mecking Variation",
+        "time_control": "180+0",
+        "date": "2025.11.01",
+        "white_elo": 2454,
+        "black_elo": 2544
+      }
+    },
+    {
+      "position_id": "1d9c86ee62c6",
+      "fen": "r3k2r/1p1nbppp/p1p1p3/2Pp4/1P1P4/2P3P1/3NPPKP/R1B1R3 b kq - 0 15",
+      "ply": 29,
+      "eval_cp": -50,
+      "best_move": "f7f5",
+      "best_move_margin_cp": 19,
+      "piece_count": 24,
+      "material_diff": 0,
+      "source": {
+        "event": "Rated Blitz game",
+        "game_url": "https://lichess.org/BdkykzqP",
+        "eco": "A11",
+        "opening": "English Opening: Caro-Kann Defensive System",
+        "time_control": "180+0",
+        "date": "2025.11.01",
+        "white_elo": 2671,
+        "black_elo": 2558
+      }
+    },
+    {
+      "position_id": "f6d5f5fdc4d8",
+      "fen": "r1bq1rk1/ppp1b1pp/1n1p4/3Pnp2/2P5/1PN1B3/P4PPP/2RQKBNR w K - 2 11",
+      "ply": 20,
+      "eval_cp": -6,
+      "best_move": "g1h3",
+      "best_move_margin_cp": 5,
+      "piece_count": 28,
+      "material_diff": 0,
+      "source": {
+        "event": "Rated Blitz game",
+        "game_url": "https://lichess.org/oqf9pYQu",
+        "eco": "B03",
+        "opening": "Alekhine Defense: Exchange Variation",
+        "time_control": "180+0",
+        "date": "2025.11.01",
+        "white_elo": 2522,
+        "black_elo": 2447
+      }
+    },
+    {
+      "position_id": "184f2a0b1cb4",
+      "fen": "2kr3r/Qpp2pp1/4pn2/3P1q1p/2P5/2N1bP2/PP3P1P/R2R2K1 w - - 0 16",
+      "ply": 30,
+      "eval_cp": 0,
+      "best_move": "f2e3",
+      "best_move_margin_cp": 0,
+      "piece_count": 22,
+      "material_diff": 2,
+      "source": {
+        "event": "Rated Blitz game",
+        "game_url": "https://lichess.org/6XXWrigh",
+        "eco": "B00",
+        "opening": "Nimzowitsch Defense: Declined Variation",
+        "time_control": "180+0",
+        "date": "2025.11.01",
+        "white_elo": 2539,
+        "black_elo": 2458
+      }
+    },
+    {
+      "position_id": "453e314ad903",
+      "fen": "r1k2b1r/2pb1pp1/1p5p/p1pNPn2/8/1P3N1P/PBP2PP1/3RR1K1 b - - 1 15",
+      "ply": 29,
+      "eval_cp": -34,
+      "best_move": "a5a4",
+      "best_move_margin_cp": 3,
+      "piece_count": 24,
+      "material_diff": 0,
+      "source": {
+        "event": "Rated Rapid game",
+        "game_url": "https://lichess.org/WcJJrqrO",
+        "eco": "C67",
+        "opening": "Ruy Lopez: Berlin Defense, Berlin Wall",
+        "time_control": "600+1",
+        "date": "2025.11.01",
+        "white_elo": 2785,
+        "black_elo": 3047
+      }
+    },
+    {
+      "position_id": "d4330f886a2b",
+      "fen": "r3nrk1/pb1q2pp/1p1bp3/2ppBp1Q/3P3P/2PBP3/PP1N1PP1/R3K2R w KQ - 0 14",
+      "ply": 26,
+      "eval_cp": 34,
+      "best_move": "d2f3",
+      "best_move_margin_cp": 11,
+      "piece_count": 28,
+      "material_diff": 0,
+      "source": {
+        "event": "Rated Blitz game",
+        "game_url": "https://lichess.org/ZpwJ9b6A",
+        "eco": "D02",
+        "opening": "Queen's Pawn Game: London System, with e6",
+        "time_control": "180+0",
+        "date": "2025.11.01",
+        "white_elo": 2596,
+        "black_elo": 2587
+      }
+    },
+    {
+      "position_id": "0469f9b1b3e5",
+      "fen": "r3r1k1/pp1q1pp1/2pp1n1p/5b2/2PBnN2/1P3B2/P1P2PPP/R2QR1K1 b - - 0 15",
+      "ply": 29,
+      "eval_cp": -38,
+      "best_move": "f5h7",
+      "best_move_margin_cp": 10,
+      "piece_count": 26,
+      "material_diff": 0,
+      "source": {
+        "event": "Rated Blitz game",
+        "game_url": "https://lichess.org/CFlhsT87",
+        "eco": "C42",
+        "opening": "Petrov's Defense: Three Knights Game",
+        "time_control": "180+0",
+        "date": "2025.11.01",
+        "white_elo": 2648,
+        "black_elo": 2633
+      }
+    },
+    {
+      "position_id": "d78748ed6473",
+      "fen": "r1b1r1k1/1p3pb1/3p1np1/p1nPp3/1q2P3/4BP2/PP1QB1P1/R3KNNR w KQ - 3 16",
+      "ply": 30,
+      "eval_cp": 35,
+      "best_move": "d2b4",
+      "best_move_margin_cp": 7,
+      "piece_count": 26,
+      "material_diff": 0,
+      "source": {
+        "event": "Rated Blitz game",
+        "game_url": "https://lichess.org/qDPXasW5",
+        "eco": "B06",
+        "opening": "Modern Defense",
+        "time_control": "180+2",
+        "date": "2025.11.01",
+        "white_elo": 2579,
+        "black_elo": 2461
+      }
+    },
+    {
+      "position_id": "98b14a468952",
+      "fen": "r1bqr1k1/bpp2pp1/p1np1n1p/8/2PP4/2N1B1P1/PP2NPBP/R2Q1RK1 w - - 2 12",
+      "ply": 22,
+      "eval_cp": 19,
+      "best_move": "d4d5",
+      "best_move_margin_cp": 19,
+      "piece_count": 28,
+      "material_diff": 0,
+      "source": {
+        "event": "Rated Blitz game",
+        "game_url": "https://lichess.org/lQSbzXa6",
+        "eco": "A22",
+        "opening": "English Opening: Carls-Bremen System",
+        "time_control": "180+0",
+        "date": "2025.11.01",
+        "white_elo": 2512,
+        "black_elo": 2513
+      }
+    },
+    {
+      "position_id": "8b690f85176b",
+      "fen": "r4rk1/pbqpppbp/1p4p1/2pBP3/P2n1B2/2NP1Q1P/1PP2PP1/R3R1K1 w - - 1 16",
+      "ply": 30,
+      "eval_cp": 5,
+      "best_move": "f3e4",
+      "best_move_margin_cp": 9,
+      "piece_count": 28,
+      "material_diff": 0,
+      "source": {
+        "event": "Rated Blitz game",
+        "game_url": "https://lichess.org/zsEe5FCk",
+        "eco": "B30",
+        "opening": "Sicilian Defense: Nyezhmetdinov-Rossolimo Attack",
+        "time_control": "180+0",
+        "date": "2025.11.01",
+        "white_elo": 2510,
+        "black_elo": 2548
+      }
+    },
+    {
+      "position_id": "6cdc07aff4ad",
+      "fen": "rn3rk1/pp2ppbp/3p1np1/2q5/4P3/2NB1Q1P/PPPB1PP1/2KR3R b - - 0 11",
+      "ply": 21,
+      "eval_cp": 26,
+      "best_move": "b8c6",
+      "best_move_margin_cp": 10,
+      "piece_count": 26,
+      "material_diff": 0,
+      "source": {
+        "event": "Rated Blitz game",
+        "game_url": "https://lichess.org/mjkUzQcM",
+        "eco": "B06",
+        "opening": "Pterodactyl Defense: Eastern, Pterodactyl",
+        "time_control": "180+0",
+        "date": "2025.11.01",
+        "white_elo": 2603,
+        "black_elo": 2608
+      }
+    },
+    {
+      "position_id": "30b1d7ae593d",
+      "fen": "r2q1rk1/pp3ppp/2n2n2/2bp4/6b1/1PN1PN2/PB2BPPP/R2Q1RK1 b - - 1 11",
+      "ply": 21,
+      "eval_cp": -49,
+      "best_move": "a7a6",
+      "best_move_margin_cp": 9,
+      "piece_count": 26,
+      "material_diff": 0,
+      "source": {
+        "event": "Rated Blitz game",
+        "game_url": "https://lichess.org/a48Cjy7K",
+        "eco": "A01",
+        "opening": "Nimzo-Larsen Attack: English Variation",
+        "time_control": "180+0",
+        "date": "2025.11.01",
+        "white_elo": 2562,
+        "black_elo": 2566
+      }
+    },
+    {
+      "position_id": "7f8650f2111a",
+      "fen": "r1bq1rk1/2p1bppp/p7/1p1nR3/8/1BP5/PP1P1PPP/RNBQ2K1 b - - 0 11",
+      "ply": 21,
+      "eval_cp": -24,
+      "best_move": "c7c6",
+      "best_move_margin_cp": 4,
+      "piece_count": 25,
+      "material_diff": 1,
+      "source": {
+        "event": "Rated Blitz game",
+        "game_url": "https://lichess.org/UNAXHPpq",
+        "eco": "C89",
+        "opening": "Ruy Lopez: Marshall Attack, Modern Main Line",
+        "time_control": "180+1",
+        "date": "2025.11.01",
+        "white_elo": 2534,
+        "black_elo": 2378
+      }
+    },
+    {
+      "position_id": "c69c4d18e4e4",
+      "fen": "r2qk2r/1ppn1ppp/p1pb4/4p2b/4P3/3P1N2/PPPN1PPP/R1BQ1RK1 w kq - 9 11",
+      "ply": 20,
+      "eval_cp": -40,
+      "best_move": "d2c4",
+      "best_move_margin_cp": 6,
+      "piece_count": 28,
+      "material_diff": 0,
+      "source": {
+        "event": "Rated Blitz game",
+        "game_url": "https://lichess.org/DYXuV2cd",
+        "eco": "C77",
+        "opening": "Ruy Lopez: Morphy Defense, Bayreuth Variation",
+        "time_control": "180+1",
+        "date": "2025.11.01",
+        "white_elo": 2646,
+        "black_elo": 2971
+      }
+    },
+    {
+      "position_id": "1f3e111b41f5",
+      "fen": "r3k2r/pp2p3/3p1np1/q3p1Qp/4P3/2N2P2/PPP3PP/2KR3R b kq - 1 15",
+      "ply": 29,
+      "eval_cp": -35,
+      "best_move": "e8f7",
+      "best_move_margin_cp": 52,
+      "piece_count": 22,
+      "material_diff": 0,
+      "source": {
+        "event": "Rated Blitz game",
+        "game_url": "https://lichess.org/TbGBmlyF",
+        "eco": "B72",
+        "opening": "Sicilian Defense: Dragon Variation",
+        "time_control": "180+2",
+        "date": "2025.11.01",
+        "white_elo": 2566,
+        "black_elo": 2381
+      }
+    },
+    {
+      "position_id": "fb49065ecd1b",
+      "fen": "r1bqr1k1/pppp1ppp/3n1b2/8/3P4/8/PPP2PPP/RNBQRBK1 w - - 3 11",
+      "ply": 20,
+      "eval_cp": 21,
+      "best_move": "c1f4",
+      "best_move_margin_cp": 1,
+      "piece_count": 26,
+      "material_diff": 0,
+      "source": {
+        "event": "Rated Blitz game",
+        "game_url": "https://lichess.org/bWKOqZMz",
+        "eco": "C67",
+        "opening": "Ruy Lopez: Berlin Defense, Rio Gambit Accepted",
+        "time_control": "15+5",
+        "date": "2025.11.01",
+        "white_elo": 2754,
+        "black_elo": 2993
+      }
+    },
+    {
+      "position_id": "05d4f0a81c1c",
+      "fen": "r2qkb1r/2p2ppp/p3n3/1p2P3/3n4/5N2/PP1N1PPP/R1BQ1RK1 w kq - 0 13",
+      "ply": 24,
+      "eval_cp": 39,
+      "best_move": "d2e4",
+      "best_move_margin_cp": 9,
+      "piece_count": 24,
+      "material_diff": 0,
+      "source": {
+        "event": "Rated Rapid game",
+        "game_url": "https://lichess.org/IHnuqoNs",
+        "eco": "C80",
+        "opening": "Ruy Lopez: Open, Bernstein Variation",
+        "time_control": "300+5",
+        "date": "2025.11.01",
+        "white_elo": 2655,
+        "black_elo": 2458
+      }
+    },
+    {
+      "position_id": "64cc8cb1cea2",
+      "fen": "r1bqk2r/1p2npbp/p5p1/3pp3/3BP3/P1N2P2/1PPQ2PP/2KR1B1R w kq - 0 12",
+      "ply": 22,
+      "eval_cp": 24,
+      "best_move": "d4c5",
+      "best_move_margin_cp": 68,
+      "piece_count": 26,
+      "material_diff": 0,
+      "source": {
+        "event": "Rated Blitz game",
+        "game_url": "https://lichess.org/S11q5IP1",
+        "eco": "B40",
+        "opening": "Sicilian Defense: French Variation",
+        "time_control": "180+0",
+        "date": "2025.11.01",
+        "white_elo": 2412,
+        "black_elo": 2537
+      }
+    },
+    {
+      "position_id": "81c6cdd3738f",
+      "fen": "r2qkb1r/pbp3pp/1p1p1n2/3Ppp2/2P5/P1PN2P1/4PPBP/R1BQK2R w KQkq - 0 12",
+      "ply": 22,
+      "eval_cp": -48,
+      "best_move": "e2e4",
+      "best_move_margin_cp": 21,
+      "piece_count": 28,
+      "material_diff": 0,
+      "source": {
+        "event": "Rated Blitz game",
+        "game_url": "https://lichess.org/Nh40poZH",
+        "eco": "A40",
+        "opening": "English Defense",
+        "time_control": "180+0",
+        "date": "2025.11.01",
+        "white_elo": 2544,
+        "black_elo": 2568
+      }
+    },
+    {
+      "position_id": "686d1eead7c8",
+      "fen": "r4rk1/1p1b2pp/p1nqp3/3p1p2/2PPn3/3B1N2/PP1N1PPP/R2QR1K1 w - - 2 14",
+      "ply": 26,
+      "eval_cp": 0,
+      "best_move": "a1c1",
+      "best_move_margin_cp": 9,
+      "piece_count": 26,
+      "material_diff": 0,
+      "source": {
+        "event": "Rated Blitz game",
+        "game_url": "https://lichess.org/jGxj1zaG",
+        "eco": "A40",
+        "opening": "Horwitz Defense",
+        "time_control": "180+0",
+        "date": "2025.11.01",
+        "white_elo": 2764,
+        "black_elo": 2731
+      }
+    },
+    {
+      "position_id": "85f243cae1b6",
+      "fen": "2rqnrk1/p2n1ppp/bp2p3/2ppP3/1b1P1BPP/2N1QP2/PPP1N3/2KR1B1R w - - 1 13",
+      "ply": 24,
+      "eval_cp": 25,
+      "best_move": "a2a3",
+      "best_move_margin_cp": 5,
+      "piece_count": 30,
+      "material_diff": 0,
+      "source": {
+        "event": "Rated Blitz game",
+        "game_url": "https://lichess.org/33BkdR2k",
+        "eco": "B12",
+        "opening": "Caro-Kann Defense: Mar\u00f3czy Variation",
+        "time_control": "180+0",
+        "date": "2025.11.01",
+        "white_elo": 2463,
+        "black_elo": 2601
+      }
+    },
+    {
+      "position_id": "3895bb0d6bcc",
+      "fen": "r2qkb1r/1p1npppb/1np4p/p3N3/P2P2PP/2N1P3/1P3P2/R1BQKB1R w KQkq - 1 12",
+      "ply": 22,
+      "eval_cp": -30,
+      "best_move": "e5d7",
+      "best_move_margin_cp": 11,
+      "piece_count": 28,
+      "material_diff": 0,
+      "source": {
+        "event": "Rated Blitz game",
+        "game_url": "https://lichess.org/5TQYYdUH",
+        "eco": "D17",
+        "opening": "Slav Defense: Czech Variation, Krause Attack",
+        "time_control": "180+0",
+        "date": "2025.11.01",
+        "white_elo": 2560,
+        "black_elo": 2634
+      }
+    },
+    {
+      "position_id": "bd7bc57be587",
+      "fen": "2rqk2r/p3bppp/4bn2/4p1B1/3pN3/6P1/PP2PPBP/R2Q1RK1 w k - 2 13",
+      "ply": 24,
+      "eval_cp": -20,
+      "best_move": "e4f6",
+      "best_move_margin_cp": 3,
+      "piece_count": 24,
+      "material_diff": 0,
+      "source": {
+        "event": "Rated Blitz game",
+        "game_url": "https://lichess.org/zeUCsRQx",
+        "eco": "D02",
+        "opening": "Queen's Pawn Game: Chandler Gambit",
+        "time_control": "180+0",
+        "date": "2025.11.01",
+        "white_elo": 2542,
+        "black_elo": 2687
+      }
+    },
+    {
+      "position_id": "6ffdf551f2a7",
+      "fen": "r1bq1rk1/bpp2ppp/p7/4p3/1P1nB3/P4N1P/1BPP1PP1/R2QK2R w KQ - 1 13",
+      "ply": 24,
+      "eval_cp": 8,
+      "best_move": "e1g1",
+      "best_move_margin_cp": 26,
+      "piece_count": 26,
+      "material_diff": 0,
+      "source": {
+        "event": "Rated Blitz game",
+        "game_url": "https://lichess.org/VvAitqoF",
+        "eco": "C20",
+        "opening": "King's Pawn Opening",
+        "time_control": "180+0",
+        "date": "2025.11.01",
+        "white_elo": 2516,
+        "black_elo": 2494
+      }
+    },
+    {
+      "position_id": "156becb9eaf2",
+      "fen": "rnb2rk1/p3bppp/2p1p3/7q/PpN3n1/4BNP1/1PQ1PPBP/R2R2K1 b - - 7 14",
+      "ply": 27,
+      "eval_cp": -39,
+      "best_move": "g4e3",
+      "best_move_margin_cp": 45,
+      "piece_count": 27,
+      "material_diff": 1,
+      "source": {
+        "event": "Rated Blitz game",
+        "game_url": "https://lichess.org/ToX18CMt",
+        "eco": "E05",
+        "opening": "Catalan Opening: Open Defense, Classical Line",
+        "time_control": "180+0",
+        "date": "2025.11.01",
+        "white_elo": 2532,
+        "black_elo": 2460
+      }
+    },
+    {
+      "position_id": "ad5e95e72648",
+      "fen": "2rq1rk1/p2nbppp/bpp1p3/3p3n/2PP4/4BNP1/PPQNPPBP/2RR2K1 b - - 7 13",
+      "ply": 25,
+      "eval_cp": -30,
+      "best_move": "h5f6",
+      "best_move_margin_cp": 2,
+      "piece_count": 30,
+      "material_diff": 0,
+      "source": {
+        "event": "Rated Blitz game",
+        "game_url": "https://lichess.org/lajGRRfG",
+        "eco": "E11",
+        "opening": "Bogo-Indian Defense: Retreat Variation",
+        "time_control": "180+2",
+        "date": "2025.11.01",
+        "white_elo": 2375,
+        "black_elo": 2965
+      }
+    },
+    {
+      "position_id": "e08839c5ce56",
+      "fen": "r1bqrbk1/p4ppp/2pp1n2/1pn1p3/4P3/2PP1NNP/PPB1QPP1/R1B2RK1 b - - 0 14",
+      "ply": 27,
+      "eval_cp": -42,
+      "best_move": "a7a5",
+      "best_move_margin_cp": 2,
+      "piece_count": 30,
+      "material_diff": 0,
+      "source": {
+        "event": "Rated Blitz game",
+        "game_url": "https://lichess.org/4Iq8IUpT",
+        "eco": "C50",
+        "opening": "Italian Game: Paris Defense",
+        "time_control": "180+0",
+        "date": "2025.11.01",
+        "white_elo": 2446,
+        "black_elo": 2562
+      }
+    },
+    {
+      "position_id": "0fee3fb827a9",
+      "fen": "r1bq1rk1/ppp2ppp/1n1p1b2/3Pn3/2P5/1PNBB3/P3NPPP/R2QK2R b KQ - 0 11",
+      "ply": 21,
+      "eval_cp": -32,
+      "best_move": "c8g4",
+      "best_move_margin_cp": 0,
+      "piece_count": 28,
+      "material_diff": 0,
+      "source": {
+        "event": "Rated Blitz game",
+        "game_url": "https://lichess.org/yo85vFKL",
+        "eco": "B03",
+        "opening": "Alekhine Defense: Exchange Variation",
+        "time_control": "180+0",
+        "date": "2025.11.01",
+        "white_elo": 2541,
+        "black_elo": 2462
+      }
+    },
+    {
+      "position_id": "1d1649b3f876",
+      "fen": "r4rk1/1p1n1ppb/1qp1pn1p/p1bp4/P3P3/1P1P1NP1/1BPNQPBP/R3R1K1 w - - 1 13",
+      "ply": 24,
+      "eval_cp": 44,
+      "best_move": "e4e5",
+      "best_move_margin_cp": 23,
+      "piece_count": 30,
+      "material_diff": 0,
+      "source": {
+        "event": "Rated Blitz game",
+        "game_url": "https://lichess.org/sew1i73R",
+        "eco": "A06",
+        "opening": "Nimzo-Larsen Attack: Classical Variation",
+        "time_control": "180+0",
+        "date": "2025.11.01",
+        "white_elo": 2522,
+        "black_elo": 2669
+      }
+    },
+    {
+      "position_id": "3ed98a08d1d8",
+      "fen": "r2qk2r/p3npb1/3pb2p/1pp1p1pP/2P1P3/3PN1P1/PP3PB1/R1BQK2R w KQkq - 0 14",
+      "ply": 26,
+      "eval_cp": 11,
+      "best_move": "g2h3",
+      "best_move_margin_cp": 24,
+      "piece_count": 28,
+      "material_diff": 0,
+      "source": {
+        "event": "Rated Blitz game",
+        "game_url": "https://lichess.org/wGihg84o",
+        "eco": "B25",
+        "opening": "Sicilian Defense: Closed, Botvinnik Defense, with Nge2",
+        "time_control": "180+2",
+        "date": "2025.11.01",
+        "white_elo": 2409,
+        "black_elo": 2579
+      }
+    },
+    {
+      "position_id": "591c53269ece",
+      "fen": "3qkb1r/pb3ppp/1pn1p3/2p5/2P5/PP3N2/1BP1QPPP/4KB1R w Kk - 0 14",
+      "ply": 26,
+      "eval_cp": 19,
+      "best_move": "e2e3",
+      "best_move_margin_cp": 21,
+      "piece_count": 24,
+      "material_diff": 0,
+      "source": {
+        "event": "Rated Blitz game",
+        "game_url": "https://lichess.org/hqC7aid9",
+        "eco": "B40",
+        "opening": "Sicilian Defense: French Variation, Westerinen Attack",
+        "time_control": "180+0",
+        "date": "2025.11.01",
+        "white_elo": 2444,
+        "black_elo": 2562
+      }
+    },
+    {
+      "position_id": "2aefde353c64",
+      "fen": "r2qkb1r/p2n1ppp/1p2p3/2pbP3/3P4/2P2N2/P1Q1BPPP/R1B2RK1 b kq - 1 11",
+      "ply": 21,
+      "eval_cp": -3,
+      "best_move": "a8c8",
+      "best_move_margin_cp": 5,
+      "piece_count": 26,
+      "material_diff": 0,
+      "source": {
+        "event": "Rated Blitz game",
+        "game_url": "https://lichess.org/fNYoq4E9",
+        "eco": "A50",
+        "opening": "Queen's Indian Accelerated",
+        "time_control": "180+2",
+        "date": "2025.11.01",
+        "white_elo": 2502,
+        "black_elo": 2439
+      }
+    },
+    {
+      "position_id": "95421a270874",
+      "fen": "1rbqr1k1/p1n2pbp/1p1ppnp1/P1pP4/2P1P3/2N1B3/1P1NBPPP/R2Q1RK1 w - - 1 13",
+      "ply": 24,
+      "eval_cp": 0,
+      "best_move": "a5b6",
+      "best_move_margin_cp": 20,
+      "piece_count": 30,
+      "material_diff": 0,
+      "source": {
+        "event": "Rated Blitz game",
+        "game_url": "https://lichess.org/NfpfmfPE",
+        "eco": "E73",
+        "opening": "King's Indian Defense: Semi-Averbakh System",
+        "time_control": "180+0",
+        "date": "2025.11.01",
+        "white_elo": 2627,
+        "black_elo": 2550
+      }
+    },
+    {
+      "position_id": "0b9c4e5be9e3",
+      "fen": "r2qkb1r/1p1n1p2/p2p1np1/3Pp2p/8/1N2BP2/PPPQ2PP/R3KB1R w KQkq - 0 12",
+      "ply": 22,
+      "eval_cp": 38,
+      "best_move": "e1c1",
+      "best_move_margin_cp": 1,
+      "piece_count": 26,
+      "material_diff": 0,
+      "source": {
+        "event": "Rated Rapid game",
+        "game_url": "https://lichess.org/VoLOVMjt",
+        "eco": "B90",
+        "opening": "Sicilian Defense: Najdorf Variation, English Attack",
+        "time_control": "300+5",
+        "date": "2025.11.01",
+        "white_elo": 2724,
+        "black_elo": 2906
+      }
+    },
+    {
+      "position_id": "56089955cee6",
+      "fen": "2bq1rk1/3nbppp/r1p2n2/pp6/2pPP3/P1N1BNPP/1P4BK/R2Q1R2 w - - 4 14",
+      "ply": 26,
+      "eval_cp": 19,
+      "best_move": "d1c2",
+      "best_move_margin_cp": 10,
+      "piece_count": 27,
+      "material_diff": 1,
+      "source": {
+        "event": "Rated Rapid game",
+        "game_url": "https://lichess.org/EAeHGDTi",
+        "eco": "A20",
+        "opening": "English Opening: King's English Variation",
+        "time_control": "900+3",
+        "date": "2025.11.01",
+        "white_elo": 3001,
+        "black_elo": 2804
+      }
+    },
+    {
+      "position_id": "59ea73e43fcc",
+      "fen": "r1bq1rk1/pp2ppb1/3p1npp/6B1/2PQP3/2N5/PP2BPPP/R4RK1 w - - 0 11",
+      "ply": 20,
+      "eval_cp": 41,
+      "best_move": "g5d2",
+      "best_move_margin_cp": 32,
+      "piece_count": 26,
+      "material_diff": 0,
+      "source": {
+        "event": "Rated Blitz game",
+        "game_url": "https://lichess.org/lJ6wxmRe",
+        "eco": "B36",
+        "opening": "Sicilian Defense: Accelerated Dragon, Mar\u00f3czy Bind",
+        "time_control": "180+0",
+        "date": "2025.11.01",
+        "white_elo": 2690,
+        "black_elo": 2539
+      }
+    },
+    {
+      "position_id": "ae7bfa13ce9c",
+      "fen": "rn2k2r/pp2bpp1/2p1p3/3pPn2/1P1P3p/P1PKBN1P/3N1PP1/R6R b kq - 0 14",
+      "ply": 27,
+      "eval_cp": 20,
+      "best_move": "b8d7",
+      "best_move_margin_cp": 2,
+      "piece_count": 26,
+      "material_diff": 0,
+      "source": {
+        "event": "Rated Blitz game",
+        "game_url": "https://lichess.org/wAlGX7hz",
+        "eco": "B12",
+        "opening": "Caro-Kann Defense: Advance Variation",
+        "time_control": "180+0",
+        "date": "2025.11.01",
+        "white_elo": 2454,
+        "black_elo": 2630
+      }
+    },
+    {
+      "position_id": "d088cba029fe",
+      "fen": "r1b2rk1/pp3pp1/2n1pq1p/8/1QBp4/2N1PN2/PP3PPP/2R1K2R w K - 1 12",
+      "ply": 22,
+      "eval_cp": 13,
+      "best_move": "b4a3",
+      "best_move_margin_cp": 3,
+      "piece_count": 24,
+      "material_diff": 2,
+      "source": {
+        "event": "Rated Blitz game",
+        "game_url": "https://lichess.org/gPmVvhpG",
+        "eco": "D38",
+        "opening": "Queen's Gambit Declined: Ragozin Defense",
+        "time_control": "180+1",
+        "date": "2025.11.01",
+        "white_elo": 3009,
+        "black_elo": 2895
+      }
+    },
+    {
+      "position_id": "d1bb7fc8d4ff",
+      "fen": "r1b2rk1/2q1ppbp/pp1p1np1/8/P3P3/1QPBBP2/1P2N1PP/R4RK1 b - - 2 14",
+      "ply": 27,
+      "eval_cp": -14,
+      "best_move": "f6d7",
+      "best_move_margin_cp": 6,
+      "piece_count": 26,
+      "material_diff": 0,
+      "source": {
+        "event": "Rated Blitz game",
+        "game_url": "https://lichess.org/Jg5uePfv",
+        "eco": "B23",
+        "opening": "Sicilian Defense: Closed, Traditional",
+        "time_control": "180+0",
+        "date": "2025.11.01",
+        "white_elo": 2555,
+        "black_elo": 2454
+      }
+    },
+    {
+      "position_id": "c2af3905a1dd",
+      "fen": "1k1r3r/pppb1pb1/2nppq1p/6p1/3PP3/1NN2P2/PPPQ2PP/1K1R1B1R b - - 8 12",
+      "ply": 23,
+      "eval_cp": 29,
+      "best_move": "a7a6",
+      "best_move_margin_cp": 5,
+      "piece_count": 28,
+      "material_diff": 0,
+      "source": {
+        "event": "Rated Blitz game",
+        "game_url": "https://lichess.org/vNLHyYZk",
+        "eco": "A45",
+        "opening": "Trompowsky Attack: Classical Defense, Big Center Variation",
+        "time_control": "180+0",
+        "date": "2025.11.01",
+        "white_elo": 2505,
+        "black_elo": 2594
+      }
+    },
+    {
+      "position_id": "76641380af8c",
+      "fen": "r1b2rk1/pp3ppp/2n1pn2/2b5/8/2P2NP1/P2NPPBP/R1BR2K1 w - - 1 11",
+      "ply": 20,
+      "eval_cp": 27,
+      "best_move": "d2b3",
+      "best_move_margin_cp": 4,
+      "piece_count": 24,
+      "material_diff": 0,
+      "source": {
+        "event": "Rated Blitz game",
+        "game_url": "https://lichess.org/bMY3zDVI",
+        "eco": "E04",
+        "opening": "Catalan Opening: Open Defense",
+        "time_control": "180+0",
+        "date": "2025.11.01",
+        "white_elo": 2567,
+        "black_elo": 2663
+      }
+    },
+    {
+      "position_id": "a1c3fdbbbd6b",
+      "fen": "r3k2r/ppq1bp1p/2n1b3/5p2/4p3/1NP3P1/P2NPPBP/1R1Q1RK1 w kq - 2 16",
+      "ply": 30,
+      "eval_cp": -12,
+      "best_move": "b3d4",
+      "best_move_margin_cp": 13,
+      "piece_count": 24,
+      "material_diff": 0,
+      "source": {
+        "event": "Rated Blitz game",
+        "game_url": "https://lichess.org/7bV7RpJP",
+        "eco": "D02",
+        "opening": "Queen's Pawn Game: Krause Variation",
+        "time_control": "180+0",
+        "date": "2025.11.01",
+        "white_elo": 2535,
+        "black_elo": 2694
+      }
+    },
+    {
+      "position_id": "4cb54f96b5d4",
+      "fen": "r2q1rk1/pp2ppbp/3pbnp1/8/2PBP3/2N2P2/PP1Q2PP/R3KB1R w KQ - 1 11",
+      "ply": 20,
+      "eval_cp": 31,
+      "best_move": "f1e2",
+      "best_move_margin_cp": 8,
+      "piece_count": 26,
+      "material_diff": 0,
+      "source": {
+        "event": "Rated Blitz game",
+        "game_url": "https://lichess.org/Kz1oE08L",
+        "eco": "B36",
+        "opening": "Sicilian Defense: Accelerated Dragon, Mar\u00f3czy Bind",
+        "time_control": "180+0",
+        "date": "2025.11.01",
+        "white_elo": 2686,
+        "black_elo": 2543
+      }
+    },
+    {
+      "position_id": "405063d07e59",
+      "fen": "r4rk1/pbq1npbp/2npp1p1/1pp5/4P3/1BPP1N1P/PP1NQPP1/R1B1R1K1 w - - 4 12",
+      "ply": 22,
+      "eval_cp": -32,
+      "best_move": "d3d4",
+      "best_move_margin_cp": 10,
+      "piece_count": 30,
+      "material_diff": 0,
+      "source": {
+        "event": "Rated Blitz game",
+        "game_url": "https://lichess.org/Bw8qVznh",
+        "eco": "B50",
+        "opening": "Sicilian Defense: Modern Variations",
+        "time_control": "180+0",
+        "date": "2025.11.01",
+        "white_elo": 2512,
+        "black_elo": 2540
+      }
+    },
+    {
+      "position_id": "dff9bdf969c0",
+      "fen": "rnb1r1k1/pp2bppp/2p5/3p1n2/3P4/1BP2N2/PP2NPPP/R1B2RK1 b - - 2 12",
+      "ply": 23,
+      "eval_cp": 2,
+      "best_move": "a7a5",
+      "best_move_margin_cp": 6,
+      "piece_count": 26,
+      "material_diff": 0,
+      "source": {
+        "event": "Rated Blitz game",
+        "game_url": "https://lichess.org/kJ03lQfg",
+        "eco": "C27",
+        "opening": "Vienna Game: Frankenstein-Dracula Variation",
+        "time_control": "180+0",
+        "date": "2025.11.01",
+        "white_elo": 2552,
+        "black_elo": 2841
+      }
+    },
+    {
+      "position_id": "03f9f38b70f0",
+      "fen": "r1bqk2r/5pbp/p1np1p2/1p1Np3/4P3/N7/PPP2PPP/R2QKB1R w KQkq - 2 11",
+      "ply": 20,
+      "eval_cp": 31,
+      "best_move": "f1d3",
+      "best_move_margin_cp": 18,
+      "piece_count": 26,
+      "material_diff": 0,
+      "source": {
+        "event": "Rated Blitz game",
+        "game_url": "https://lichess.org/hsz1g98V",
+        "eco": "B33",
+        "opening": "Sicilian Defense: Lasker-Pelikan Variation, Sveshnikov Variation, Novosibirsk Variation",
+        "time_control": "180+2",
+        "date": "2025.11.01",
+        "white_elo": 2413,
+        "black_elo": 2564
+      }
+    },
+    {
+      "position_id": "6f5f40a867b4",
+      "fen": "r1bq1rk1/p3ppbp/1pn3p1/8/3P1n2/2N1pN2/PPP1B1PP/R1BQ1RK1 w - - 0 13",
+      "ply": 24,
+      "eval_cp": -44,
+      "best_move": "c1e3",
+      "best_move_margin_cp": 111,
+      "piece_count": 27,
+      "material_diff": 1,
+      "source": {
+        "event": "Rated Rapid game",
+        "game_url": "https://lichess.org/5vhqnyV2",
+        "eco": "A03",
+        "opening": "Bird Opening: Dutch Variation",
+        "time_control": "480+1",
+        "date": "2025.11.01",
+        "white_elo": 3011,
+        "black_elo": 3049
+      }
+    },
+    {
+      "position_id": "76c0a838fb87",
+      "fen": "r1b1nrk1/1pp1qpbp/6p1/p3p3/PnNpP3/BP1P1NP1/2P2PBP/R2QR1K1 w - - 2 13",
+      "ply": 24,
+      "eval_cp": 26,
+      "best_move": "d1d2",
+      "best_move_margin_cp": 39,
+      "piece_count": 30,
+      "material_diff": 0,
+      "source": {
+        "event": "Rated Blitz game",
+        "game_url": "https://lichess.org/MTOOLnUO",
+        "eco": "A05",
+        "opening": "King's Indian Attack: Symmetrical Defense",
+        "time_control": "180+2",
+        "date": "2025.11.01",
+        "white_elo": 2511,
+        "black_elo": 2487
+      }
+    },
+    {
+      "position_id": "fe1c600577ea",
+      "fen": "1rbqr1k1/p1pn1ppp/2pp1b2/8/4PB2/1BN2Q1P/PPP2PP1/R4RK1 w - - 6 13",
+      "ply": 24,
+      "eval_cp": 25,
+      "best_move": "f1e1",
+      "best_move_margin_cp": 13,
+      "piece_count": 26,
+      "material_diff": 0,
+      "source": {
+        "event": "Rated Rapid game",
+        "game_url": "https://lichess.org/xZBL84X5",
+        "eco": "C41",
+        "opening": "Philidor Defense: Exchange Variation",
+        "time_control": "600+2",
+        "date": "2025.11.01",
+        "white_elo": 2605,
+        "black_elo": 2614
+      }
+    },
+    {
+      "position_id": "065fa4b36000",
+      "fen": "r1b2rk1/pppqbppp/8/nP2p3/2P5/3P1N2/P4PPP/RNBQ1RK1 w - - 1 12",
+      "ply": 22,
+      "eval_cp": -44,
+      "best_move": "c1d2",
+      "best_move_margin_cp": 7,
+      "piece_count": 26,
+      "material_diff": 0,
+      "source": {
+        "event": "Rated Rapid game",
+        "game_url": "https://lichess.org/tCMeMfQY",
+        "eco": "C53",
+        "opening": "Italian Game: Bird's Attack",
+        "time_control": "300+10",
+        "date": "2025.11.01",
+        "white_elo": 2737,
+        "black_elo": 2825
+      }
+    },
+    {
+      "position_id": "3ac63af987e3",
+      "fen": "r2k3r/pppn1ppp/8/4P3/1b2P1b1/2NB4/PPP3PP/R1B1K2R w KQ - 1 11",
+      "ply": 20,
+      "eval_cp": 21,
+      "best_move": "c1f4",
+      "best_move_margin_cp": 22,
+      "piece_count": 23,
+      "material_diff": 1,
+      "source": {
+        "event": "Rated Blitz game",
+        "game_url": "https://lichess.org/cU1jLaUv",
+        "eco": "B00",
+        "opening": "Pirc Defense",
+        "time_control": "180+0",
+        "date": "2025.11.01",
+        "white_elo": 2532,
+        "black_elo": 2654
+      }
+    },
+    {
+      "position_id": "be9c8e8ff407",
+      "fen": "r1bq1rk1/3n2pp/2pb1n2/p2p1p2/2PPpP2/2N1P2P/PBQNB1P1/2KR3R w - - 0 15",
+      "ply": 28,
+      "eval_cp": -3,
+      "best_move": "g2g4",
+      "best_move_margin_cp": 21,
+      "piece_count": 28,
+      "material_diff": 0,
+      "source": {
+        "event": "Rated Blitz game",
+        "game_url": "https://lichess.org/OaVbu9tH",
+        "eco": "A01",
+        "opening": "Nimzo-Larsen Attack: Modern Variation",
+        "time_control": "180+0",
+        "date": "2025.11.01",
+        "white_elo": 2656,
+        "black_elo": 2721
+      }
+    },
+    {
+      "position_id": "129a98465b4e",
+      "fen": "r2q1rk1/1bpn1pbp/1p1p1np1/pP2p3/2PP4/4PN2/PB1NBPPP/R2Q1RK1 w - - 0 11",
+      "ply": 20,
+      "eval_cp": 20,
+      "best_move": "d4e5",
+      "best_move_margin_cp": 6,
+      "piece_count": 30,
+      "material_diff": 0,
+      "source": {
+        "event": "Rated Blitz game",
+        "game_url": "https://lichess.org/1Wxl0za6",
+        "eco": "A00",
+        "opening": "Van't Kruijs Opening",
+        "time_control": "180+0",
+        "date": "2025.11.01",
+        "white_elo": 2575,
+        "black_elo": 2457
+      }
+    },
+    {
+      "position_id": "986c158450a5",
+      "fen": "r1b2rk1/p4pbp/nq1p1np1/3Pp3/1P2P3/B4NP1/N4PBP/R2QR1K1 b - - 0 15",
+      "ply": 29,
+      "eval_cp": 22,
+      "best_move": "c8d7",
+      "best_move_margin_cp": 17,
+      "piece_count": 26,
+      "material_diff": 0,
+      "source": {
+        "event": "Rated Blitz game",
+        "game_url": "https://lichess.org/7nhqxLmn",
+        "eco": "E62",
+        "opening": "King's Indian Defense: Fianchetto Variation, Kavalek Defense",
+        "time_control": "180+0",
+        "date": "2025.11.01",
+        "white_elo": 2468,
+        "black_elo": 2520
+      }
+    },
+    {
+      "position_id": "9f233d8075b9",
+      "fen": "r1bqrnk1/ppb2ppp/2p2p2/8/2PP4/3BB3/PPQ1NPPP/3R1RK1 b - - 4 12",
+      "ply": 23,
+      "eval_cp": -32,
+      "best_move": "c8g4",
+      "best_move_margin_cp": 20,
+      "piece_count": 26,
+      "material_diff": 0,
+      "source": {
+        "event": "Rated Blitz game",
+        "game_url": "https://lichess.org/K3Kscjn2",
+        "eco": "B15",
+        "opening": "Caro-Kann Defense: Tartakower Variation",
+        "time_control": "180+0",
+        "date": "2025.11.01",
+        "white_elo": 2556,
+        "black_elo": 2599
+      }
+    },
+    {
+      "position_id": "6d416ff88da9",
+      "fen": "rn2k2r/pp2bpp1/q1p1p3/3pPn1p/2PP3P/1P1Q1N2/P2N1PP1/R1B2RK1 w kq - 1 12",
+      "ply": 22,
+      "eval_cp": 45,
+      "best_move": "a2a4",
+      "best_move_margin_cp": 23,
+      "piece_count": 28,
+      "material_diff": 0,
+      "source": {
+        "event": "Rated Blitz game",
+        "game_url": "https://lichess.org/LRPBGKpn",
+        "eco": "B12",
+        "opening": "Caro-Kann Defense: Advance Variation, Tal Variation",
+        "time_control": "180+0",
+        "date": "2025.11.01",
+        "white_elo": 2438,
+        "black_elo": 2592
+      }
+    },
+    {
+      "position_id": "8663c088e56a",
+      "fen": "r1bq1rk1/pppn2b1/3p2p1/3P4/2P2p2/2N1B2P/PP1Q1P2/2KR1B1R w - - 0 16",
+      "ply": 30,
+      "eval_cp": 30,
+      "best_move": "e3f4",
+      "best_move_margin_cp": 22,
+      "piece_count": 24,
+      "material_diff": 0,
+      "source": {
+        "event": "Rated Rapid game",
+        "game_url": "https://lichess.org/USltNYiw",
+        "eco": "E60",
+        "opening": "King's Indian Defense: Normal Variation, King's Knight Variation",
+        "time_control": "600+3",
+        "date": "2025.11.01",
+        "white_elo": 2845,
+        "black_elo": 2995
+      }
+    },
+    {
+      "position_id": "29d611b002e7",
+      "fen": "1r1qk2r/p1p2ppp/2p5/3p1b2/Q1P5/B1b3P1/P3PPBP/R4RK1 b k - 1 13",
+      "ply": 25,
+      "eval_cp": -16,
+      "best_move": "c3a1",
+      "best_move_margin_cp": 156,
+      "piece_count": 23,
+      "material_diff": 1,
+      "source": {
+        "event": "Rated Blitz game",
+        "game_url": "https://lichess.org/TgoQFxjE",
+        "eco": "A28",
+        "opening": "English Opening: King's English Variation, Four Knights Variation",
+        "time_control": "180+0",
+        "date": "2025.11.01",
+        "white_elo": 2646,
+        "black_elo": 2539
+      }
+    },
+    {
+      "position_id": "0b977172b398",
+      "fen": "rnbq1rk1/p4pp1/1p2pn1p/8/1b1P4/2NB1N2/PP3PPP/R1BQ1RK1 w - - 0 11",
+      "ply": 20,
+      "eval_cp": -9,
+      "best_move": "c1f4",
+      "best_move_margin_cp": 1,
+      "piece_count": 26,
+      "material_diff": 0,
+      "source": {
+        "event": "Rated Blitz game",
+        "game_url": "https://lichess.org/w0PkIJyJ",
+        "eco": "C07",
+        "opening": "French Defense: Tarrasch Variation, Open System, S\u00fcchting Line",
+        "time_control": "180+2",
+        "date": "2025.11.01",
+        "white_elo": 2607,
+        "black_elo": 2755
+      }
+    },
+    {
+      "position_id": "a81300f43aa5",
+      "fen": "2rq1rk1/1b1nbpp1/p1p1pn1p/1p6/3P3B/2N1PN2/PPQ1BPPP/R2R2K1 w - - 4 14",
+      "ply": 26,
+      "eval_cp": 47,
+      "best_move": "f3e5",
+      "best_move_margin_cp": 51,
+      "piece_count": 28,
+      "material_diff": 0,
+      "source": {
+        "event": "Rated Classical game",
+        "game_url": "https://lichess.org/IzCL9VkV",
+        "eco": "D43",
+        "opening": "Semi-Slav Defense",
+        "time_control": "1800+2",
+        "date": "2025.11.01",
+        "white_elo": 2836,
+        "black_elo": 2704
+      }
+    },
+    {
+      "position_id": "4e1d2dea90fc",
+      "fen": "r4rk1/1pqn1ppp/p1pbbn2/3p2B1/1P1P4/2NBPN2/P1Q2PPP/1R3RK1 b - - 0 12",
+      "ply": 23,
+      "eval_cp": 0,
+      "best_move": "h7h6",
+      "best_move_margin_cp": 8,
+      "piece_count": 28,
+      "material_diff": 0,
+      "source": {
+        "event": "Rated Blitz game",
+        "game_url": "https://lichess.org/jMfKTp8q",
+        "eco": "D37",
+        "opening": "Queen's Gambit Declined: Three Knights Variation",
+        "time_control": "180+0",
+        "date": "2025.11.01",
+        "white_elo": 2700,
+        "black_elo": 2516
+      }
+    },
+    {
+      "position_id": "6df4cb4e8629",
+      "fen": "r2qr1k1/pb1n1ppp/1p1p1n2/2pPp3/2P1P3/2PB4/P2N1PPP/R1BQ1RK1 b - - 2 13",
+      "ply": 25,
+      "eval_cp": -45,
+      "best_move": "b7c8",
+      "best_move_margin_cp": 5,
+      "piece_count": 28,
+      "material_diff": 0,
+      "source": {
+        "event": "Rated Blitz game",
+        "game_url": "https://lichess.org/wjTwsS24",
+        "eco": "E21",
+        "opening": "Nimzo-Indian Defense: Three Knights Variation",
+        "time_control": "180+1",
+        "date": "2025.11.01",
+        "white_elo": 2969,
+        "black_elo": 2644
+      }
+    },
+    {
+      "position_id": "f053dbe487e8",
+      "fen": "r4rk1/pp2ppbp/4b1p1/n1p5/2P3n1/1PN1BNP1/P3PPBP/R4RK1 w - - 1 13",
+      "ply": 24,
+      "eval_cp": 31,
+      "best_move": "e3d2",
+      "best_move_margin_cp": 105,
+      "piece_count": 26,
+      "material_diff": 0,
+      "source": {
+        "event": "Rated Blitz game",
+        "game_url": "https://lichess.org/iSawIo2o",
+        "eco": "E65",
+        "opening": "King's Indian Defense: Fianchetto Variation, Yugoslav Variation, Exchange Line",
+        "time_control": "180+0",
+        "date": "2025.11.01",
+        "white_elo": 2595,
+        "black_elo": 2550
+      }
+    },
+    {
+      "position_id": "0dfe2edd3546",
+      "fen": "r1b2rk1/1p1n1ppp/p3p3/1n6/8/4P3/PB2BPPP/2R1K1NR w K - 4 16",
+      "ply": 30,
+      "eval_cp": -13,
+      "best_move": "e2f3",
+      "best_move_margin_cp": 2,
+      "piece_count": 21,
+      "material_diff": 1,
+      "source": {
+        "event": "Rated Blitz game",
+        "game_url": "https://lichess.org/MEvUBhs0",
+        "eco": "D50",
+        "opening": "Queen's Gambit Declined: Modern Variation",
+        "time_control": "180+2",
+        "date": "2025.11.01",
+        "white_elo": 2544,
+        "black_elo": 2688
+      }
+    },
+    {
+      "position_id": "79aaf4741009",
+      "fen": "r1bqn1k1/ppp2ppp/5b2/3p4/3P1B2/2P5/PP1N1PPP/R3QBK1 b - - 1 14",
+      "ply": 27,
+      "eval_cp": -21,
+      "best_move": "c8f5",
+      "best_move_margin_cp": 3,
+      "piece_count": 24,
+      "material_diff": 0,
+      "source": {
+        "event": "Rated Blitz game",
+        "game_url": "https://lichess.org/KIoHWtnf",
+        "eco": "C67",
+        "opening": "Ruy Lopez: Berlin Defense, Rio Gambit Accepted",
+        "time_control": "300+3",
+        "date": "2025.11.01",
+        "white_elo": 2965,
+        "black_elo": 2947
+      }
+    },
+    {
+      "position_id": "5f835ea597f5",
+      "fen": "2rq1rk1/p3bppp/1pn2n2/3p4/2PP1P2/6P1/PB2NPBP/R2Q1RK1 b - - 0 14",
+      "ply": 27,
+      "eval_cp": 1,
+      "best_move": "d5c4",
+      "best_move_margin_cp": 121,
+      "piece_count": 25,
+      "material_diff": 1,
+      "source": {
+        "event": "Rated Blitz game",
+        "game_url": "https://lichess.org/S5mdrH5d",
+        "eco": "A01",
+        "opening": "Nimzo-Larsen Attack: English Variation",
+        "time_control": "180+0",
+        "date": "2025.11.01",
+        "white_elo": 2726,
+        "black_elo": 2529
+      }
+    },
+    {
+      "position_id": "f822e62ac00a",
+      "fen": "r1b1k2r/pp2nppp/8/3qP3/4p3/2B5/PP3PPP/R2QKB1R w KQkq - 1 12",
+      "ply": 22,
+      "eval_cp": 30,
+      "best_move": "f1e2",
+      "best_move_margin_cp": 3,
+      "piece_count": 22,
+      "material_diff": 0,
+      "source": {
+        "event": "Rated Blitz game",
+        "game_url": "https://lichess.org/Qh41FPo5",
+        "eco": "B21",
+        "opening": "Sicilian Defense: Smith-Morra Gambit",
+        "time_control": "180+0",
+        "date": "2025.11.01",
+        "white_elo": 2366,
+        "black_elo": 2513
+      }
+    },
+    {
+      "position_id": "ccf3f3e640de",
+      "fen": "2r1kb1r/1p1n1ppp/p1p5/2Ppp1B1/1P1P4/4PP1P/1P3P2/R3KB1R w KQk - 0 14",
+      "ply": 26,
+      "eval_cp": 0,
+      "best_move": "d4e5",
+      "best_move_margin_cp": 9,
+      "piece_count": 24,
+      "material_diff": 0,
+      "source": {
+        "event": "Rated Blitz game",
+        "game_url": "https://lichess.org/cDGAOWcI",
+        "eco": "A45",
+        "opening": "Trompowsky Attack",
+        "time_control": "180+0",
+        "date": "2025.11.01",
+        "white_elo": 2490,
+        "black_elo": 2506
+      }
+    },
+    {
+      "position_id": "7b24cb2fd912",
+      "fen": "r1k2b1r/pp1n1ppp/2p1b3/4p1B1/B3P1n1/2N2N2/PPP2PPP/2KR3R w - - 2 11",
+      "ply": 20,
+      "eval_cp": 0,
+      "best_move": "d1d2",
+      "best_move_margin_cp": 18,
+      "piece_count": 26,
+      "material_diff": 0,
+      "source": {
+        "event": "Rated Blitz game",
+        "game_url": "https://lichess.org/FoWcP10B",
+        "eco": "B00",
+        "opening": "Pirc Defense",
+        "time_control": "180+0",
+        "date": "2025.11.01",
+        "white_elo": 2549,
+        "black_elo": 2639
+      }
+    },
+    {
+      "position_id": "f6ab4c5baa0c",
+      "fen": "2rq1rk1/1b1nppb1/p2p1np1/1p5p/3NP2P/2NBBP2/PPPQ2P1/1K1RR3 w - - 1 14",
+      "ply": 26,
+      "eval_cp": 0,
+      "best_move": "g2g4",
+      "best_move_margin_cp": 6,
+      "piece_count": 28,
+      "material_diff": 0,
+      "source": {
+        "event": "Rated Blitz game",
+        "game_url": "https://lichess.org/eaeGlTmG",
+        "eco": "B90",
+        "opening": "Sicilian Defense: Najdorf Variation, English Attack",
+        "time_control": "180+0",
+        "date": "2025.11.01",
+        "white_elo": 2538,
+        "black_elo": 2565
+      }
+    },
+    {
+      "position_id": "1a182b2631ea",
+      "fen": "r1bqnrk1/pppp1ppp/8/2bPR3/8/8/PPP2PPP/RNBQ1BK1 w - - 1 11",
+      "ply": 20,
+      "eval_cp": 33,
+      "best_move": "e5e1",
+      "best_move_margin_cp": 26,
+      "piece_count": 26,
+      "material_diff": 0,
+      "source": {
+        "event": "Rated Blitz game",
+        "game_url": "https://lichess.org/tYSwKXwo",
+        "eco": "C67",
+        "opening": "Ruy Lopez: Berlin Defense, Rio Gambit Accepted",
+        "time_control": "180+5",
+        "date": "2025.11.01",
+        "white_elo": 2993,
+        "black_elo": 2688
+      }
+    },
+    {
+      "position_id": "af4faeb963cf",
+      "fen": "r1b2rk1/ppq2ppp/2n2n2/3p4/P1pP4/2PBPN2/5PPP/R1BQ1RK1 w - - 0 12",
+      "ply": 22,
+      "eval_cp": 6,
+      "best_move": "d3c2",
+      "best_move_margin_cp": 2,
+      "piece_count": 26,
+      "material_diff": 0,
+      "source": {
+        "event": "Rated Blitz game",
+        "game_url": "https://lichess.org/oRp11R4k",
+        "eco": "E58",
+        "opening": "Nimzo-Indian Defense: Normal Variation, Bernstein Defense, Exchange Line",
+        "time_control": "180+2",
+        "date": "2025.11.01",
+        "white_elo": 2372,
+        "black_elo": 2538
+      }
+    },
+    {
+      "position_id": "ccf2a3ae22d7",
+      "fen": "r3kb1r/pp1qpppp/1n6/8/3P4/8/PP3PPP/RNBQ1RK1 w kq - 1 13",
+      "ply": 24,
+      "eval_cp": -9,
+      "best_move": "b1c3",
+      "best_move_margin_cp": 1,
+      "piece_count": 22,
+      "material_diff": 0,
+      "source": {
+        "event": "Rated Rapid game",
+        "game_url": "https://lichess.org/QXMbDR7y",
+        "eco": "B22",
+        "opening": "Sicilian Defense: Alapin Variation",
+        "time_control": "300+5",
+        "date": "2025.11.01",
+        "white_elo": 2737,
+        "black_elo": 2906
+      }
+    },
+    {
+      "position_id": "03a187a20ab6",
+      "fen": "rn3rk1/pb2q1pp/1p1ppb2/2P2p2/2P1n3/P1N2NP1/1PQ1PPBP/2R1BRK1 b - - 0 13",
+      "ply": 25,
+      "eval_cp": 46,
+      "best_move": "d6c5",
+      "best_move_margin_cp": 19,
+      "piece_count": 29,
+      "material_diff": 1,
+      "source": {
+        "event": "Rated Blitz game",
+        "game_url": "https://lichess.org/r1eCBcLl",
+        "eco": "A40",
+        "opening": "English Defense",
+        "time_control": "180+0",
+        "date": "2025.11.01",
+        "white_elo": 2550,
+        "black_elo": 2563
+      }
+    },
+    {
+      "position_id": "2a2638a5d0a6",
+      "fen": "r2r2k1/1bqnbppp/pp2pn2/2p5/2P5/2N1PNP1/PB1PQPBP/2RR2K1 w - - 6 14",
+      "ply": 26,
+      "eval_cp": 22,
+      "best_move": "d2d3",
+      "best_move_margin_cp": 3,
+      "piece_count": 28,
+      "material_diff": 0,
+      "source": {
+        "event": "Rated Blitz game",
+        "game_url": "https://lichess.org/3sSMUM3D",
+        "eco": "A13",
+        "opening": "English Opening: Agincourt Defense",
+        "time_control": "180+0",
+        "date": "2025.11.01",
+        "white_elo": 2643,
+        "black_elo": 2526
+      }
+    },
+    {
+      "position_id": "5da92b5819cd",
+      "fen": "r1b1kb1r/ppq2ppp/4p1n1/8/3p4/3P1QP1/PP3PBP/RNB2RK1 w kq - 0 12",
+      "ply": 22,
+      "eval_cp": -7,
+      "best_move": "h2h4",
+      "best_move_margin_cp": 6,
+      "piece_count": 25,
+      "material_diff": 1,
+      "source": {
+        "event": "Rated Blitz game",
+        "game_url": "https://lichess.org/23ENWfar",
+        "eco": "B40",
+        "opening": "Sicilian Defense: Delayed Alapin Variation, with e6",
+        "time_control": "180+0",
+        "date": "2025.11.01",
+        "white_elo": 2508,
+        "black_elo": 2467
+      }
+    },
+    {
+      "position_id": "8edc41c729f3",
+      "fen": "r1bq1rk1/1pp2ppp/3n1b2/p2p4/3P4/2P5/PP1N1PPP/R1BQRBK1 w - - 2 14",
+      "ply": 26,
+      "eval_cp": 23,
+      "best_move": "a2a4",
+      "best_move_margin_cp": 10,
+      "piece_count": 26,
+      "material_diff": 0,
+      "source": {
+        "event": "Rated Blitz game",
+        "game_url": "https://lichess.org/NTixFPzU",
+        "eco": "C67",
+        "opening": "Ruy Lopez: Berlin Defense, Rio Gambit Accepted",
+        "time_control": "300+3",
+        "date": "2025.11.01",
+        "white_elo": 2947,
+        "black_elo": 2965
+      }
+    },
+    {
+      "position_id": "f3f92730875f",
+      "fen": "2bqkb1r/5ppp/5n2/1ppp4/r7/P2PP3/1BQNBPPP/R3K2R b KQk - 1 15",
+      "ply": 29,
+      "eval_cp": 42,
+      "best_move": "f8e7",
+      "best_move_margin_cp": 25,
+      "piece_count": 24,
+      "material_diff": 0,
+      "source": {
+        "event": "Rated Blitz game",
+        "game_url": "https://lichess.org/zow9D77R",
+        "eco": "A00",
+        "opening": "Polish Opening: Bugayev Attack",
+        "time_control": "180+1",
+        "date": "2025.11.01",
+        "white_elo": 2953,
+        "black_elo": 3006
+      }
+    },
+    {
+      "position_id": "2df8ee1179bc",
+      "fen": "r4rk1/1p3ppp/p1nqpn2/3p4/1P1P4/P3PB1P/3N1PP1/2RQ1RK1 b - - 0 15",
+      "ply": 29,
+      "eval_cp": 6,
+      "best_move": "a6a5",
+      "best_move_margin_cp": 7,
+      "piece_count": 24,
+      "material_diff": 0,
+      "source": {
+        "event": "Rated Blitz game",
+        "game_url": "https://lichess.org/r27avSfA",
+        "eco": "D02",
+        "opening": "Queen's Pawn Game: Chigorin Variation",
+        "time_control": "180+0",
+        "date": "2025.11.01",
+        "white_elo": 2503,
+        "black_elo": 2324
+      }
+    },
+    {
+      "position_id": "dd5c6b4c0f90",
+      "fen": "rnbq1r2/pp3pbk/3p1npp/2pP4/2P5/2N1BN2/PP1QBPPP/R3K2R b KQ - 2 11",
+      "ply": 21,
+      "eval_cp": -26,
+      "best_move": "c8f5",
+      "best_move_margin_cp": 25,
+      "piece_count": 28,
+      "material_diff": 0,
+      "source": {
+        "event": "Rated Blitz game",
+        "game_url": "https://lichess.org/BjAzlbVo",
+        "eco": "E73",
+        "opening": "King's Indian Defense: Averbakh Variation, Flexible Defense",
+        "time_control": "180+0",
+        "date": "2025.11.01",
+        "white_elo": 2511,
+        "black_elo": 2485
+      }
+    },
+    {
+      "position_id": "2a188a997b14",
+      "fen": "r1bq1rk1/pp3pbp/2p2np1/4p3/4P3/1PNP1N2/1PP3PP/R1BQ1RK1 w - - 0 12",
+      "ply": 22,
+      "eval_cp": 39,
+      "best_move": "c1e3",
+      "best_move_margin_cp": 0,
+      "piece_count": 26,
+      "material_diff": 0,
+      "source": {
+        "event": "Rated Blitz game",
+        "game_url": "https://lichess.org/QE4tbrLK",
+        "eco": "A02",
+        "opening": "Bird Opening",
+        "time_control": "180+0",
+        "date": "2025.11.01",
+        "white_elo": 2480,
+        "black_elo": 2568
+      }
+    },
+    {
+      "position_id": "180cac9b6ab2",
+      "fen": "r1b2rk1/1pqpbppp/p1n1p1n1/8/3NPP2/2N1B3/PPP1B1PP/R2Q1RK1 w - - 2 11",
+      "ply": 20,
+      "eval_cp": 33,
+      "best_move": "d4b3",
+      "best_move_margin_cp": 18,
+      "piece_count": 28,
+      "material_diff": 0,
+      "source": {
+        "event": "Rated Blitz game",
+        "game_url": "https://lichess.org/DoEycq0J",
+        "eco": "B30",
+        "opening": "Sicilian Defense: Nyezhmetdinov-Rossolimo Attack",
+        "time_control": "180+2",
+        "date": "2025.11.01",
+        "white_elo": 2799,
+        "black_elo": 2825
+      }
+    },
+    {
+      "position_id": "8cc58b25c0f3",
+      "fen": "r1bqk2r/4npbp/p3p1p1/3p4/2P5/2NBB3/PP3PPP/R2Q1RK1 w kq - 0 12",
+      "ply": 22,
+      "eval_cp": 47,
+      "best_move": "c4d5",
+      "best_move_margin_cp": 13,
+      "piece_count": 24,
+      "material_diff": 0,
+      "source": {
+        "event": "Rated Blitz game",
+        "game_url": "https://lichess.org/gKsHisdI",
+        "eco": "B42",
+        "opening": "Sicilian Defense: Kan Variation, Modern Variation",
+        "time_control": "180+0",
+        "date": "2025.11.01",
+        "white_elo": 2470,
+        "black_elo": 2505
+      }
+    },
+    {
+      "position_id": "bcff905e792b",
+      "fen": "r1b2rk1/1p2qpnp/2p2np1/p2pN3/N2P4/4P3/PPQ1BPPP/R3K2R w KQ - 6 15",
+      "ply": 28,
+      "eval_cp": 13,
+      "best_move": "e1g1",
+      "best_move_margin_cp": 5,
+      "piece_count": 26,
+      "material_diff": 0,
+      "source": {
+        "event": "Rated Classical game",
+        "game_url": "https://lichess.org/7jogRKL3",
+        "eco": "D35",
+        "opening": "Queen's Gambit Declined: Exchange Variation, S\u00e4misch Variation",
+        "time_control": "1800+10",
+        "date": "2025.11.01",
+        "white_elo": 2560,
+        "black_elo": 2836
+      }
+    },
+    {
+      "position_id": "324fb90591af",
+      "fen": "rn1q1rk1/4bppp/1pp2n2/3p3b/3P4/2NB1N1P/PP3PP1/R1BQR1K1 w - - 1 13",
+      "ply": 24,
+      "eval_cp": 25,
+      "best_move": "c1f4",
+      "best_move_margin_cp": 8,
+      "piece_count": 26,
+      "material_diff": 0,
+      "source": {
+        "event": "Rated Blitz game",
+        "game_url": "https://lichess.org/CApifncD",
+        "eco": "C01",
+        "opening": "French Defense: Exchange Variation",
+        "time_control": "180+0",
+        "date": "2025.11.01",
+        "white_elo": 2591,
+        "black_elo": 2490
+      }
+    },
+    {
+      "position_id": "4071e47329c1",
+      "fen": "r1bq1rk1/1p3ppp/1n1p4/p1pN4/P2nPR2/2NP4/BPP3PP/2RQ2K1 b - - 0 15",
+      "ply": 29,
+      "eval_cp": -43,
+      "best_move": "b6d5",
+      "best_move_margin_cp": 5,
+      "piece_count": 26,
+      "material_diff": 0,
+      "source": {
+        "event": "Rated Blitz game",
+        "game_url": "https://lichess.org/yhaw3VJ0",
+        "eco": "B30",
+        "opening": "Sicilian Defense: Closed, Anti-Sveshnikov Variation, with d6",
+        "time_control": "180+0",
+        "date": "2025.11.01",
+        "white_elo": 2525,
+        "black_elo": 2475
+      }
+    },
+    {
+      "position_id": "65be72b6ad24",
+      "fen": "r1bq1rk1/pp1n1ppp/5n2/3p1N2/2P5/P3P3/4BPPP/R1BQ1RK1 b - - 0 13",
+      "ply": 25,
+      "eval_cp": 16,
+      "best_move": "d7b6",
+      "best_move_margin_cp": 23,
+      "piece_count": 24,
+      "material_diff": 0,
+      "source": {
+        "event": "Rated Blitz game",
+        "game_url": "https://lichess.org/Wl6Vu9BD",
+        "eco": "A22",
+        "opening": "English Opening: King's English Variation, Two Knights Variation",
+        "time_control": "180+0",
+        "date": "2025.11.01",
+        "white_elo": 2486,
+        "black_elo": 2595
+      }
+    },
+    {
+      "position_id": "d874869f7c7d",
+      "fen": "r3k2r/ppqnbpp1/2p2n1p/2Pp1b2/3Pp3/2N1P3/PP1BBPPP/R2QNRK1 w kq - 2 13",
+      "ply": 24,
+      "eval_cp": -18,
+      "best_move": "b2b4",
+      "best_move_margin_cp": 1,
+      "piece_count": 30,
+      "material_diff": 0,
+      "source": {
+        "event": "Rated Blitz game",
+        "game_url": "https://lichess.org/TUIUFG12",
+        "eco": "A00",
+        "opening": "Van't Kruijs Opening",
+        "time_control": "180+0",
+        "date": "2025.11.01",
+        "white_elo": 2500,
+        "black_elo": 2395
+      }
+    },
+    {
+      "position_id": "8d370b5ff9b4",
+      "fen": "r3k1nr/pp1b1ppp/2n5/8/Q2Nq3/4PP2/P2B2PP/2R1KB1R b Kkq - 0 15",
+      "ply": 29,
+      "eval_cp": -33,
+      "best_move": "e4h4",
+      "best_move_margin_cp": 91,
+      "piece_count": 22,
+      "material_diff": 0,
+      "source": {
+        "event": "Rated Blitz game",
+        "game_url": "https://lichess.org/9NAxpt3l",
+        "eco": "D32",
+        "opening": "Tarrasch Defense: Two Knights Variation",
+        "time_control": "300+1",
+        "date": "2025.11.01",
+        "white_elo": 2897,
+        "black_elo": 2733
+      }
+    },
+    {
+      "position_id": "eeb2a5f1aee5",
+      "fen": "r1b2rk1/3nppbp/3p1np1/qppP2B1/P3P3/2N2P1N/1P1Q2PP/R3KB1R w KQ - 0 12",
+      "ply": 22,
+      "eval_cp": 9,
+      "best_move": "f1b5",
+      "best_move_margin_cp": 29,
+      "piece_count": 28,
+      "material_diff": 0,
+      "source": {
+        "event": "Rated Blitz game",
+        "game_url": "https://lichess.org/ACdCelbA",
+        "eco": "E81",
+        "opening": "King's Indian Defense: Steiner Attack",
+        "time_control": "180+0",
+        "date": "2025.11.01",
+        "white_elo": 2650,
+        "black_elo": 2470
+      }
+    },
+    {
+      "position_id": "d7978a1c6389",
+      "fen": "r1bq1rk1/1pp1bppp/3pnn2/p4N2/1PP1P3/P1N2P2/1B4PP/R2QKB1R b KQ - 0 11",
+      "ply": 21,
+      "eval_cp": -12,
+      "best_move": "c7c6",
+      "best_move_margin_cp": 15,
+      "piece_count": 28,
+      "material_diff": 0,
+      "source": {
+        "event": "Rated Blitz game",
+        "game_url": "https://lichess.org/GWFOZSgW",
+        "eco": "A55",
+        "opening": "Old Indian Defense: Normal Variation",
+        "time_control": "180+0",
+        "date": "2025.11.01",
+        "white_elo": 2500,
+        "black_elo": 2329
+      }
+    },
+    {
+      "position_id": "4bc113c6aa5b",
+      "fen": "1nrq1rk1/1b1pbppp/1p2pn2/pP6/2P5/P1N2NP1/2Q1PPBP/R1BR2K1 w - - 1 14",
+      "ply": 26,
+      "eval_cp": 40,
+      "best_move": "c2b3",
+      "best_move_margin_cp": 7,
+      "piece_count": 28,
+      "material_diff": 0,
+      "source": {
+        "event": "Rated Blitz game",
+        "game_url": "https://lichess.org/G6RPaHUu",
+        "eco": "E15",
+        "opening": "Queen's Indian Defense: Fianchetto Variation, Nimzowitsch Variation",
+        "time_control": "60+10",
+        "date": "2025.11.01",
+        "white_elo": 2967,
+        "black_elo": 2707
+      }
+    },
+    {
+      "position_id": "e10dce1d9e5d",
+      "fen": "1r1q1rk1/1p1bppbp/p1np1np1/2p5/2P2N2/1PN3P1/PBQPPPBP/2R2RK1 b - - 1 11",
+      "ply": 21,
+      "eval_cp": 46,
+      "best_move": "b7b5",
+      "best_move_margin_cp": 16,
+      "piece_count": 30,
+      "material_diff": 0,
+      "source": {
+        "event": "Rated Blitz game",
+        "game_url": "https://lichess.org/IZyzPBEh",
+        "eco": "A36",
+        "opening": "English Opening: Symmetrical Variation, Ultra-Symmetrical Variation",
+        "time_control": "180+0",
+        "date": "2025.11.01",
+        "white_elo": 2545,
+        "black_elo": 2560
+      }
+    },
+    {
+      "position_id": "dc5be36ea0d8",
+      "fen": "r4rk1/ppq2pbp/2n2np1/4p3/8/PP1B1Q1P/1BPN1PP1/R4RK1 w - - 2 14",
+      "ply": 26,
+      "eval_cp": 17,
+      "best_move": "a1d1",
+      "best_move_margin_cp": 7,
+      "piece_count": 24,
+      "material_diff": 0,
+      "source": {
+        "event": "Rated Blitz game",
+        "game_url": "https://lichess.org/Z8gBXjDy",
+        "eco": "A48",
+        "opening": "East Indian Defense",
+        "time_control": "180+0",
+        "date": "2025.11.01",
+        "white_elo": 2459,
+        "black_elo": 2520
+      }
+    },
+    {
+      "position_id": "2066e0f39435",
+      "fen": "r4rk1/1bqpbppp/ppn1pn2/8/2PNP1P1/P1N1BP2/1P5P/2RQKB1R w K - 1 12",
+      "ply": 22,
+      "eval_cp": -43,
+      "best_move": "d1d2",
+      "best_move_margin_cp": 3,
+      "piece_count": 28,
+      "material_diff": 0,
+      "source": {
+        "event": "Rated Blitz game",
+        "game_url": "https://lichess.org/rCqHWNol",
+        "eco": "B41",
+        "opening": "Sicilian Defense: Kan Variation, Mar\u00f3czy Bind, R\u00e9ti Variation",
+        "time_control": "180+0",
+        "date": "2025.11.01",
+        "white_elo": 2599,
+        "black_elo": 2482
+      }
+    },
+    {
+      "position_id": "a05c84007014",
+      "fen": "r2qkb1r/1pp3pp/p1n1bpn1/4p3/1P2P3/P1BP1N2/2QN1PPP/R3KB1R b KQkq - 0 11",
+      "ply": 21,
+      "eval_cp": 26,
+      "best_move": "d8d7",
+      "best_move_margin_cp": 17,
+      "piece_count": 28,
+      "material_diff": 0,
+      "source": {
+        "event": "Rated Blitz game",
+        "game_url": "https://lichess.org/ct5OXVB9",
+        "eco": "C44",
+        "opening": "Ponziani Opening: Steinitz Variation",
+        "time_control": "180+0",
+        "date": "2025.11.01",
+        "white_elo": 2524,
+        "black_elo": 2503
+      }
+    },
+    {
+      "position_id": "85d89dbfc3c5",
+      "fen": "rn2r1k1/ppp1qppp/3p1n2/3Pp3/2P1P1b1/2N2NP1/PP1Q1PBP/R4RK1 b - - 0 11",
+      "ply": 21,
+      "eval_cp": -47,
+      "best_move": "g4f3",
+      "best_move_margin_cp": 0,
+      "piece_count": 28,
+      "material_diff": 0,
+      "source": {
+        "event": "Rated Blitz game",
+        "game_url": "https://lichess.org/wwRmlPCQ",
+        "eco": "A40",
+        "opening": "Kangaroo Defense",
+        "time_control": "180+0",
+        "date": "2025.11.01",
+        "white_elo": 2698,
+        "black_elo": 2554
+      }
+    },
+    {
+      "position_id": "325ab5171a22",
+      "fen": "2r1brk1/pp2bppp/nq2pn2/2ppN3/3P1B2/P1NBP3/1PP2PPP/1R1Q1RK1 w - - 10 13",
+      "ply": 24,
+      "eval_cp": 0,
+      "best_move": "f1e1",
+      "best_move_margin_cp": 22,
+      "piece_count": 30,
+      "material_diff": 0,
+      "source": {
+        "event": "Rated Blitz game",
+        "game_url": "https://lichess.org/oYFHMM5l",
+        "eco": "D01",
+        "opening": "Rapport-Jobava System",
+        "time_control": "180+0",
+        "date": "2025.11.01",
+        "white_elo": 2822,
+        "black_elo": 2551
+      }
+    },
+    {
+      "position_id": "168a7652aae3",
+      "fen": "1rbq1rk1/6bp/p2p2p1/nppPpp1n/2P5/1PN1P1P1/PBQN1PBP/1R2R1K1 b - - 0 15",
+      "ply": 29,
+      "eval_cp": 32,
+      "best_move": "b5b4",
+      "best_move_margin_cp": 16,
+      "piece_count": 30,
+      "material_diff": 0,
+      "source": {
+        "event": "Rated Rapid game",
+        "game_url": "https://lichess.org/CCGHvJa5",
+        "eco": "E63",
+        "opening": "King's Indian Defense: Fianchetto Variation, Panno Variation",
+        "time_control": "600+2",
+        "date": "2025.11.01",
+        "white_elo": 2451,
+        "black_elo": 2588
+      }
+    },
+    {
+      "position_id": "3cbd07cf8f9e",
+      "fen": "r2q1rk1/pp3ppp/n1pb4/3p1b2/2PPn3/1QNB1N2/PP3PPP/R1B1R1K1 b - - 3 11",
+      "ply": 21,
+      "eval_cp": -32,
+      "best_move": "d5c4",
+      "best_move_margin_cp": 9,
+      "piece_count": 28,
+      "material_diff": 0,
+      "source": {
+        "event": "Rated Blitz game",
+        "game_url": "https://lichess.org/lmJ6yZp1",
+        "eco": "C42",
+        "opening": "Petrov's Defense: Classical Attack, Marshall Variation",
+        "time_control": "180+2",
+        "date": "2025.11.01",
+        "white_elo": 2825,
+        "black_elo": 2798
+      }
+    },
+    {
+      "position_id": "6f290d2fca5e",
+      "fen": "r1b1k2r/ppp3p1/2p2p2/4P2p/6Pb/2N2P1P/PPP5/R1BR2K1 w - - 0 15",
+      "ply": 28,
+      "eval_cp": 19,
+      "best_move": "e5f6",
+      "best_move_margin_cp": 19,
+      "piece_count": 22,
+      "material_diff": 0,
+      "source": {
+        "event": "Rated Rapid game",
+        "game_url": "https://lichess.org/7WxL9GiX",
+        "eco": "C67",
+        "opening": "Ruy Lopez: Berlin Defense, l'Hermet Variation, Berlin Wall Defense",
+        "time_control": "600+5",
+        "date": "2025.11.01",
+        "white_elo": 2998,
+        "black_elo": 3002
+      }
+    },
+    {
+      "position_id": "35adf6a28100",
+      "fen": "r4rk1/1bpnqppp/1p1b4/p2pN3/3Pn3/1P1BP3/PB1N1PPP/2RQ1RK1 w - - 2 13",
+      "ply": 24,
+      "eval_cp": -30,
+      "best_move": "d2f3",
+      "best_move_margin_cp": 9,
+      "piece_count": 28,
+      "material_diff": 0,
+      "source": {
+        "event": "Rated Rapid game",
+        "game_url": "https://lichess.org/n1XDFFQZ",
+        "eco": "E14",
+        "opening": "Queen's Indian Defense: Spassky System",
+        "time_control": "600+15",
+        "date": "2025.11.01",
+        "white_elo": 2735,
+        "black_elo": 2823
+      }
+    },
+    {
+      "position_id": "bc02d4d10938",
+      "fen": "r3k2r/1b2bppp/p1nqpn2/1p4N1/3P4/2N1B3/PP1QBPPP/R4RK1 w kq - 2 13",
+      "ply": 24,
+      "eval_cp": 27,
+      "best_move": "g5e4",
+      "best_move_margin_cp": 13,
+      "piece_count": 26,
+      "material_diff": 0,
+      "source": {
+        "event": "Rated Rapid game",
+        "game_url": "https://lichess.org/kSB7TdYn",
+        "eco": "B28",
+        "opening": "Sicilian Defense: O'Kelly Variation, Venice System",
+        "time_control": "300+5",
+        "date": "2025.11.01",
+        "white_elo": 2909,
+        "black_elo": 2613
+      }
+    },
+    {
+      "position_id": "83c8622a60f0",
+      "fen": "2r1kb1r/1p1bppp1/p1np1n1p/q5B1/4P2Q/2N2N2/PPP2PPP/1K1R1B1R w k - 0 11",
+      "ply": 20,
+      "eval_cp": 32,
+      "best_move": "g5f6",
+      "best_move_margin_cp": 53,
+      "piece_count": 28,
+      "material_diff": 0,
+      "source": {
+        "event": "Rated Blitz game",
+        "game_url": "https://lichess.org/8RPMxaen",
+        "eco": "A43",
+        "opening": "Benoni Defense: Old Benoni",
+        "time_control": "180+0",
+        "date": "2025.11.01",
+        "white_elo": 2535,
+        "black_elo": 2559
+      }
+    },
+    {
+      "position_id": "ce44f54bc64b",
+      "fen": "r1bq1rk1/pp1n1pb1/6pp/3pP3/3N1P2/2N5/PP1Q2PP/R3KB1R b KQ - 0 14",
+      "ply": 27,
+      "eval_cp": 9,
+      "best_move": "d7c5",
+      "best_move_margin_cp": 18,
+      "piece_count": 24,
+      "material_diff": 0,
+      "source": {
+        "event": "Rated Blitz game",
+        "game_url": "https://lichess.org/OfWaQh7R",
+        "eco": "E70",
+        "opening": "King's Indian Defense: Normal Variation",
+        "time_control": "180+0",
+        "date": "2025.11.01",
+        "white_elo": 2641,
+        "black_elo": 2726
+      }
+    },
+    {
+      "position_id": "b68f441de6fb",
+      "fen": "r1bq1rk1/2p1bppp/p1n2n2/4p3/Pp2P3/1B3N2/1PPN1PPP/R1BQR1K1 b - - 1 11",
+      "ply": 21,
+      "eval_cp": -46,
+      "best_move": "e7c5",
+      "best_move_margin_cp": 13,
+      "piece_count": 28,
+      "material_diff": 0,
+      "source": {
+        "event": "Rated Blitz game",
+        "game_url": "https://lichess.org/VHTA4cXK",
+        "eco": "C88",
+        "opening": "Ruy Lopez: Closed, Anti-Marshall",
+        "time_control": "300+3",
+        "date": "2025.11.01",
+        "white_elo": 2990,
+        "black_elo": 2957
+      }
+    },
+    {
+      "position_id": "a963a3a1cac4",
+      "fen": "r3kb1r/p1q2ppp/b1p1p1n1/3pP3/5P2/2NB4/PPP3PP/R1BQ1RK1 w kq - 1 11",
+      "ply": 20,
+      "eval_cp": 24,
+      "best_move": "c1e3",
+      "best_move_margin_cp": 12,
+      "piece_count": 26,
+      "material_diff": 0,
+      "source": {
+        "event": "Rated Blitz game",
+        "game_url": "https://lichess.org/PYznCkz1",
+        "eco": "B47",
+        "opening": "Sicilian Defense: Taimanov Variation, Bastrikov Variation",
+        "time_control": "180+2",
+        "date": "2025.11.01",
+        "white_elo": 2518,
+        "black_elo": 2478
+      }
+    },
+    {
+      "position_id": "4761c76aea7f",
+      "fen": "r2qk2r/1b1pb1pp/p1n1p3/1p1n1p2/3P4/2PB1NBP/PP1N1PP1/RQ3RK1 b kq - 0 12",
+      "ply": 23,
+      "eval_cp": -35,
+      "best_move": "d5b6",
+      "best_move_margin_cp": 3,
+      "piece_count": 28,
+      "material_diff": 0,
+      "source": {
+        "event": "Rated Blitz game",
+        "game_url": "https://lichess.org/aGxMOoDO",
+        "eco": "A40",
+        "opening": "Horwitz Defense",
+        "time_control": "180+0",
+        "date": "2025.11.01",
+        "white_elo": 2409,
+        "black_elo": 2515
+      }
+    },
+    {
+      "position_id": "bbff632d2d02",
+      "fen": "r2q1r1k/ppp1n1pp/2np1p2/4p3/P1BPP1bB/2P2N1P/2P2PP1/R2Q1RK1 b - - 0 12",
+      "ply": 23,
+      "eval_cp": -7,
+      "best_move": "g4h5",
+      "best_move_margin_cp": 11,
+      "piece_count": 28,
+      "material_diff": 0,
+      "source": {
+        "event": "Rated Blitz game",
+        "game_url": "https://lichess.org/0wb6BnCI",
+        "eco": "B00",
+        "opening": "Nimzowitsch Defense: French Connection",
+        "time_control": "180+2",
+        "date": "2025.11.01",
+        "white_elo": 2419,
+        "black_elo": 2609
+      }
+    },
+    {
+      "position_id": "a8dae85e33da",
+      "fen": "r1bqrnk1/pp3ppp/2p2b2/3p4/1P1P4/2NBPN2/P1Q2PPP/R4RK1 b - - 0 12",
+      "ply": 23,
+      "eval_cp": 14,
+      "best_move": "c8g4",
+      "best_move_margin_cp": 5,
+      "piece_count": 26,
+      "material_diff": 0,
+      "source": {
+        "event": "Rated Blitz game",
+        "game_url": "https://lichess.org/jhpS7p7i",
+        "eco": "D02",
+        "opening": "Queen's Pawn Game: Symmetrical Variation",
+        "time_control": "180+0",
+        "date": "2025.11.01",
+        "white_elo": 2556,
+        "black_elo": 2556
+      }
+    },
+    {
+      "position_id": "20af031b180f",
+      "fen": "r1bqk2r/2p1bppp/p2p4/1p1Pn3/3N4/8/PPP2PPP/RNBQR1K1 b kq - 0 11",
+      "ply": 21,
+      "eval_cp": 30,
+      "best_move": "e8g8",
+      "best_move_margin_cp": 4,
+      "piece_count": 26,
+      "material_diff": 0,
+      "source": {
+        "event": "Rated Rapid game",
+        "game_url": "https://lichess.org/Vv2MRAfA",
+        "eco": "C84",
+        "opening": "Ruy Lopez: Closed, Center Attack",
+        "time_control": "600+2",
+        "date": "2025.11.01",
+        "white_elo": 2605,
+        "black_elo": 2817
+      }
+    },
+    {
+      "position_id": "1664307c84f6",
+      "fen": "r1bqnrk1/ppp2ppp/3p4/2bP4/8/8/PPP2PPP/RNBQRBK1 w - - 0 12",
+      "ply": 22,
+      "eval_cp": 38,
+      "best_move": "b1c3",
+      "best_move_margin_cp": 20,
+      "piece_count": 26,
+      "material_diff": 0,
+      "source": {
+        "event": "Rated Blitz game",
+        "game_url": "https://lichess.org/ze2wnGFV",
+        "eco": "C67",
+        "opening": "Ruy Lopez: Berlin Defense, Rio Gambit Accepted",
+        "time_control": "60+3",
+        "date": "2025.11.01",
+        "white_elo": 2989,
+        "black_elo": 2603
+      }
+    },
+    {
+      "position_id": "f90b22b70f82",
+      "fen": "r2q1rk1/pp2ppbp/1np3p1/5b2/3Pn2N/2N1P1P1/PP2QPBP/R1B2RK1 b - - 6 12",
+      "ply": 23,
+      "eval_cp": 7,
+      "best_move": "e4c3",
+      "best_move_margin_cp": 80,
+      "piece_count": 28,
+      "material_diff": 0,
+      "source": {
+        "event": "Rated Blitz game",
+        "game_url": "https://lichess.org/MEa5g20g",
+        "eco": "D78",
+        "opening": "Neo-Gr\u00fcnfeld Defense: Classical Variation, Original Defense",
+        "time_control": "180+2",
+        "date": "2025.11.01",
+        "white_elo": 2547,
+        "black_elo": 2457
+      }
+    },
+    {
+      "position_id": "3866c568f624",
+      "fen": "r4rk1/pp3ppp/2nqpn2/3p4/3P2b1/1QPB1N2/PP1N1PPP/R4RK1 w - - 2 12",
+      "ply": 22,
+      "eval_cp": 32,
+      "best_move": "a1e1",
+      "best_move_margin_cp": 1,
+      "piece_count": 26,
+      "material_diff": 0,
+      "source": {
+        "event": "Rated Blitz game",
+        "game_url": "https://lichess.org/XBt02p6q",
+        "eco": "B13",
+        "opening": "Caro-Kann Defense: Exchange Variation, Rubinstein Variation",
+        "time_control": "180+0",
+        "date": "2025.11.01",
+        "white_elo": 2482,
+        "black_elo": 2561
+      }
+    },
+    {
+      "position_id": "dd3f5f3a94db",
+      "fen": "2kr1b1r/1pqb1pp1/p1npp2p/8/4PPPP/2N2N2/PPPQ4/2KR1B1R w - - 1 14",
+      "ply": 26,
+      "eval_cp": 16,
+      "best_move": "c1b1",
+      "best_move_margin_cp": 0,
+      "piece_count": 26,
+      "material_diff": 0,
+      "source": {
+        "event": "Rated Blitz game",
+        "game_url": "https://lichess.org/BUEvppAl",
+        "eco": "B67",
+        "opening": "Sicilian Defense: Richter-Rauzer Variation, Neo-Modern Variation",
+        "time_control": "180+0",
+        "date": "2025.11.01",
+        "white_elo": 2584,
+        "black_elo": 2549
+      }
+    },
+    {
+      "position_id": "60f7f87533d9",
+      "fen": "r1bqr1k1/pp1n1pb1/2p3pp/3p1n2/3P1B1P/2N1PNP1/PP3PB1/1R1Q1RK1 w - - 1 14",
+      "ply": 26,
+      "eval_cp": -1,
+      "best_move": "b2b4",
+      "best_move_margin_cp": 39,
+      "piece_count": 28,
+      "material_diff": 0,
+      "source": {
+        "event": "Rated Blitz game",
+        "game_url": "https://lichess.org/8ZZuUbQs",
+        "eco": "A04",
+        "opening": "Zukertort Opening: Pirc Invitation",
+        "time_control": "180+0",
+        "date": "2025.11.01",
+        "white_elo": 2553,
+        "black_elo": 2543
+      }
+    },
+    {
+      "position_id": "d15c5819e678",
+      "fen": "3q1rk1/p1p2ppp/2B5/b7/Q7/2P3Pb/Pr1BPP1P/R3R1K1 b - - 4 15",
+      "ply": 29,
+      "eval_cp": -33,
+      "best_move": "d8f6",
+      "best_move_margin_cp": 38,
+      "piece_count": 21,
+      "material_diff": 1,
+      "source": {
+        "event": "Rated Blitz game",
+        "game_url": "https://lichess.org/gDxj8nZy",
+        "eco": "A28",
+        "opening": "English Opening: King's English Variation, Four Knights Variation",
+        "time_control": "180+0",
+        "date": "2025.11.01",
+        "white_elo": 2648,
+        "black_elo": 2635
+      }
+    },
+    {
+      "position_id": "80b852448305",
+      "fen": "r3kb1r/1R3ppp/p2pbn2/6B1/3QP3/q1N5/P1P3PP/4KB1R b Kkq - 0 13",
+      "ply": 25,
+      "eval_cp": -39,
+      "best_move": "f8e7",
+      "best_move_margin_cp": 83,
+      "piece_count": 22,
+      "material_diff": 0,
+      "source": {
+        "event": "Rated Blitz game",
+        "game_url": "https://lichess.org/NfOpu5O7",
+        "eco": "B97",
+        "opening": "Sicilian Defense: Najdorf Variation, Poisoned Pawn Accepted",
+        "time_control": "180+2",
+        "date": "2025.11.01",
+        "white_elo": 2998,
+        "black_elo": 3010
+      }
+    },
+    {
+      "position_id": "affe751b2655",
+      "fen": "rn1q1rk1/bp3pp1/p3bn1p/2NpN3/5B2/6P1/PP2PPBP/2RQ1RK1 b - - 9 14",
+      "ply": 27,
+      "eval_cp": -30,
+      "best_move": "a7c5",
+      "best_move_margin_cp": 20,
+      "piece_count": 26,
+      "material_diff": 0,
+      "source": {
+        "event": "Rated Blitz game",
+        "game_url": "https://lichess.org/XarOc3Hy",
+        "eco": "A34",
+        "opening": "English Opening: Symmetrical Variation, Three Knights Variation",
+        "time_control": "180+0",
+        "date": "2025.11.01",
+        "white_elo": 2529,
+        "black_elo": 2371
+      }
+    },
+    {
+      "position_id": "6f093b7d016b",
+      "fen": "r3kb1r/pp3pp1/5n1p/4p3/2Bn1PbB/2N5/PP4PP/2KR2NR w kq - 1 12",
+      "ply": 22,
+      "eval_cp": 20,
+      "best_move": "g1f3",
+      "best_move_margin_cp": 121,
+      "piece_count": 23,
+      "material_diff": 1,
+      "source": {
+        "event": "Rated Blitz game",
+        "game_url": "https://lichess.org/UQqkzbyS",
+        "eco": "B13",
+        "opening": "Caro-Kann Defense: Panov Attack, Modern Defense",
+        "time_control": "180+0",
+        "date": "2025.11.01",
+        "white_elo": 2700,
+        "black_elo": 2636
+      }
+    },
+    {
+      "position_id": "66800aedd770",
+      "fen": "2r2rk1/2q1bppp/p2ppn2/np6/2P1PP2/1PN1BN2/P3Q1PP/3R1RK1 w - - 0 16",
+      "ply": 30,
+      "eval_cp": -10,
+      "best_move": "f4f5",
+      "best_move_margin_cp": 17,
+      "piece_count": 26,
+      "material_diff": 0,
+      "source": {
+        "event": "Rated Blitz game",
+        "game_url": "https://lichess.org/qVo1cyUr",
+        "eco": "B52",
+        "opening": "Sicilian Defense: Moscow Variation, Sokolsky Variation",
+        "time_control": "180+2",
+        "date": "2025.11.01",
+        "white_elo": 2525,
+        "black_elo": 2471
+      }
+    },
+    {
+      "position_id": "cf4eb27c1111",
+      "fen": "rn2r1k1/pp2qp1p/2p2bp1/3p4/3P4/2NQPN1P/PP3PP1/R3K2R w KQ - 1 14",
+      "ply": 26,
+      "eval_cp": -19,
+      "best_move": "e1g1",
+      "best_move_margin_cp": 2,
+      "piece_count": 24,
+      "material_diff": 0,
+      "source": {
+        "event": "Rated Blitz game",
+        "game_url": "https://lichess.org/Yb5J4ylA",
+        "eco": "D02",
+        "opening": "Queen's Pawn Game: Symmetrical Variation",
+        "time_control": "180+0",
+        "date": "2025.11.01",
+        "white_elo": 2560,
+        "black_elo": 2608
+      }
+    },
+    {
+      "position_id": "c3afd52b3978",
+      "fen": "r2q1rk1/1bpn1ppp/pp2pn2/8/PbBP4/2N1PN2/1P2QPPP/R1BR2K1 w - - 6 11",
+      "ply": 20,
+      "eval_cp": 31,
+      "best_move": "c4d3",
+      "best_move_margin_cp": 13,
+      "piece_count": 28,
+      "material_diff": 0,
+      "source": {
+        "event": "Rated Blitz game",
+        "game_url": "https://lichess.org/opDRIqQn",
+        "eco": "D37",
+        "opening": "Queen's Gambit Declined: Vienna Variation, Quiet Variation",
+        "time_control": "180+0",
+        "date": "2025.11.01",
+        "white_elo": 2555,
+        "black_elo": 2612
+      }
+    },
+    {
+      "position_id": "164ef3b269cc",
+      "fen": "rn1qk2r/p1p2pp1/bp2p2p/3pP3/1b1P3P/2NB1N2/PPPQ1PP1/R3K2R w KQkq - 1 11",
+      "ply": 20,
+      "eval_cp": 33,
+      "best_move": "d3a6",
+      "best_move_margin_cp": 21,
+      "piece_count": 28,
+      "material_diff": 0,
+      "source": {
+        "event": "Rated Blitz game",
+        "game_url": "https://lichess.org/cp06U9oh",
+        "eco": "A40",
+        "opening": "Horwitz Defense",
+        "time_control": "180+0",
+        "date": "2025.11.01",
+        "white_elo": 2550,
+        "black_elo": 2547
+      }
+    },
+    {
+      "position_id": "8251b5e3c837",
+      "fen": "r4rk1/p3bppp/1p2p3/3q4/3Q4/1P2P1P1/PB3P1P/R4RK1 b - - 0 15",
+      "ply": 29,
+      "eval_cp": 0,
+      "best_move": "d5d4",
+      "best_move_margin_cp": 16,
+      "piece_count": 20,
+      "material_diff": 0,
+      "source": {
+        "event": "Rated Blitz game",
+        "game_url": "https://lichess.org/tarqppZL",
+        "eco": "A15",
+        "opening": "English Opening: Anglo-Indian Defense, Queen's Indian Formation",
+        "time_control": "180+0",
+        "date": "2025.11.01",
+        "white_elo": 2455,
+        "black_elo": 2500
+      }
+    },
+    {
+      "position_id": "f6462f124e1c",
+      "fen": "1rbq1rk1/3nbppp/p3p3/PpP5/1n2P3/1Q2NNP1/1P3PBP/R1B2RK1 b - - 0 15",
+      "ply": 29,
+      "eval_cp": 0,
+      "best_move": "b4c6",
+      "best_move_margin_cp": 22,
+      "piece_count": 27,
+      "material_diff": 1,
+      "source": {
+        "event": "Rated Blitz game",
+        "game_url": "https://lichess.org/hjIKnG8Z",
+        "eco": "A13",
+        "opening": "English Opening: Agincourt Defense",
+        "time_control": "180+2",
+        "date": "2025.11.01",
+        "white_elo": 2556,
+        "black_elo": 2612
+      }
+    },
+    {
+      "position_id": "1578d5863077",
+      "fen": "r2q1rk1/4bppp/1np1pn2/pp1p4/4P3/1PPP2P1/PBQN1PNP/R4RK1 b - - 1 13",
+      "ply": 25,
+      "eval_cp": 38,
+      "best_move": "a5a4",
+      "best_move_margin_cp": 23,
+      "piece_count": 28,
+      "material_diff": 0,
+      "source": {
+        "event": "Rated Blitz game",
+        "game_url": "https://lichess.org/3AecakG6",
+        "eco": "A04",
+        "opening": "Zukertort Opening: Polish Defense",
+        "time_control": "180+0",
+        "date": "2025.11.01",
+        "white_elo": 2544,
+        "black_elo": 2567
+      }
+    },
+    {
+      "position_id": "a2ef754b184f",
+      "fen": "r4b1r/1p1k1ppp/p1n1q3/2pp4/8/1PN3P1/P1PPQPP1/2KR2NR b - - 0 14",
+      "ply": 27,
+      "eval_cp": 0,
+      "best_move": "e6e2",
+      "best_move_margin_cp": 25,
+      "piece_count": 24,
+      "material_diff": 0,
+      "source": {
+        "event": "Rated Blitz game",
+        "game_url": "https://lichess.org/NwLItEZ5",
+        "eco": "B20",
+        "opening": "Sicilian Defense: Snyder Variation",
+        "time_control": "180+0",
+        "date": "2025.11.01",
+        "white_elo": 2524,
+        "black_elo": 2422
+      }
+    },
+    {
+      "position_id": "3cea0aac5aa2",
+      "fen": "r2q1rk1/p1pp2pp/1pn1pb2/7P/2PP4/2NQ4/PP3PP1/R1B1K2R w KQ - 0 14",
+      "ply": 26,
+      "eval_cp": -3,
+      "best_move": "c1e3",
+      "best_move_margin_cp": 0,
+      "piece_count": 24,
+      "material_diff": 0,
+      "source": {
+        "event": "Rated Blitz game",
+        "game_url": "https://lichess.org/B2zIDgud",
+        "eco": "A10",
+        "opening": "English Opening",
+        "time_control": "180+0",
+        "date": "2025.11.01",
+        "white_elo": 2631,
+        "black_elo": 2706
+      }
+    },
+    {
+      "position_id": "a40605686ad3",
+      "fen": "2rq1rk1/p2nbppp/bp2p3/2pn4/3P4/1P3NP1/PB1NPPBP/R2QR1K1 w - - 2 14",
+      "ply": 26,
+      "eval_cp": 26,
+      "best_move": "a2a3",
+      "best_move_margin_cp": 13,
+      "piece_count": 28,
+      "material_diff": 0,
+      "source": {
+        "event": "Rated Rapid game",
+        "game_url": "https://lichess.org/YFZ29bKx",
+        "eco": "E15",
+        "opening": "Queen's Indian Defense: Fianchetto Variation, Check Variation, Intermezzo Line",
+        "time_control": "480+1",
+        "date": "2025.11.01",
+        "white_elo": 3063,
+        "black_elo": 2782
+      }
+    },
+    {
+      "position_id": "35395c8762c8",
+      "fen": "r2qk2r/pp1nbpp1/2p1pnp1/8/3P4/2N1P1P1/PP1BBP1P/R2QK2R b KQkq - 2 11",
+      "ply": 21,
+      "eval_cp": -19,
+      "best_move": "e6e5",
+      "best_move_margin_cp": 27,
+      "piece_count": 26,
+      "material_diff": 0,
+      "source": {
+        "event": "Rated Blitz game",
+        "game_url": "https://lichess.org/knUF6DLf",
+        "eco": "D12",
+        "opening": "Slav Defense: Quiet Variation, Schallopp Defense",
+        "time_control": "420+0",
+        "date": "2025.11.01",
+        "white_elo": 2768,
+        "black_elo": 2664
+      }
+    },
+    {
+      "position_id": "81dfb7307588",
+      "fen": "r2qkb1r/pp3ppp/2n1b3/4p3/1nP1B3/1N3Q2/PP3PPP/RNB2RK1 b kq - 2 11",
+      "ply": 21,
+      "eval_cp": 14,
+      "best_move": "e6c4",
+      "best_move_margin_cp": 16,
+      "piece_count": 26,
+      "material_diff": 0,
+      "source": {
+        "event": "Rated Blitz game",
+        "game_url": "https://lichess.org/rISypeJr",
+        "eco": "B54",
+        "opening": "Sicilian Defense: Modern Variations, Main Line",
+        "time_control": "180+0",
+        "date": "2025.11.01",
+        "white_elo": 2397,
+        "black_elo": 2511
+      }
+    },
+    {
+      "position_id": "a16b6ef0020b",
+      "fen": "r1bq1rk1/1pp2pb1/3p2p1/3Pp1Pp/pPP1P3/2N1B2P/1P2NP2/nB1QK2R w K - 0 16",
+      "ply": 30,
+      "eval_cp": -46,
+      "best_move": "c3a4",
+      "best_move_margin_cp": 125,
+      "piece_count": 28,
+      "material_diff": 2,
+      "source": {
+        "event": "Rated Blitz game",
+        "game_url": "https://lichess.org/lvcqOgO8",
+        "eco": "E71",
+        "opening": "King's Indian Defense: Makogonov Variation",
+        "time_control": "180+0",
+        "date": "2025.11.01",
+        "white_elo": 2433,
+        "black_elo": 2550
+      }
+    },
+    {
+      "position_id": "3c5055741833",
+      "fen": "r3r1k1/pp3ppp/2p2n2/4b3/5Bb1/2P2BP1/PP2NP1P/R2R2K1 w - - 2 16",
+      "ply": 30,
+      "eval_cp": 0,
+      "best_move": "f3g4",
+      "best_move_margin_cp": 23,
+      "piece_count": 22,
+      "material_diff": 0,
+      "source": {
+        "event": "Rated Blitz game",
+        "game_url": "https://lichess.org/wQHLa1st",
+        "eco": "C00",
+        "opening": "French Defense: Schlechter Variation",
+        "time_control": "180+0",
+        "date": "2025.11.01",
+        "white_elo": 2550,
+        "black_elo": 2433
+      }
+    },
+    {
+      "position_id": "2373b438b822",
+      "fen": "r2qk2r/1p2bppp/p1bppn2/6B1/4P2P/2N2P2/PPPQ2P1/2KR1B1R b kq - 0 11",
+      "ply": 21,
+      "eval_cp": -10,
+      "best_move": "h7h6",
+      "best_move_margin_cp": 6,
+      "piece_count": 26,
+      "material_diff": 0,
+      "source": {
+        "event": "Rated Blitz game",
+        "game_url": "https://lichess.org/TDCf2kH4",
+        "eco": "B67",
+        "opening": "Sicilian Defense: Richter-Rauzer Variation, Neo-Modern Variation",
+        "time_control": "180+0",
+        "date": "2025.11.01",
+        "white_elo": 2604,
+        "black_elo": 2562
+      }
+    },
+    {
+      "position_id": "3db4ba369abc",
+      "fen": "r1bq1rk1/pp3pbp/6p1/1Q1pn3/2p2B2/2P1PN2/PP2BPPP/R4RK1 b - - 1 13",
+      "ply": 25,
+      "eval_cp": 7,
+      "best_move": "a7a6",
+      "best_move_margin_cp": 42,
+      "piece_count": 26,
+      "material_diff": 0,
+      "source": {
+        "event": "Rated Blitz game",
+        "game_url": "https://lichess.org/eSjTWRrU",
+        "eco": "A45",
+        "opening": "Indian Defense",
+        "time_control": "180+0",
+        "date": "2025.11.01",
+        "white_elo": 2645,
+        "black_elo": 2641
+      }
+    },
+    {
+      "position_id": "ce84b46136bb",
+      "fen": "rnbqr1k1/1p3pb1/p2p1npp/2pP4/P3P3/R1N1BP2/1P1Q2PP/4KBNR b K - 2 12",
+      "ply": 23,
+      "eval_cp": -4,
+      "best_move": "h6h5",
+      "best_move_margin_cp": 7,
+      "piece_count": 28,
+      "material_diff": 0,
+      "source": {
+        "event": "Rated Blitz game",
+        "game_url": "https://lichess.org/o04KC7zq",
+        "eco": "A65",
+        "opening": "Benoni Defense: King's Pawn Line, with Bg5",
+        "time_control": "180+0",
+        "date": "2025.11.01",
+        "white_elo": 2547,
+        "black_elo": 2476
+      }
+    },
+    {
+      "position_id": "ee16d32c1def",
+      "fen": "r3k2r/pp1b1pp1/4p2p/3pP3/1P1P1P2/8/P5PP/R3KB1R w KQkq - 1 16",
+      "ply": 30,
+      "eval_cp": 38,
+      "best_move": "f1d3",
+      "best_move_margin_cp": 6,
+      "piece_count": 20,
+      "material_diff": 0,
+      "source": {
+        "event": "Rated Blitz game",
+        "game_url": "https://lichess.org/lD6dInk5",
+        "eco": "C11",
+        "opening": "French Defense: Classical Variation",
+        "time_control": "180+0",
+        "date": "2025.11.01",
+        "white_elo": 2504,
+        "black_elo": 2371
+      }
+    }
+  ]
+}
