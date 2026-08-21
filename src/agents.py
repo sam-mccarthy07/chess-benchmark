@@ -368,6 +368,87 @@ Analyze the position and propose your best move."""
     )
 
 
+SOLO_SYSTEM = """You are a chess player choosing your next move. You are deciding alone.
+
+Respond with ONLY valid JSON in this exact format:
+{
+  "move": "<UCI notation e.g. e2e4>",
+  "reasoning": "<2-3 sentences explaining why>",
+  "confidence": <0.0-1.0>
+}
+
+UCI notation: from-square + to-square + optional promotion piece (q/r/b/n).
+Example: e2e4, d7d5, e1g1 (castling), e7e8q (promotion)."""
+
+
+async def get_solo_move(
+    agent: AgentConfig,
+    board_fen: str,
+    legal_moves: list[str],
+    move_history: list[str],
+    color: str,
+    move_number: int,
+) -> MoveProposal:
+    """What this agent would play with no teammates.
+
+    The revealed counterfactual behind Collaborative Advantage and
+    ir_revealed. Deliberately given *exactly* the same information a team
+    agent had — same FEN, same full legal move list, same history, same
+    persona — minus any mention of teammates. Any difference in the
+    information available would confound coordination with context, and the
+    whole point is to isolate the former.
+    """
+    moves_str = ", ".join(legal_moves)
+    history_str = " ".join(move_history[-10:]) if move_history else "none"
+
+    user_msg = f"""You are playing as {color} on move {move_number}.
+
+Board (FEN): {board_fen}
+Recent moves: {history_str}
+Legal moves available ({len(legal_moves)} total): {moves_str}
+
+Your persona: {agent.persona}
+
+Analyze the position and decide your move."""
+
+    start = time.time()
+    try:
+        resp, _attempts = await get_gate().run(lambda: client.chat.completions.create(
+            model=agent.model,
+            messages=[
+                {"role": "system", "content": SOLO_SYSTEM},
+                {"role": "user", "content": user_msg},
+            ],
+            max_tokens=MAX_TOKENS_PROPOSAL,
+            temperature=TEMPERATURE_PROPOSAL,
+        ))
+    except Exception as e:
+        return MoveProposal(
+            agent_role=agent.role, model=agent.model, proposed_move="",
+            reasoning="", confidence=0.0, tokens_used=0,
+            latency_ms=(time.time() - start) * 1000,
+            status=STATUS_API_ERROR, legal=False, raw_response="", error=str(e),
+        )
+
+    latency = (time.time() - start) * 1000
+    content = resp.choices[0].message.content or ""
+    tokens = resp.usage.total_tokens if resp.usage else 0
+
+    move = _parse_move(content, board_fen)
+    status, legal = _classify(move, legal_moves)
+    try:
+        reasoning = json.loads(content).get("reasoning", content[:300])
+    except Exception:
+        reasoning = content[:300]
+
+    return MoveProposal(
+        agent_role=agent.role, model=agent.model, proposed_move=move,
+        reasoning=reasoning, confidence=_extract_confidence(content),
+        tokens_used=tokens, latency_ms=latency, status=status, legal=legal,
+        raw_response=content, error=None,
+    )
+
+
 DISCUSSION_SYSTEM = """You are a chess player in a multi-agent team deliberating on the next move.
 
 You have already proposed a move. You can now see what your teammates proposed and why.
