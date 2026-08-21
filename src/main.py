@@ -22,7 +22,7 @@ from team import build_team
 from tournament import run_round_robin
 from leaderboard import print_leaderboard, load_all_games
 from charts import generate_all_charts
-from config import load_ablations
+from config import load_ablations, set_seed
 from rich.console import Console
 
 console = Console()
@@ -37,6 +37,7 @@ async def main():
     parser.add_argument("--single", action="store_true", help="Run single quick test game")
     parser.add_argument("--charts", action="store_true", help="Generate charts from existing results")
     parser.add_argument("--quiet", action="store_true", help="Minimal output")
+    parser.add_argument("--seed", type=int, default=None, help="Seed for reproducible runs")
     args = parser.parse_args()
 
     if args.leaderboard:
@@ -56,6 +57,8 @@ async def main():
 
     verbose = not args.quiet
 
+    set_seed(args.seed)
+
     if args.single:
         config = load_ablations()
         orgs = config["orgs"]
@@ -69,6 +72,7 @@ async def main():
             max_moves=10,
             monitor_model=monitor_model,
             verbose=verbose,
+            seed=args.seed,
         )
         console.print(f"\nResult: {result.result} by {result.result_reason}")
         console.print(f"White tokens: {result.white_tokens:,} | Black tokens: {result.black_tokens:,}")
@@ -88,6 +92,7 @@ async def main():
             num_games=args.games,
             max_moves=args.moves,
             verbose=verbose,
+            seed=args.seed,
         )
 
     print_leaderboard()

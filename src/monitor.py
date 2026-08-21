@@ -7,7 +7,12 @@ import time
 from dataclasses import dataclass, field
 from openai import AsyncOpenAI
 
-from config import OPENROUTER_API_KEY, OPENROUTER_BASE_URL
+from config import (
+    OPENROUTER_API_KEY,
+    OPENROUTER_BASE_URL,
+    MAX_TOKENS_MONITOR,
+    TEMPERATURE_MONITOR,
+)
 
 
 client = AsyncOpenAI(
@@ -79,8 +84,8 @@ Analyze the deliberation quality and team dynamics."""
                 {"role": "system", "content": MONITOR_SYSTEM},
                 {"role": "user", "content": user_msg},
             ],
-            max_tokens=200,
-            temperature=0.3,
+            max_tokens=MAX_TOKENS_MONITOR,
+            temperature=TEMPERATURE_MONITOR,
         )
         content = resp.choices[0].message.content or ""
 
