@@ -26,7 +26,9 @@ from charts import generate_all_charts
 from config import (
     load_ablations, set_seed, set_active_config,
     REQUESTS_PER_MINUTE, MAX_CONCURRENT_CALLS,
+    new_run_id, set_run_id,
 )
+from report import write_run_artifacts, as_dict
 from throttle import CallGate
 from rich.console import Console
 
@@ -61,6 +63,11 @@ async def main():
                         help="Requests per minute ceiling (0 or omit for the config default)")
     parser.add_argument("--concurrency", type=int, default=None,
                         help="Maximum simultaneous API calls")
+    parser.add_argument("--run-id", default=None,
+                        help="Label for this run (default: UTC timestamp). Reuse it "
+                             "with --resume to continue an interrupted run.")
+    parser.add_argument("--no-report", action="store_true",
+                        help="Skip writing reports/<run_id>/ at the end")
     args = parser.parse_args()
 
     if args.config:
@@ -88,6 +95,9 @@ async def main():
     verbose = not args.quiet
 
     set_seed(args.seed)
+    # Stamped for every run path, so even smoke-test games can be told
+    # apart from real ones in results/.
+    run_id = set_run_id(args.run_id or new_run_id())
 
     if args.positions:
         config = load_ablations()
@@ -110,6 +120,7 @@ async def main():
             f"[bold]{len(positions)} positions from {meta['file']} "
             f"(version {meta['version']}, seed {meta['seed']})[/bold]"
         )
+        console.print(f"[dim]Run {run_id}[/dim]")
         gate = CallGate(
             per_minute=args.rpm if args.rpm else REQUESTS_PER_MINUTE,
             max_concurrent=args.concurrency or MAX_CONCURRENT_CALLS,
@@ -149,6 +160,19 @@ async def main():
             f"{s['rate_limited']:,} rate-limited | {s['total_tokens']:,} tokens | "
             f"{s['elapsed_s']:.0f}s at {s['calls_per_minute']}/min[/dim]"
         )
+
+        if not args.no_report:
+            # Written by default. An artefact that exists only when someone
+            # remembers a flag is not an audit trail.
+            from report import load_games
+            written = write_run_artifacts(
+                run_id, [as_dict(g) for g in load_games(run_id=run_id)])
+            console.print(
+                f"\n[green]Wrote {written['turn_rows']} turn rows and a run report "
+                f"to {written['dir']}[/green]\n"
+                f"[dim]Next: backfill.py for move quality, then solo_probe.py for "
+                f"Collaborative Advantage, then report.py --run-id {run_id}[/dim]"
+            )
         return
 
     if args.single:

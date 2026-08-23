@@ -9,6 +9,7 @@ from pathlib import Path
 PROJECT_ROOT = Path(__file__).parent.parent
 CONFIGS_DIR = PROJECT_ROOT / "configs"
 RESULTS_DIR = PROJECT_ROOT / "results"
+REPORTS_DIR = PROJECT_ROOT / "reports"
 
 
 def _load_dotenv():
@@ -124,6 +125,13 @@ HARNESS_PARAMS = {
 # REQUESTS_PER_MINUTE (or set it to None) on paid tiers.
 # ---------------------------------------------------------------------------
 
+# Raw model output is the JSON blob that move/reasoning/confidence were parsed
+# out of, so on a successful parse it is pure duplication — 27% of a game
+# record by measurement. It is retained whenever parsing did *not* fully
+# succeed, which is exactly when it has debugging value. Set to True to keep
+# everything, e.g. when building a rubric that needs untouched model output.
+RETAIN_RAW_RESPONSES = os.environ.get("RETAIN_RAW_RESPONSES", "").lower() in ("1", "true", "yes")
+
 MAX_RETRIES = 5
 RETRY_BASE_DELAY_S = 2.0
 RETRY_MAX_DELAY_S = 60.0
@@ -188,9 +196,31 @@ def config_fingerprint(extra: dict | None = None) -> str:
     return hashlib.sha256(blob.encode()).hexdigest()[:16]
 
 
+# Identifies one invocation. Without it a report cannot tell a second run of
+# the same config from the first, because both land in the same results/
+# directory under the same fingerprint.
+_RUN_ID = None
+
+
+def set_run_id(run_id: str) -> str:
+    global _RUN_ID
+    _RUN_ID = run_id
+    return run_id
+
+
+def get_run_id():
+    return _RUN_ID
+
+
+def new_run_id() -> str:
+    from datetime import datetime, timezone
+    return datetime.now(timezone.utc).strftime("%Y%m%dT%H%M%SZ")
+
+
 def build_manifest(seed: int | None = None, extra: dict | None = None) -> dict:
     """Run manifest embedded in every saved game."""
     manifest = {
+        "run_id": _RUN_ID,
         # 1: original. 2: integrity fields + per-turn records (PR 1).
         # 3: deliberation rounds, drift, and sampled start positions.
         "schema_version": 3,

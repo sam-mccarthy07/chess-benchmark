@@ -186,6 +186,50 @@ the stated counterfactual uncontaminated by the outcome, at the cost that the
 agent cannot explain a delta it has not yet seen — so the prompt asks why its
 solo move differs from where the group is heading, which is visible to it.
 
+## Runs and artefacts
+
+Every run is stamped with a `run_id` (UTC timestamp by default) recorded in each
+game. `results/` accumulates across runs, so without it a report generated later
+silently includes games the original run never saw.
+
+```bash
+python3 src/main.py --config configs/pilot.json --positions positions/positions_v1.json \
+                    --limit-positions 3 --resume
+
+python3 src/backfill.py   --run-id 20260101T120000Z    # move quality
+python3 src/solo_probe.py --run-id 20260101T120000Z    # Collaborative Advantage
+python3 src/report.py --list-runs
+```
+
+A run writes `reports/<run_id>/` automatically when it finishes — `run_report.md`,
+`turns.csv`, and `games.txt`. An artefact that exists only when someone remembers
+a flag is not an audit trail. Pass `--no-report` to skip.
+
+Scope the offline passes with `--run-id` too. `solo_probe.py` spends API calls,
+so re-processing an earlier run is wasted money rather than just wasted time.
+
+**`results/` is gitignored; `reports/` is committed.** Raw game records are local
+artefacts — a 40-game pilot is ~7MB and a full grid would be hundreds. The
+committed record is the report plus `turns.csv`, which carries every analysable
+field. Raw games are reproducible from the configs and position set, and belong
+in a data release rather than in git history.
+
+### Record size
+
+Roughly 7KB per turn, so ~140KB for a 20-turn game. Two things that were pure
+duplication have been removed, cutting about a quarter:
+
+- `raw_response` is the JSON blob that `move`/`reasoning`/`confidence` were
+  parsed out of. It is dropped on a clean parse and **kept whenever anything
+  went wrong** — illegal, unparseable, API error, or a model that ignored the
+  public/private split. Set `RETAIN_RAW_RESPONSES=1` to keep everything.
+- The final round used to be stored twice, once inside `rounds` and again as
+  `proposals`. Consumers now derive it via `metrics.final_proposals()`.
+
+Derived *summaries* such as `drift.by_agent` and the `integrity` counts are kept
+even though they are recomputable: they make a game file readable without
+running code, which is worth more than the ~8% they cost.
+
 ## Reports
 
 Metrics are computed once in `analysis.py`; every report is a view over that
