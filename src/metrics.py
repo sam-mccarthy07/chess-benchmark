@@ -14,7 +14,13 @@ A positive delta_selection means the team held a better move and did not play
 it. It is negative only when the submitter played something nobody proposed
 that beat every proposal — worth knowing, so it is not clamped.
 
-Collaborative Advantage needs solo baseline runs and arrives with those.
+Collaborative Advantage sits on top of both, comparing the team's decision
+against what its best member would have played alone:
+
+    CA = min_i CPL_solo(i) - CPL_team
+
+It requires solo probes (see solo_probe.py); without them the block is absent
+rather than zero-filled.
 """
 
 from __future__ import annotations
@@ -42,8 +48,13 @@ def _ceiling_by_round(oracle: Oracle, board: chess.Board, turn: dict) -> list[Op
     return out
 
 
-def analyse_turn(oracle: Oracle, turn: dict) -> dict:
-    """Oracle metrics for one turn of a schema-v2 game record."""
+def analyse_turn(oracle: Oracle, turn: dict, probes: Optional[dict] = None) -> dict:
+    """Oracle metrics for one turn.
+
+    `probes` is that turn's solo-probe record when one exists; without it
+    the collaborative-advantage and revealed-influence blocks are simply
+    absent rather than filled with placeholders.
+    """
     board = chess.Board(turn["fen_before"])
 
     best_cp, engine_best = oracle.best_move(board)
@@ -123,6 +134,8 @@ def analyse_turn(oracle: Oracle, turn: dict) -> dict:
     }
     # Needs the metrics above, so it is attached rather than inlined.
     out["influence_quality"] = influence_quality(oracle, turn, out)
+    out["collaborative_advantage"] = collaborative_advantage(oracle, turn, out, probes)
+    out["revealed_influence"] = revealed_influence(turn, probes)
     return out
 
 
@@ -138,10 +151,13 @@ def influence_metrics(turn: dict) -> dict:
 
     `introspective_gap` is stated minus revealed. Negative means the agent
     under-reports having been moved — silent conformity, where an agent
-    changed position and does not say so. The fully revealed anchor needs
-    actual solo runs and arrives with them; until then IR_proposal stands in,
-    and the gap computed here is stated-vs-round-0, which is weaker but
-    directionally the same quantity.
+    changed position and does not say so.
+
+    The gap computed *here* is stated-vs-round-0, which is the version
+    available with no extra calls. When solo probes exist, `revealed_influence`
+    supplies the stronger anchor (what the agent actually played alone) and
+    should be preferred: a round-0 proposal is still made in a team context,
+    whereas a probe is not.
 
     Unsigned on its own: being moved can be good or bad. Cross with move
     quality via `influence_quality` for direction.
@@ -188,6 +204,94 @@ def influence_metrics(turn: dict) -> dict:
             round(ir_s - ir_p, 3) if (ir_p is not None and ir_s is not None) else None
         ),
         "private_notes_present": len(stated),
+        "by_agent": by_agent,
+    }
+
+
+def collaborative_advantage(
+    oracle: Oracle, turn: dict, turn_metrics: dict, probes: Optional[dict]
+) -> dict:
+    """Did the team play better than its best member would have alone?
+
+        CA = min_i CPL_solo(i) - CPL_team
+
+    Positive means the team beat its best individual member. The literature
+    predicts negative for homogeneous teams — that is the collaboration gap,
+    and reproducing it in a second domain is itself the H1 result.
+
+    Undefined, rather than zero, when the team's decision was illegal or no
+    agent produced a legal solo move: there is no comparison to make, and
+    filling in a number would quietly bias the mean toward whichever side
+    happened to fail.
+    """
+    if not probes:
+        return {}
+
+    cpl_team = turn_metrics.get("cpl_decision")
+    board = chess.Board(turn["fen_before"])
+
+    per_agent = {}
+    for p in probes.get("probes", []):
+        move = p.get("move") or ""
+        if not move or not p.get("legal"):
+            per_agent[p.get("agent_role")] = {"move": move, "cpl": None,
+                                              "status": p.get("status")}
+            continue
+        ev = oracle.evaluate_move(board, move)
+        per_agent[p.get("agent_role")] = {
+            "move": move,
+            "cpl": ev.cpl if ev.legal else None,
+            "status": p.get("status"),
+        }
+
+    solo_cpls = [v["cpl"] for v in per_agent.values() if v["cpl"] is not None]
+    best_solo = min(solo_cpls) if solo_cpls else None
+
+    ca = (best_solo - cpl_team) if (best_solo is not None and cpl_team is not None) else None
+
+    return {
+        "cpl_team": cpl_team,
+        "best_solo_cpl": best_solo,
+        "best_solo_role": (
+            min(
+                (r for r, v in per_agent.items() if v["cpl"] is not None),
+                key=lambda r: per_agent[r]["cpl"],
+            )
+            if solo_cpls else None
+        ),
+        "collaborative_advantage": ca,
+        "team_beat_best_member": (ca > 0) if ca is not None else None,
+        "mean_solo_cpl": round(sum(solo_cpls) / len(solo_cpls), 1) if solo_cpls else None,
+        "by_agent": per_agent,
+    }
+
+
+def revealed_influence(turn: dict, probes: Optional[dict]) -> dict:
+    """ir_revealed: team move vs what the agent actually played alone.
+
+    The true anchor `ir_proposal` stands in for until probes exist. Pairing it
+    with `ir_stated` from the private stream is what turns `introspective_gap`
+    into a real measurement of whether an agent notices being moved.
+    """
+    if not probes:
+        return {}
+
+    decision = (turn.get("decision") or {}).get("submitted_move") or ""
+    if not decision:
+        return {}
+
+    by_agent, flags = {}, []
+    for p in probes.get("probes", []):
+        move = p.get("move") or ""
+        if not move:
+            by_agent[p.get("agent_role")] = {"solo_move": "", "ir_revealed": None}
+            continue
+        ir = move != decision
+        flags.append(ir)
+        by_agent[p.get("agent_role")] = {"solo_move": move, "ir_revealed": ir}
+
+    return {
+        "ir_revealed_rate": round(sum(flags) / len(flags), 3) if flags else None,
         "by_agent": by_agent,
     }
 
