@@ -144,9 +144,21 @@ async def play_game(
             "start_fen": start_fen,
             "position_id": position_id,
             "position_set": position_set,
-            "deliberation_rounds": {
-                white_team.org_id: white_team.deliberation_rounds,
-                black_team.org_id: black_team.deliberation_rounds,
+            # Full condition description for both teams. Recorded here so a
+            # report can describe the experimental cell without reading the
+            # config file, which may have changed since the run — analysis must
+            # not depend on mutable external state.
+            "orgs": {
+                t.org_id: {
+                    "name": t.org_name,
+                    "deliberation_style": t.deliberation_style,
+                    "submitter_rotation": t.submitter_rotation,
+                    "deliberation_rounds": t.deliberation_rounds,
+                    "models": [a.model for a in t.agents],
+                    "roles": [a.role for a in t.agents],
+                    "homogeneous": len({a.model for a in t.agents}) == 1,
+                }
+                for t in (white_team, black_team)
             },
         },
     )
