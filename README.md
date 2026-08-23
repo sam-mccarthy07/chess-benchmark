@@ -186,6 +186,38 @@ the stated counterfactual uncontaminated by the outcome, at the cost that the
 agent cannot explain a delta it has not yet seen — so the prompt asks why its
 solo move differs from where the group is heading, which is visible to it.
 
+## Reports
+
+Metrics are computed once in `analysis.py`; every report is a view over that
+result. Embedding computation in a renderer is how a leaderboard and a report
+end up disagreeing about the same number with no way to tell which is right.
+
+```bash
+python3 src/report.py --run                      # aggregate across games
+python3 src/report.py --run --out run.md         # markdown to a file
+python3 src/report.py --game 2d5e8f8a            # deliberation transcript
+python3 src/report.py --csv analysis/turns.csv   # tidy per-turn export
+```
+
+**Health before findings.** The run report opens with data quality — legal-move
+rate, false consensus, fallbacks, oracle and probe coverage — and only then
+reports Collaborative Advantage and the deltas. A CA computed over a run that
+was 40% illegal moves is not a weak result, it is not a result.
+
+**Games are grouped, never pooled.** Different `config_fingerprint` or position
+set means a different experiment, so each is reported in its own section with
+its own n and intervals.
+
+**Effect sizes and intervals, no p-values.** [[Pre-Registration v1]] applies FDR
+control across four confirmatory hypotheses; significance testing belongs in
+that analysis, not sprayed across every metric in a report. Aggregates always
+carry `n` and an explicit count of what was excluded — silent dropping is how a
+mean ends up biased toward whichever side failed.
+
+The CSV is the substrate for real analysis: one row per `(game, ply, org)` with
+grouping keys and 49 columns, which is the long format the pre-registered
+mixed-effects models need.
+
 ## Testing
 
 ```bash

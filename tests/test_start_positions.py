@@ -154,9 +154,19 @@ class TestManifestProvenance(unittest.TestCase):
         r = play(max_moves=1, start_fen=MIDGAME_FEN, position_id="abc123")
         self.assertGreaterEqual(r.manifest["schema_version"], 3)
 
-    def test_manifest_records_rounds_per_org(self):
+    def test_manifest_describes_each_condition_in_full(self):
+        # Style, rotation, rounds and models all live in the record so a report
+        # can describe the experimental cell without reading a config file that
+        # may have changed since the run.
         r = play(max_moves=1, start_fen=MIDGAME_FEN, position_id="abc123")
-        self.assertIn("deliberation_rounds", r.manifest)
+        orgs = r.manifest["orgs"]
+        self.assertEqual(set(orgs), {"white-org", "black-org"})
+        for meta in orgs.values():
+            self.assertIn("deliberation_style", meta)
+            self.assertIn("submitter_rotation", meta)
+            self.assertIn("deliberation_rounds", meta)
+            self.assertIn("models", meta)
+            self.assertIsInstance(meta["homogeneous"], bool)
 
 
 class TestPositionSetLoading(unittest.TestCase):
