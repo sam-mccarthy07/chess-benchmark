@@ -31,6 +31,7 @@ class GameResult:
     # between-condition comparisons paired rather than independent.
     start_fen: str = ""
     position_id: str = ""
+    run_id: str = ""
     # Run provenance. Games with different fingerprints must not be pooled.
     manifest: dict = field(default_factory=dict)
     # Full per-turn record: proposals, decision, resolution, integrity counters.

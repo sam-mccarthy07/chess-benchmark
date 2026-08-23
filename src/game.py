@@ -22,7 +22,10 @@ from agents import (
 )
 from monitor import analyze_move, MoveAnalysis
 from leaderboard import GameResult, load_all_games, save_game
-from config import load_ablations, build_manifest, set_seed
+from config import (
+    load_ablations, build_manifest, set_seed,
+    RETAIN_RAW_RESPONSES, get_run_id,
+)
 from throttle import BudgetExceeded, set_gate
 
 console = Console()
@@ -74,6 +77,32 @@ def resolve_move(
             f"and no proposal was legal"
         ),
     }
+
+
+def serialise_proposal(p: MoveProposal) -> dict:
+    """Proposal as stored.
+
+    `raw_response` is dropped when the model parsed cleanly and honoured the
+    stream split, because on that path it is the JSON wrapper around fields we
+    already store individually — 27% of a game record by measurement. It is
+    kept whenever anything went wrong, which is exactly when someone would
+    want to read it.
+    """
+    d = asdict(p)
+    clean = p.status == STATUS_OK and p.stream_split in ("split", "n/a")
+    if clean and not RETAIN_RAW_RESPONSES:
+        d["raw_response"] = ""
+        d["raw_response_pruned"] = True
+    return d
+
+
+def serialise_private(n) -> dict:
+    """Private note as stored, under the same retention rule."""
+    d = asdict(n)
+    if n.present and not RETAIN_RAW_RESPONSES:
+        d["raw"] = ""
+        d["raw_pruned"] = True
+    return d
 
 
 def integrity_summary(
@@ -238,7 +267,8 @@ async def play_game(
             # reconstructed. Round 0 is the independent anchor the influence
             # metrics need.
             "rounds": [
-                {"round_index": r.round_index, "proposals": [asdict(p) for p in r.proposals]}
+                {"round_index": r.round_index,
+                 "proposals": [serialise_proposal(p) for p in r.proposals]}
                 for r in rounds
             ],
             # Solo stream: written and read only by the agent that produced it.
@@ -246,12 +276,12 @@ async def play_game(
             # anything rendering the group stream cannot show private content
             # by walking one level too deep.
             "private_notes": [
-                asdict(n) for r in rounds for n in r.private_notes
+                serialise_private(n) for r in rounds for n in r.private_notes
             ],
             "drift": drift_summary(rounds),
-            # Final round, duplicated under the name every decision-side
-            # consumer already reads.
-            "proposals": [asdict(p) for p in proposals],
+            # Deliberately NOT storing the final round again under
+            # "proposals": it was a byte-identical copy of rounds[-1] and 18%
+            # of the record. Consumers derive it via metrics.final_proposals().
             "decision": {
                 "submitted_move": decision.submitted_move,
                 "submitter_role": decision.submitter_role,
@@ -429,6 +459,7 @@ async def play_game(
         pgn=pgn_str,
         start_fen=start_fen or "",
         position_id=position_id or "",
+        run_id=get_run_id() or "",
         manifest=manifest,
         moves=moves,
         integrity_totals=totals,

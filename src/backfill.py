@@ -61,12 +61,22 @@ def main() -> int:
     ap.add_argument("--depth", type=int, default=ENGINE_PARAMS["depth"])
     ap.add_argument("--engine", default=ENGINE_PARAMS["engine_path"])
     ap.add_argument("--force", action="store_true", help="Re-analyse already-analysed games")
+    ap.add_argument("--run-id", help="Only games from this run. results/ accumulates across runs, and without this every earlier run is reprocessed.")
     ap.add_argument("--game", help="Analyse only this game_id")
     args = ap.parse_args()
 
     paths = sorted(RESULTS_DIR.glob("game_*.json"))
     if args.game:
         paths = [p for p in paths if args.game in p.name]
+    if args.run_id:
+        keep = []
+        for p in paths:
+            try:
+                if json.loads(p.read_text()).get("run_id") == args.run_id:
+                    keep.append(p)
+            except Exception:
+                continue
+        paths = keep
     if not paths:
         print("No game files found.")
         return 1

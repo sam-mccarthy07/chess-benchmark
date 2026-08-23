@@ -29,6 +29,7 @@ from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).parent))
 
+from metrics import final_proposals
 from analysis import (
     TURN_COLUMNS, delta_share, group_games, headline_summary,
     health_summary, turn_rows,
@@ -57,10 +58,18 @@ def _fmt_rate(r: dict) -> str:
     return f"{r['rate']:.1%}{ci} ({r.get('count', 0)}/{r['n']})"
 
 
-def load_games(game_id=None):
+def load_games(game_id=None, run_id=None):
+    """Games matching the filters.
+
+    `run_id` is what makes a report reconstructible after the fact: results/
+    accumulates across runs, so without it a report generated later silently
+    includes games the original run never saw.
+    """
     games = load_all_games(warn=False)
     if game_id:
         games = [g for g in games if game_id in (g.game_id or "")]
+    if run_id:
+        games = [g for g in games if (g.run_id or "") == run_id]
     return games
 
 
@@ -259,19 +268,52 @@ def export_csv(games: list[dict], path: Path) -> int:
     return len(rows)
 
 
+def write_run_artifacts(run_id: str, games: list[dict], reports_dir=None) -> dict:
+    """Persist a run's report and tidy export at the moment it finishes.
+
+    An audit trail needs the report as it stood when the run ended.
+    Regenerating it later against an accumulated results/ directory answers a
+    different question, and nothing on disk would say which was which.
+    """
+    from config import REPORTS_DIR
+    base = Path(reports_dir or REPORTS_DIR) / run_id
+    base.mkdir(parents=True, exist_ok=True)
+
+    (base / "run_report.md").write_text(run_report(games))
+    rows = export_csv(games, base / "turns.csv")
+    (base / "games.txt").write_text(
+        "\n".join(sorted(g.get("game_id", "") for g in games)) + "\n")
+    return {"dir": base, "games": len(games), "turn_rows": rows}
+
+
 def main() -> int:
     ap = argparse.ArgumentParser(description="Reports over saved games")
     ap.add_argument("--game", help="Deliberation transcript for one game id")
     ap.add_argument("--run", action="store_true", help="Aggregate report across games")
     ap.add_argument("--csv", type=Path, help="Write tidy per-turn rows here")
     ap.add_argument("--out", type=Path, help="Write the report to a file instead of stdout")
+    ap.add_argument("--run-id", help="Restrict to one run (see reports/ or a game manifest)")
+    ap.add_argument("--list-runs", action="store_true", help="Show runs present in results/")
     args = ap.parse_args()
+
+    if args.list_runs:
+        runs = {}
+        for g in load_all_games(warn=False):
+            key = (g.run_id or "(no run id)", (g.manifest or {}).get("config_fingerprint", "?"))
+            runs[key] = runs.get(key, 0) + 1
+        if not runs:
+            print("No games in results/.")
+            return 1
+        print(f"{'run_id':<22} {'config':<18} {'games':>6}")
+        for (rid, fp), n in sorted(runs.items()):
+            print(f"{rid:<22} {fp:<18} {n:>6}")
+        return 0
 
     if not (args.game or args.run or args.csv):
         ap.print_help()
         return 1
 
-    games = [as_dict(g) for g in load_games(args.game)]
+    games = [as_dict(g) for g in load_games(args.game, args.run_id)]
     if not games:
         print("No matching games in results/.")
         return 1

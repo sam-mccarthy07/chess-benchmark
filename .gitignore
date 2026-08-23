@@ -4,3 +4,10 @@ __pycache__/
 .env
 .venv/
 .DS_Store
+
+# Raw game records. Local run artefacts, not the research record: a 40-game
+# pilot is ~7MB and a full grid would be hundreds. The committed record is
+# reports/<run_id>/ — the markdown report plus turns.csv, which carries every
+# analysable field. Raw games are reproducible from configs + position set,
+# and belong in a data release rather than in git history.
+results/

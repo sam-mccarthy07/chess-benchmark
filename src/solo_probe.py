@@ -135,6 +135,7 @@ async def probe_game(data: dict, config: dict, verbose: bool = True) -> dict:
 
 async def main() -> int:
     ap = argparse.ArgumentParser(description="Probe each agent's solo move on played positions")
+    ap.add_argument("--run-id", help="Only games from this run. results/ accumulates across runs, and without this every earlier run is reprocessed.")
     ap.add_argument("--game", help="Only this game_id")
     ap.add_argument("--force", action="store_true", help="Re-probe games already probed")
     ap.add_argument("--max-calls", type=int, default=None)
@@ -147,6 +148,15 @@ async def main() -> int:
     paths = sorted(RESULTS_DIR.glob("game_*.json"))
     if args.game:
         paths = [p for p in paths if args.game in p.name]
+    if args.run_id:
+        keep = []
+        for p in paths:
+            try:
+                if json.loads(p.read_text()).get("run_id") == args.run_id:
+                    keep.append(p)
+            except Exception:
+                continue
+        paths = keep
     if not paths:
         print("No game files found.")
         return 1

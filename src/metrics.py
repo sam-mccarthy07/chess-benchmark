@@ -48,6 +48,20 @@ def _ceiling_by_round(oracle: Oracle, board: chess.Board, turn: dict) -> list[Op
     return out
 
 
+def final_proposals(turn: dict) -> list[dict]:
+    """The slate the submitter chose from.
+
+    Derived from the last round rather than stored separately: it used to be
+    written twice, which was 18% of a game record for no information gain.
+    Falls back to a stored `proposals` key for records written before that
+    change.
+    """
+    rounds = turn.get("rounds") or []
+    if rounds:
+        return rounds[-1].get("proposals", [])
+    return turn.get("proposals", [])
+
+
 def analyse_turn(oracle: Oracle, turn: dict, probes: Optional[dict] = None) -> dict:
     """Oracle metrics for one turn.
 
@@ -59,7 +73,7 @@ def analyse_turn(oracle: Oracle, turn: dict, probes: Optional[dict] = None) -> d
 
     best_cp, engine_best = oracle.best_move(board)
 
-    proposals = turn.get("proposals", [])
+    proposals = final_proposals(turn)
     candidate_moves = [p["proposed_move"] for p in proposals if p.get("proposed_move")]
 
     decision = turn.get("decision", {})
