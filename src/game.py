@@ -497,7 +497,7 @@ async def run_position_series(
     # Rate-limited runs are long, so a run must be resumable. Completion is
     # keyed on (position, white org, black org) rather than a counter, so
     # resuming after an interruption cannot silently replay or skip a cell.
-    done = completed_games() if resume else set()
+    done = completed_games(get_run_id()) if resume else set()
     if resume and done and verbose:
         console.print(f"[dim]Resuming: {len(done)} games already on disk[/dim]")
 
@@ -546,16 +546,27 @@ async def run_position_series(
     return results
 
 
-def completed_games() -> set[tuple[str, str, str]]:
-    """(position_id, white_org, black_org) for every game already saved.
+def completed_games(run_id: str | None = None) -> set[tuple[str, str, str]]:
+    """(position_id, white_org, black_org) for games already saved by this run.
 
     Read from disk rather than tracked in memory so a resumed run sees work
     done by an earlier process.
+
+    Scoped to `run_id`, because results/ accumulates across runs and the key
+    carries no run identity of its own. Unscoped, resuming silently skips any
+    position an earlier run happened to play with the same org pair — including
+    runs made under a different parser or config fingerprint, whose games are
+    not interchangeable with this one's. The result is a short run with a hole
+    in its position set and nothing on disk saying so. Passing None restores
+    the old cross-run behaviour and is not what --resume wants.
     """
     out = set()
     for g in load_all_games(warn=False):
-        if g.position_id:
-            out.add((g.position_id, g.white_org, g.black_org))
+        if not g.position_id:
+            continue
+        if run_id is not None and (g.run_id or "") != run_id:
+            continue
+        out.add((g.position_id, g.white_org, g.black_org))
     return out
 
 
