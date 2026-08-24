@@ -285,3 +285,99 @@ class TestInfluenceQuality(unittest.TestCase):
 
 if __name__ == "__main__":
     unittest.main()
+
+
+class TestFenceStripping(unittest.TestCase):
+    """Models that wrap JSON in a markdown fence must not lose their private
+    stream.
+
+    Regression for pilot-01, where `json.loads` was called on raw model output:
+    mistral-small lost 71 of 80 private notes and gemini-flash-lite 70 of 80,
+    while qwen — which emits bare JSON — lost none. Because the loss tracked
+    model identity, the H4 introspective gap would have been computed almost
+    entirely from one model with no error raised anywhere.
+    """
+
+    # Reproduced verbatim from a pilot-01 record.
+    FENCED = (
+        '```json\n'
+        '{\n'
+        '  "public": {\n'
+        '    "move": "c7d6",\n'
+        '    "reasoning": "This move supports the center.",\n'
+        '    "confidence": 0.85\n'
+        '  },\n'
+        '  "private": {\n'
+        '    "solo_move": "c7c5",\n'
+        '    "solo_rationale": "The original plan was sharper.",\n'
+        '    "process_note": "Advisors are converging too quickly."\n'
+        '  }\n'
+        '}\n'
+        '```'
+    )
+
+    def test_fenced_response_splits(self):
+        public, private, status = _split_streams(self.FENCED)
+        self.assertEqual(status, "split")
+        self.assertEqual(json.loads(public)["move"], "c7d6")
+        self.assertEqual(json.loads(private)["solo_move"], "c7c5")
+
+    def test_fenced_private_note_parses(self):
+        _, private, _ = _split_streams(self.FENCED)
+        # Black to move after 1.e4, where both c7c5 and c7d6 are meaningful:
+        # c7c5 is legal, so solo_move_legal must come back True.
+        board = chess.Board(
+            "rnbqkbnr/pppppppp/8/8/4P3/8/PPPP1PPP/RNBQKBNR b KQkq - 0 1")
+        note = _parse_private(
+            private, "critic", 1, board.fen(),
+            [m.uci() for m in board.legal_moves])
+        self.assertTrue(note.present)
+        self.assertEqual(note.solo_move, "c7c5")
+        self.assertTrue(note.solo_move_legal)
+        self.assertIn("sharper", note.solo_rationale)
+
+    def test_bare_json_still_splits(self):
+        """The fix must not depend on a fence being present."""
+        bare = json.dumps({
+            "public": {"move": "e2e4", "reasoning": "r", "confidence": 0.5},
+            "private": {"solo_move": "d2d4", "solo_rationale": "s",
+                        "process_note": "p"},
+        })
+        public, private, status = _split_streams(bare)
+        self.assertEqual(status, "split")
+        self.assertEqual(json.loads(private)["solo_move"], "d2d4")
+
+    def test_prose_is_left_alone(self):
+        """Unfenced non-JSON is still 'unparsed'. Stripping unwraps; it never
+        invents structure, and a model that ignored the contract must still
+        show up as having ignored it."""
+        _, private, status = _split_streams("I think I'll play e2e4, actually.")
+        self.assertEqual(status, "unparsed")
+        self.assertEqual(private, "")
+
+    def test_no_private_block_stays_flat(self):
+        """A fenced response with only a public half must not fabricate a
+        private one."""
+        fenced_flat = '```json\n{"move": "e2e4", "confidence": 0.6}\n```'
+        _, private, status = _split_streams(fenced_flat)
+        self.assertEqual(status, "flat")
+        self.assertEqual(private, "")
+
+    def test_reasoning_is_extracted_not_truncated(self):
+        """The same bare json.loads bug put the raw fenced blob into the
+        reasoning field, truncated at 300 chars — damaging the qualitative
+        corpus E3 and the rubric protocol both read."""
+        public, _, _ = _split_streams(self.FENCED)
+        data = json.loads(agents_mod._strip_fence(public))
+        self.assertEqual(data["reasoning"], "This move supports the center.")
+        self.assertFalse(data["reasoning"].startswith("```"))
+
+    def test_confidence_survives_fence(self):
+        public, _, _ = _split_streams(self.FENCED)
+        self.assertAlmostEqual(agents_mod._extract_confidence(public), 0.85)
+
+    def test_fence_without_language_tag(self):
+        fenced = '```\n{"public": {"move": "e2e4"}, "private": {"solo_move": "d2d4"}}\n```'
+        _, private, status = _split_streams(fenced)
+        self.assertEqual(status, "split")
+        self.assertEqual(json.loads(private)["solo_move"], "d2d4")

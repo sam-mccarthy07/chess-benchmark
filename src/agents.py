@@ -125,6 +125,35 @@ client = AsyncOpenAI(
 )
 
 
+def _strip_fence(text: str) -> str:
+    """Remove a markdown code fence wrapped around a JSON body.
+
+    Models are asked for bare JSON; several reliably wrap it in ```json ...```
+    anyway. `json.loads` then throws and every caller silently degrades:
+    `_split_streams` reports "unparsed" and discards a well-formed private
+    block, and the reasoning parsers substitute a 300-character slice of the
+    raw response.
+
+    Measured on pilot-01, this cost 141 of 240 private notes — 71/80 from
+    mistral-small and 70/80 from gemini-flash-lite, against 0/80 from qwen,
+    which happens to emit bare JSON. Because the loss tracked model identity,
+    it would have made the H4 introspective gap a qwen-only measurement while
+    every other number looked healthy.
+
+    A fence is a formatting habit, not a refusal to answer, so it is stripped
+    rather than counted as a parse failure. Anything that is not fenced is
+    returned untouched — this never rewrites content, only unwraps it.
+    """
+    s = text.strip()
+    if not s.startswith("```"):
+        return text
+    s = re.sub(r"^```[A-Za-z0-9_+-]*[ \t]*\r?\n?", "", s)
+    s = s.rstrip()
+    if s.endswith("```"):
+        s = s[:-3]
+    return s.strip()
+
+
 def _parse_move(text: str, board_fen: str = "") -> str:
     """Best-effort extraction of the move the model intended.
 
@@ -138,7 +167,7 @@ def _parse_move(text: str, board_fen: str = "") -> str:
 
     # Structured JSON response is the documented contract.
     try:
-        data = json.loads(text)
+        data = json.loads(_strip_fence(text))
         if isinstance(data, dict):
             v = str(data.get("move", "")).strip()
             if v:
@@ -195,7 +224,7 @@ def _split_streams(text: str) -> tuple[str, str, str]:
     invented), or "unparsed" when it was not JSON at all.
     """
     try:
-        data = json.loads(text)
+        data = json.loads(_strip_fence(text))
     except Exception:
         return text, "", "unparsed"
 
@@ -251,7 +280,7 @@ def _extract_confidence(text: str) -> float:
     """Extract confidence score. Defaults to 0.5 when absent — a neutral prior,
     not the previous 0.7, which quietly inflated unstated confidence."""
     try:
-        data = json.loads(text)
+        data = json.loads(_strip_fence(text))
         if isinstance(data, dict) and "confidence" in data:
             return min(1.0, max(0.0, float(data["confidence"])))
     except Exception:
@@ -348,7 +377,7 @@ Analyze the position and propose your best move."""
     status, legal = _classify(move, legal_moves)
 
     try:
-        data = json.loads(content)
+        data = json.loads(_strip_fence(content))
         reasoning = data.get("reasoning", content[:300])
     except Exception:
         reasoning = content[:300]
@@ -437,7 +466,7 @@ Analyze the position and decide your move."""
     move = _parse_move(content, board_fen)
     status, legal = _classify(move, legal_moves)
     try:
-        reasoning = json.loads(content).get("reasoning", content[:300])
+        reasoning = json.loads(_strip_fence(content)).get("reasoning", content[:300])
     except Exception:
         reasoning = content[:300]
 
@@ -573,7 +602,7 @@ State your move for this round."""
     private = _parse_private(private_json, agent.role, round_index, board_fen, legal_moves)
 
     try:
-        data = json.loads(public_json)
+        data = json.loads(_strip_fence(public_json))
         reasoning = data.get("reasoning", public_json[:300])
     except Exception:
         reasoning = public_json[:300]
@@ -688,7 +717,7 @@ Select the final move for your team."""
     status, legal = _classify(move, legal_moves)
 
     try:
-        data = json.loads(content)
+        data = json.loads(_strip_fence(content))
         rationale = data.get("rationale", content[:300])
     except Exception:
         rationale = content[:300]
