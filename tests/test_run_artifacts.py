@@ -165,5 +165,44 @@ class TestArtifactPersistence(unittest.TestCase):
         self.assertIn("1 / 2 / 1", text, "should report one game")
 
 
+class TestTranscriptPersistence(unittest.TestCase):
+    """Every game gets a transcript, without anyone asking for one.
+
+    results/ is gitignored, so without this the qualitative record exists only
+    on the machine that ran the games. turns.csv carries no text at all: it can
+    say a turn converged and ratified an illegal move, but not how the team
+    talked itself there — which Build Plan §3.5 makes a first-class object of
+    study, and which E3 and the rubric protocol both read.
+    """
+
+    def setUp(self):
+        self.tmp = Path(tempfile.mkdtemp())
+
+    def test_a_transcript_is_written_per_game(self):
+        out = write_run_artifacts("run-1", [_game("g1"), _game("g2")], reports_dir=self.tmp)
+        base = out["dir"]
+        self.assertTrue((base / "game_g1.md").is_file())
+        self.assertTrue((base / "game_g2.md").is_file())
+        self.assertEqual(out["transcripts"], 2)
+
+    def test_transcript_contains_the_dialogue(self):
+        out = write_run_artifacts("run-1", [_game("g1")], reports_dir=self.tmp)
+        text = (out["dir"] / "game_g1.md").read_text()
+        self.assertIn("Round 0 (independent)", text)
+        self.assertIn("Decision", text)
+
+    def test_reasoning_is_not_truncated(self):
+        """The display caps (220/180/300) cut compliant output: measured on
+        pilot-02, 80% of proposal reasoning, 73% of private rationales and 55%
+        of decision rationales were being clipped mid-sentence. The prompts ask
+        for 2-3 sentences and the models comply; the renderer was the problem."""
+        long_reason = "Sentence one about the position. " * 12  # ~400 chars
+        g = _game("g1")
+        g["moves"][0]["rounds"][0]["proposals"][0]["reasoning"] = long_reason
+        out = write_run_artifacts("run-1", [g], reports_dir=self.tmp)
+        text = (out["dir"] / "game_g1.md").read_text()
+        self.assertIn(long_reason.strip(), text)
+
+
 if __name__ == "__main__":
     unittest.main()
