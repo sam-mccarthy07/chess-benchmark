@@ -204,6 +204,48 @@ class TestManifest(unittest.TestCase):
             HARNESS_PARAMS["temperature_proposal"] = original
         self.assertEqual(before, config_fingerprint())
 
+    def test_colour_swap_and_position_do_not_change_fingerprint(self):
+        """The paired design must survive into the report.
+
+        Pre-Registration v1 §0.2 has every condition play the same positions
+        with colours swapped, so pairs can be compared. Reports never pool
+        across fingerprints, so if position identity or colour assignment
+        entered the hash, each game would become its own condition — a
+        20-position, 2-colour run reporting 40 cells of n=1, with every other
+        number still looking healthy. Caught in pilot-01, where one position
+        played twice produced two fingerprints.
+        """
+        base = {"max_moves": 10, "position_set": {"version": "v1"}}
+        white_first = config_fingerprint(
+            {**base, "white_org": "alpha", "black_org": "beta",
+             "position_id": "pos1", "start_fen": "fen1"})
+        colours_swapped = config_fingerprint(
+            {**base, "white_org": "beta", "black_org": "alpha",
+             "position_id": "pos1", "start_fen": "fen1"})
+        other_position = config_fingerprint(
+            {**base, "white_org": "alpha", "black_org": "beta",
+             "position_id": "pos2", "start_fen": "fen2"})
+
+        self.assertEqual(white_first, colours_swapped)
+        self.assertEqual(white_first, other_position)
+
+    def test_fingerprint_still_separates_position_sets(self):
+        """Which set you sampled from is a real design difference, unlike
+        which member of it you drew. Guards the fix above from over-reaching."""
+        v1 = config_fingerprint({"position_set": {"version": "v1"}})
+        v2 = config_fingerprint({"position_set": {"version": "v2"}})
+        self.assertNotEqual(v1, v2)
+
+    def test_manifest_still_records_position_and_colours(self):
+        """Excluded from the hash, but never from the record — analysis needs
+        both as covariates."""
+        m = build_manifest(extra={"white_org": "alpha", "black_org": "beta",
+                                  "position_id": "pos1", "start_fen": "fen1"})
+        self.assertEqual(m["white_org"], "alpha")
+        self.assertEqual(m["black_org"], "beta")
+        self.assertEqual(m["position_id"], "pos1")
+        self.assertEqual(m["start_fen"], "fen1")
+
     def test_manifest_records_seed_and_fingerprint(self):
         m = build_manifest(seed=42)
         self.assertEqual(m["seed"], 42)

@@ -179,11 +179,33 @@ def set_seed(seed: int | None) -> int | None:
     return seed
 
 
+# Per-game identity: recorded in the manifest, deliberately NOT hashed into
+# config_fingerprint.
+#
+# Which position a game started from, and which side each org took, are
+# *within-design* variables — the paired design in Pre-Registration v1 §0.2
+# requires every condition to play the same position set with colours swapped,
+# and then to be compared as pairs. Hashing them gives every position and every
+# colour assignment its own fingerprint; since reports never pool across
+# fingerprints, that silently dissolves the design into singleton cells (a
+# 20-position, 2-colour run would report 40 cells of n=1) while every other
+# number still looks healthy.
+#
+# `position_set` stays in the hash on purpose: two different *released sets*
+# are genuinely different experiments and must never pool. The distinction is
+# which set you sampled from, not which member of it you drew.
+FINGERPRINT_EXCLUDED_KEYS = ("white_org", "black_org", "start_fen", "position_id")
+
+
 def config_fingerprint(extra: dict | None = None) -> str:
     """Stable hash over everything that can change a result.
 
     Covers the ablation config, harness parameters and prompt versions. Two
     runs with the same fingerprint are poolable; two runs without are not.
+
+    Per-game identity (FINGERPRINT_EXCLUDED_KEYS) is stripped before hashing:
+    it varies *by design* within a condition, so including it would make every
+    game its own condition.
     """
     payload = {
         "config_file": _ACTIVE_CONFIG.name,
@@ -191,7 +213,9 @@ def config_fingerprint(extra: dict | None = None) -> str:
         "harness": HARNESS_PARAMS,
     }
     if extra:
-        payload["extra"] = extra
+        payload["extra"] = {
+            k: v for k, v in extra.items() if k not in FINGERPRINT_EXCLUDED_KEYS
+        }
     blob = json.dumps(payload, sort_keys=True, separators=(",", ":"))
     return hashlib.sha256(blob.encode()).hexdigest()[:16]
 
