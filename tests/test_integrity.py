@@ -249,6 +249,25 @@ class TestManifest(unittest.TestCase):
         self.assertEqual(m["position_id"], "pos1")
         self.assertEqual(m["start_fen"], "fen1")
 
+    def test_manifest_records_raw_retention(self):
+        """Whether a run kept raw model output cannot be inferred afterwards
+        from a record whose raw fields are simply absent, so it is recorded.
+
+        Not in the fingerprint: retention changes what was stored, not what the
+        models did, so two runs differing only in this are the same experiment.
+        """
+        m = build_manifest(seed=1)
+        self.assertIn("retained_raw_responses", m)
+        self.assertIsInstance(m["retained_raw_responses"], bool)
+
+    def test_raw_retention_defaults_on(self):
+        """Default flipped in PR 13. Raw output is only 'duplication' given the
+        parser that produced the parsed fields — PR 11 changed that parser and
+        the pre-PR-11 records cannot be re-derived. It is also the corpus the
+        Build Plan §6 rubric protocol needs to hand-label."""
+        import config as config_mod
+        self.assertTrue(config_mod.RETAIN_RAW_RESPONSES)
+
     def test_manifest_records_seed_and_fingerprint(self):
         m = build_manifest(seed=42)
         self.assertEqual(m["seed"], 42)
