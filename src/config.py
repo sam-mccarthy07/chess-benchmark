@@ -1,5 +1,6 @@
 """Configuration and constants for chess benchmark."""
 
+import ast
 import hashlib
 import json
 import os
@@ -197,6 +198,60 @@ def set_seed(seed: int | None) -> int | None:
 FINGERPRINT_EXCLUDED_KEYS = ("white_org", "black_org", "start_fen", "position_id")
 
 
+# The module that turns a model response into a record. Its behaviour decides
+# what the data *is* — not merely how the run was configured — so it belongs in
+# the fingerprint alongside the config. PR 11 is the worked example: fixing
+# fenced-JSON parsing changed private-note capture from 41% to 97% with no
+# config change at all, so without this the two runs would have carried the
+# same fingerprint and been pooled into one average.
+PARSER_MODULE = PROJECT_ROOT / "src" / "agents.py"
+
+
+def _semantic_source_hash(source: str) -> str:
+    """Hash what a module *does*, ignoring how it is written.
+
+    Hashing the raw file text would work, but it splits the dataset on a typo
+    in a comment: any edit at all would declare every prior game unpoolable.
+    That trades one silent failure for a noisy one, and a fingerprint people
+    learn to ignore is no better than one that misses things.
+
+    So the source is parsed to an AST, docstrings are dropped, and the tree is
+    dumped without line numbers. Comments never reach the AST. Reformatting,
+    re-wrapping and prose edits therefore leave the hash alone, while any
+    change to executable logic changes it.
+
+    Caveat: `ast.dump` output is not guaranteed stable across Python versions,
+    so a interpreter upgrade can shift this hash without any code change. That
+    errs toward over-splitting — the safe direction, since it refuses to pool
+    rather than pooling wrongly — but record the Python version with a release.
+    """
+    tree = ast.parse(source)
+    for node in ast.walk(tree):
+        if not isinstance(
+            node, (ast.Module, ast.ClassDef, ast.FunctionDef, ast.AsyncFunctionDef)
+        ):
+            continue
+        body = node.body
+        if (
+            body
+            and isinstance(body[0], ast.Expr)
+            and isinstance(body[0].value, ast.Constant)
+            and isinstance(body[0].value.value, str)
+        ):
+            node.body = body[1:]
+    return hashlib.sha256(ast.dump(tree).encode()).hexdigest()[:16]
+
+
+def parser_fingerprint() -> str:
+    """Behavioural hash of the response-parsing module.
+
+    Deliberately not wrapped in a try/except returning "unknown": a fingerprint
+    that silently degrades to a constant is exactly the failure this exists to
+    prevent, because every run would then share it and pool.
+    """
+    return _semantic_source_hash(PARSER_MODULE.read_text(encoding="utf-8"))
+
+
 def config_fingerprint(extra: dict | None = None) -> str:
     """Stable hash over everything that can change a result.
 
@@ -211,6 +266,7 @@ def config_fingerprint(extra: dict | None = None) -> str:
         "config_file": _ACTIVE_CONFIG.name,
         "ablations": load_ablations(),
         "harness": HARNESS_PARAMS,
+        "parser": parser_fingerprint(),
     }
     if extra:
         payload["extra"] = {
@@ -249,6 +305,9 @@ def build_manifest(seed: int | None = None, extra: dict | None = None) -> dict:
         # 3: deliberation rounds, drift, and sampled start positions.
         "schema_version": 3,
         "config_fingerprint": config_fingerprint(extra),
+        # Surfaced separately as well as folded into the fingerprint above, so
+        # a reader can see *which* input changed when two runs will not pool.
+        "parser_fingerprint": parser_fingerprint(),
         "harness": HARNESS_PARAMS,
         "seed": seed,
     }

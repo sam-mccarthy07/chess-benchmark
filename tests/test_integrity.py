@@ -28,7 +28,10 @@ from agents import (
     STATUS_API_ERROR,
 )
 from game import resolve_move, integrity_summary
-from config import config_fingerprint, build_manifest, HARNESS_PARAMS
+from config import (
+    config_fingerprint, build_manifest, HARNESS_PARAMS,
+    parser_fingerprint, _semantic_source_hash,
+)
 
 
 START_FEN = chess.Board().fen()
@@ -258,3 +261,56 @@ class TestManifest(unittest.TestCase):
 
 if __name__ == "__main__":
     unittest.main()
+
+
+class TestParserFingerprint(unittest.TestCase):
+    """The fingerprint must cover the code that produces the record, not only
+    the settings the run was configured with.
+
+    PR 11 is the worked example: fixing fenced-JSON parsing moved private-note
+    capture from 41% to 97% with no config change. Without the parser in the
+    hash, those two runs carry the same fingerprint and `report.py` pools a
+    crippled run with a healthy one into a single average, intervals and all.
+    """
+
+    def test_cosmetic_edits_do_not_change_the_hash(self):
+        """Hashing raw file text would split the dataset on a comment typo.
+        A fingerprint that fires on everything gets ignored, which is its own
+        failure mode."""
+        a = _semantic_source_hash(
+            "def f(x):\n"
+            "    '''Original docstring.'''\n"
+            "    # a comment\n"
+            "    return x + 1\n"
+        )
+        b = _semantic_source_hash(
+            "def f(x):\n"
+            "    '''Completely rewritten prose, much longer than before.'''\n"
+            "    # an entirely different comment\n"
+            "\n"
+            "    return x + 1\n"
+        )
+        self.assertEqual(a, b)
+
+    def test_behaviour_changes_do_change_the_hash(self):
+        a = _semantic_source_hash("def f(x):\n    return x + 1\n")
+        b = _semantic_source_hash("def f(x):\n    return x + 2\n")
+        self.assertNotEqual(a, b)
+
+    def test_the_actual_pr11_fix_would_have_been_caught(self):
+        """The concrete regression: routing a parse through _strip_fence is a
+        behavioural change and must split the fingerprint."""
+        before = _semantic_source_hash("def g(t):\n    return json.loads(t)\n")
+        after = _semantic_source_hash("def g(t):\n    return json.loads(_strip_fence(t))\n")
+        self.assertNotEqual(before, after)
+
+    def test_parser_fingerprint_reads_the_real_module(self):
+        fp = parser_fingerprint()
+        self.assertEqual(len(fp), 16)
+        self.assertEqual(fp, parser_fingerprint())  # stable across calls
+
+    def test_manifest_surfaces_parser_fingerprint_separately(self):
+        """Folded into config_fingerprint *and* recorded on its own, so a
+        reader can see which input changed when two runs will not pool."""
+        m = build_manifest(seed=1)
+        self.assertEqual(m["parser_fingerprint"], parser_fingerprint())
