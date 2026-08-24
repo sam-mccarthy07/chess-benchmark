@@ -130,7 +130,7 @@ def game_report(game: dict) -> str:
                             cpl = f" · {pp['cpl']}cp loss"
                 out.append(f"- `{p.get('proposed_move') or '—'}`{mark}{cpl} "
                            f"— **{p.get('agent_role')}** ({p.get('confidence', 0):.2f}): "
-                           f"{(p.get('reasoning') or '').strip()[:220]}")
+                           f"{(p.get('reasoning') or '').strip()}")
             out.append("")
 
         private = [n for n in (turn.get("private_notes") or []) if n.get("present")]
@@ -139,7 +139,13 @@ def game_report(game: dict) -> str:
             for n in private:
                 solo = n.get("solo_move") or "—"
                 out.append(f"- **{n.get('agent_role')}** would play `{solo}` alone"
-                           f"{' · ' + n['solo_rationale'].strip()[:180] if n.get('solo_rationale') else ''}")
+                           f"{' · ' + n['solo_rationale'].strip() if n.get('solo_rationale') else ''}")
+                # The agent's read on the deliberation itself. Collected since
+                # PR 6 and stored, but never rendered until now — it is the
+                # half of the private stream that speaks to E3 (public argument
+                # vs private assessment) rather than to the counterfactual.
+                if n.get("process_note"):
+                    out.append(f"  - *on the discussion:* {n['process_note'].strip()}")
             out.append("")
 
         if probes.get(turn.get("ply")):
@@ -154,7 +160,7 @@ def game_report(game: dict) -> str:
                    f"by {dec.get('submitter_role')}"
                    f"{' · OFF-SLATE' if integ.get('off_slate') else ''}")
         if dec.get("rationale"):
-            out.append(f"> {dec['rationale'].strip()[:300]}")
+            out.append(f"> {dec['rationale'].strip()}")
         if res.get("method") and res["method"] != "as_decided":
             out.append(f"\n⚠️ **Resolution**: played `{res.get('played_move')}` — {res.get('note')}")
 
@@ -283,7 +289,28 @@ def write_run_artifacts(run_id: str, games: list[dict], reports_dir=None) -> dic
     rows = export_csv(games, base / "turns.csv")
     (base / "games.txt").write_text(
         "\n".join(sorted(g.get("game_id", "") for g in games)) + "\n")
-    return {"dir": base, "games": len(games), "turn_rows": rows}
+
+    # Transcripts are written for every game, not on request. results/ is
+    # gitignored, so without this the qualitative record — every word the
+    # models actually said — exists only on the machine that ran the games,
+    # and a collaborator cloning the repo gets metrics with nothing behind
+    # them. turns.csv carries no text at all: it can say a turn converged and
+    # ratified an illegal move, but not how the team talked itself there,
+    # which Build Plan §3.5 makes a first-class object of study.
+    transcripts = 0
+    for g in games:
+        gid = g.get("game_id")
+        if not gid:
+            continue
+        (base / f"game_{gid}.md").write_text(game_report(g))
+        transcripts += 1
+
+    return {
+        "dir": base,
+        "games": len(games),
+        "turn_rows": rows,
+        "transcripts": transcripts,
+    }
 
 
 def main() -> int:

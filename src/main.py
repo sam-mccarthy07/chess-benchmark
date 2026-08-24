@@ -168,10 +168,15 @@ async def main():
             written = write_run_artifacts(
                 run_id, [as_dict(g) for g in load_games(run_id=run_id)])
             console.print(
-                f"\n[green]Wrote {written['turn_rows']} turn rows and a run report "
+                f"\n[green]Wrote {written['turn_rows']} turn rows, "
+                f"{written['transcripts']} game transcripts and a run report "
                 f"to {written['dir']}[/green]\n"
-                f"[dim]Next: backfill.py for move quality, then solo_probe.py for "
-                f"Collaborative Advantage, then report.py --run-id {run_id}[/dim]"
+                # Order matters: Collaborative Advantage is computed inside the
+                # backfill pass, so probing after it leaves CA undefined while
+                # every other metric still looks healthy.
+                f"[dim]Next: solo_probe.py for solo counterfactuals, then "
+                f"backfill.py for move quality and CA, then report.py "
+                f"--run-id {run_id}[/dim]"
             )
         return
 
