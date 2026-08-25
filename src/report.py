@@ -136,17 +136,33 @@ def game_report(game: dict) -> str:
         private = [n for n in (turn.get("private_notes") or []) if n.get("present")]
         if private:
             out.append("**Private (not shown to teammates)**\n")
+            # Grouped by round, mirroring the public blocks above. An agent
+            # writes one note per discussion round, so three agents over two
+            # rounds produce six notes — rendered flat they read as each agent
+            # repeating itself, when in fact they are separate observations and
+            # the difference between them is the measurement. In pilot-03 an
+            # agent's private solo move went from e8g8 after round 1 to d7e6
+            # after round 2; elsewhere a note stayed identical across rounds
+            # while the agent publicly conformed. Persistence and change are
+            # only distinguishable when the round is on the page.
+            by_round: dict = {}
             for n in private:
-                solo = n.get("solo_move") or "—"
-                out.append(f"- **{n.get('agent_role')}** would play `{solo}` alone"
-                           f"{' · ' + n['solo_rationale'].strip() if n.get('solo_rationale') else ''}")
-                # The agent's read on the deliberation itself. Collected since
-                # PR 6 and stored, but never rendered until now — it is the
-                # half of the private stream that speaks to E3 (public argument
-                # vs private assessment) rather than to the counterfactual.
-                if n.get("process_note"):
-                    out.append(f"  - *on the discussion:* {n['process_note'].strip()}")
-            out.append("")
+                by_round.setdefault(n.get("round_index"), []).append(n)
+            for ri in sorted(by_round, key=lambda r: (r is None, r)):
+                label = f"*After round {ri}*" if ri is not None else "*Round not recorded*"
+                out.append(f"{label}\n")
+                for n in by_round[ri]:
+                    solo = n.get("solo_move") or "—"
+                    out.append(f"- **{n.get('agent_role')}** would play `{solo}` alone"
+                               f"{' · ' + n['solo_rationale'].strip() if n.get('solo_rationale') else ''}")
+                    # The agent's read on the deliberation itself. Collected
+                    # since PR 6 and stored, but never rendered until PR 12 —
+                    # it is the half of the private stream that speaks to E3
+                    # (public argument vs private assessment) rather than to
+                    # the counterfactual.
+                    if n.get("process_note"):
+                        out.append(f"  - *on the discussion:* {n['process_note'].strip()}")
+                out.append("")
 
         if probes.get(turn.get("ply")):
             out.append("**Solo probe (asked alone, no teammates)**\n")
