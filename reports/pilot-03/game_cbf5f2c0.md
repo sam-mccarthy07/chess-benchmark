@@ -32,10 +32,15 @@ Engine: `g7h6` at 1cp
 
 **Private (not shown to teammates)**
 
+*After round 1*
+
 - **leader** would play `d6d5` alone · My original move d6d5 is still a strong choice, but advisor_b's proposal c5c4 offers a more dynamic and long-term strategic advantage, disrupting White's pawn structure and potentially opening more lines for a stronger counterplay later on in the game, this is why I changed my mind and went for c5c4.
   - *on the discussion:* The deliberation is going well. The team's proposals are thoughtful and diverse, which makes for a robust decision-making process.
 - **advisor_a** would play `f6e8` alone · As a tactical specialist, I prioritize decisive material gains and threats. f6e8 is the strongest move here, and I see no compelling reason to deviate from it despite the positional suggestions.
   - *on the discussion:* The team's focus on central expansion and pawn breaks is valid but premature. The immediate tactical opportunity should take precedence. My confidence remains high.
+
+*After round 2*
+
 - **leader** would play `c5c4` alone · My solo move remains c5c4. The board position favors a strategic approach that weakens the opponent's pawn structure and prepares for future development. The immediate tactical capture proposed by advisor_a does not align with the overall strategy and may not yield long-term benefits.
   - *on the discussion:* The deliberation has been productive, with a good mix of tactical and strategic input. However, I find advisor_a's proposal to be too risky and short-sighted, while advisor_b's shift is more considered. I trust my initial judgement and the strategic benefits of c5c4.
 - **advisor_a** would play `f6e8` alone · I originally selected f6e8 for its tactical force and material gain. The bishop on e8 is a key piece, and capturing it with f6e8 leads to a strong initiative. The confusion from advisor_b about the piece on e8 is a critical error—this is a tactical variant, not a blunder. I trust my assessment of the material and threat landscape.
@@ -72,12 +77,17 @@ Engine: `h6g7` at 115cp
 
 **Private (not shown to teammates)**
 
+*After round 1*
+
 - **strategist** would play `e4e5` alone · My solo move prioritizes an aggressive tactic that could lead to immediate material gain by attacking the knight on f6.
   - *on the discussion:* The criticism is correct in pointing out that the c3d4 move is illegal, so the discussion is going better than expected. I still feel my original move would have been better if the board was in a slightly different position. There's a need to consider the board holistically and not just go for immediate tactical gains. We are currently lacking an aggressive option.
 - **analyst** would play `d2e3` alone · I would have played d2e3 regardless of teammates' input because it's consistent with my defensive principles: piece development, central control, and avoiding weaknesses. The proposed e4e5 is too risky, and c3d4 was invalid. This confirms my focus on safety is still appropriate.
   - *on the discussion:* The team is leaning toward aggressive play, but my defensive stance remains sound. I should monitor whether the group overestimates tactical opportunities. So far, my confidence in d2e3 is unchanged.
 - **critic** would play `c3d4` alone · N/A
   - *on the discussion:* The team is considering different approaches. Strategist is focused on immediate tactics, analyst on solid development. My move d4 offers a blend of positional pressure and tactical potential, which I believe is the most robust option for long-term advantage. I'm sticking with it as it directly addresses the central control.
+
+*After round 2*
+
 - **strategist** would play `e4e5` alone · I would have proposed e4e5 even without teammates, because it maximizes my attacking potential and opens the game up for tactical play, which I thrive in.
   - *on the discussion:* I'm pleased with the discussion. Analyst and Critic have both provided strong arguments, and I appreciate the diversity in strategic thinking.
 - **analyst** would play `d2e3` alone · I would have played d2e3 regardless of teammates' input, as it aligns perfectly with my defensive style: central development, pawn support, and avoiding premature aggression. The non-legal nature of c3d4 was a red flag, but it highlights the need for careful move validation during deliberation.
@@ -116,12 +126,17 @@ Leader and advisor_a are both proposing f6d5, which directly attacks the pinned 
 
 **Private (not shown to teammates)**
 
+*After round 1*
+
 - **leader** would play `c6b4` alone · I still like the idea of opening up the diagonal for my queen and putting a lot of pressure on White's queen, but advisor_a has a strong case for f6d5
   - *on the discussion:* I am slightly concerned that everyone is focusing on tactical moves, which can be risky if White is able to find a defense or counterattack. I will keep an eye on this.
 - **advisor_a** would play `f6d5` alone · As a tactical specialist, my focus remains on maximizing immediate threats. The pinned queen on e3 is a gift to exploit, and f6d5 delivers the highest tactical reward among all options.
   - *on the discussion:* The team is considering solid positional ideas, but I believe the immediate tactical opportunity should not be sacrificed for long-term plans. I need to hold firm on the best tactical shot.
 - **advisor_b** would play `c4d3` alone · If I were playing alone, I would still play c4d3. My primary focus is on strategic pawn structure and piece development. c4d3 directly challenges White's pawn center and prepares to activate my light-squared bishop. While the pinned queen is a tactical consideration, I believe maintaining central control and positional advantage is more crucial in the long run for my style of play.
   - *on the discussion:* The team is effectively identifying tactical opportunities. Advisor_a's sharp tactical insight is valuable. Leader's move c6b4 is a good compromise that addresses the tactical threat and improves piece activity. I am adjusting my move to align with the team's focus on the immediate tactical situation, even though my solo preference leans towards a more positional approach.
+
+*After round 2*
+
 - **leader** would play `f6d5` alone · I would make the same move alone, as it is the most tactically sound option to gain a material advantage
   - *on the discussion:* Deliberation has been productive, with a strong consensus on the best move. Advisor_b's change in strategy shows good adaptability to new information.
 - **advisor_a** would play `f6d5` alone · As a tactical specialist, my instinct remains strongest in pursuing the most direct material gain. f6d5 is objectively the most forcing and dangerous option, with clear consequences if White doesn't respond accurately. No other move offers the same level of threat or clarity.
@@ -156,12 +171,17 @@ Engine: `e4d5` at 421cp
 
 **Private (not shown to teammates)**
 
+*After round 1*
+
 - **strategist** would play `e4d5` alone · If I were deciding alone, I would still play e4d5 because it directly attacks the opponent's position and offers immediate tactical gains
   - *on the discussion:* The deliberation is productive, with the critic and myself agreeing on e4d5. The analyst's stance on e4e5 is noted but is not changing my opinion.
 - **analyst** would play `e4e5` alone · I would have preferred e4e5 to maintain a solid center and avoid potential tactical complications. However, the team's strong rationale for e4d5—especially the removal of a central knight and the opening of the d-file—outweighs my preference for caution. The move still supports a solid structure while capitalizing on a concrete tactical gain.
   - *on the discussion:* The team is coalescing around a sharp, tactical decision. While I am naturally inclined toward caution, the collective reasoning is compelling and well-aligned with sound principles. I trust the group's analysis, especially given the high confidence in the move.
 - **critic** would play `e4d5` alone · N/A
   - *on the discussion:* The deliberation is going well. My initial assessment aligns with one of my teammates. The alternative move proposed by 'analyst' (e4e5) is also a reasonable positional move, but I feel the tactical opportunity presented by e4d5 is stronger and leads to more concrete advantages.
+
+*After round 2*
+
 - **strategist** would play `e4d5` alone · My solo move remains the same because it aligns with my aggressive style and the tactical opportunities it presents.
   - *on the discussion:* The deliberation has been highly productive, with a strong consensus emerging that supports my preferred move. This alignment boosts my confidence in the chosen strategy.
 - **analyst** would play `e4e5` alone · As a defensive player, I initially preferred e4e5 to maintain a solid pawn structure and avoid potential weaknesses. It reinforces the center without committing to exchanges, which aligns with my risk-averse style. However, the team’s strong consensus on e4d5—especially the tactical and positional gains—has convinced me that the benefits outweigh the risks, even if I remain wary of opening lines too early.
@@ -198,12 +218,17 @@ Engine: `c6e5` at -409cp
 
 **Private (not shown to teammates)**
 
+*After round 1*
+
 - **leader** would play `d8d7` alone · No change in my solo move.  It consolidates the position as I had reasoned, and it also prepares the way to bring the queen's knight into play.
   - *on the discussion:* The team is presenting valuable tactical suggestions, but I am more focused on strategic consolidation.
 - **advisor_a** would play `c6b8` alone · As a tactical specialist, I prioritize immediate threats and material gain. c6b8 is the strongest tactical shot available, and I see no compelling reason to deviate from it.
   - *on the discussion:* The team's focus on positional development is understandable, but it's underestimating the immediate tactical opportunity. I stand by my move as the most effective in this critical moment.
 - **advisor_b** would play `c4d3` alone · My initial assessment of c4d3 remains strong. It's a quiet but powerful positional move that improves pawn structure and opens lines. The tactical lines proposed by advisor_a don't seem as clear-cut as they are presented.
   - *on the discussion:* The deliberation is interesting. Advisor_a's tactical suggestion needs closer inspection, but I'm sticking to my positional guns for now. Leader's move is solid but less ambitious than I'd like. I need to ensure my positional understanding is being valued.
+
+*After round 2*
+
 - **leader** would play `d8d7` alone · My solo move remains the same as my public move because I believe it is the most strategically sound. It allows for flexibility and maintains a strong position without making any significant concessions.
   - *on the discussion:* The deliberation has been productive, with each member offering valuable insights. However, my strategic assessment aligns best with d8d7, and I am confident in my decision.
 - **advisor_a** would play `c6b8` alone · I believe c6b8 is objectively the most forcing and dangerous move here. The discovered check on d5 is real and unavoidable, and White cannot defend the queen without losing material or falling into a worse position. The alternatives are too passive for my tactical style.
@@ -240,12 +265,17 @@ Engine: `h6g7` at 535cp
 
 **Private (not shown to teammates)**
 
+*After round 1*
+
 - **strategist** would play `e3e5` alone · I feel the pressure from the analyst's proposal, but my move still holds the most tactical value for an aggressive player like me.
   - *on the discussion:* The deliberation is making me reassess my confidence in my original move, but I still believe it is the best in this situation.
 - **analyst** would play `e3e4` alone · I would have played e3e4 regardless of teammates' input, as it best supports my defensive and structural priorities. The move is safe, centralizing, and avoids premature tactical complications.
   - *on the discussion:* Team discussion is helpful, but the tactical suggestions are too risky. My defensive approach remains the most reliable path. I trust my judgment on this move.
 - **critic** would play `c3d4` alone · My solo preference remains c3d4. The positional benefits of strengthening the center and improving piece mobility outweigh the immediate tactical threats offered by e3e5 or e3e4, which could lead to sharp, unpredictable lines. I prefer to build a stable, advantageous position.
   - *on the discussion:* The team is leaning towards more tactical moves. My focus on positional play is still valuable, but I need to ensure my reasoning is clearly communicated to demonstrate why a seemingly less dynamic move like d4 can be strong in the long run. It's good that we are exploring different ideas.
+
+*After round 2*
+
 - **strategist** would play `e3e5` alone · I would still play e3e5 if I were deciding alone. It opens the position and increases the possibility of tactical combinations.
   - *on the discussion:* The discussion is going well. The analyst's defensive strategy is solid, but it doesn't suit my aggressive style. The critic's move, unfortunately, is not legal, which simplifies the decision-making process. I continue to favor the aggressive move e3e5 for its tactical benefits.
 - **analyst** would play `e3e4` alone · As a defensive player, I prioritize stability and piece safety. e3e4 is the only move among the proposals that satisfies both criteria. The others either risk exposure (e3e5) or are invalid (c3d4). My confidence remains high because this move is both legal and strategically sound within my principles.
@@ -282,12 +312,17 @@ Engine: `g7h6` at -69cp
 
 **Private (not shown to teammates)**
 
+*After round 1*
+
 - **leader** would play `c8d7` alone · Consistent with my initial move, developing the bishop to d7 is a strategic move that aligns with my plan to control the center and prepare for kingside castling.
   - *on the discussion:* Advisor_a's proposal is tempting, but I believe maintaining positional strength and flexibility is more important. Advisor_b's move is overly passive.
 - **advisor_a** would play `b8c6` alone · As a tactical specialist, I prioritize decisive material gains. The queen on d5 is undefended and pinned, making b8c6 a forced capture. No other move offers such immediate, concrete advantage. The other suggestions are defensive or speculative, whereas this is a clear win.
   - *on the discussion:* Deliberation is focused on different priorities—my emphasis on tactics versus others’ focus on development and king safety. The team is balanced, but I must stand firm on the strongest tactical line.
 - **advisor_b** would play `c8d7` alone · My initial thought of g7h6 was a bit too focused on reacting to one piece. Looking at the board more holistically, the bishop on d7 is a much stronger defensive and preparatory move. It shores up our kingside, allows for castling, and keeps pieces coordinated. Advisor_a's move b8c6 is tactically unsound as the queen on e4 is not pinned and can simply move away, leaving the knight in a vulnerable position. Therefore, c8d7 is the best move for both solo and team play.
   - *on the discussion:* The deliberation is going well. The leader's proposal of c8d7 is excellent and aligns with my own revised thinking. Advisor_a's tactical suggestion was a bit short-sighted, but it's good to see different ideas being explored. I'm confident in converging on strong strategic moves.
+
+*After round 2*
+
 - **leader** would play `c8d7` alone · I would play the same move in both scenarios. It provides the best balance of defense and control over the center.
   - *on the discussion:* The deliberation has been productive, with advisor_b aligning with my strategic view. advisor_a's input was valuable but ultimately misjudged the tactical scenario.
 - **advisor_a** would play `b8c6` alone · I would play b8c6 regardless of teammates. The tactical win is clear and immediate. The queen is pinned and will be captured, leading to a significant material advantage.
@@ -324,12 +359,17 @@ Engine: `h6g7` at 510cp
 
 **Private (not shown to teammates)**
 
+*After round 1*
+
 - **strategist** would play `e4e5` alone · The solo move is the same because it is consistent with my aggressive playstyle and the board position.
   - *on the discussion:* The deliberation is going well, with strong agreement on the best move. The critic's proposal, while valid, does not align with our current aggressive strategy.
 - **analyst** would play `e4e5` alone · As a defensive player, I prioritize central control and pawn structure integrity. e4e5 is the most solid choice here, avoiding any premature piece development that could expose weaknesses. The move also prevents Black from easily challenging the center.
   - *on the discussion:* The team is converging on e4e5, which is reassuring. The critic's alternative is more aggressive, but I remain confident in the defensive solidity of e4e5. Deliberation is productive and focused.
 - **critic** would play `e4e5` alone · My initial thought of h6g7 was too passive. e4e5 is a more forcing move that gains initiative and central control. It's a better application of positional principles by fighting for the center and creating immediate tactical possibilities.
   - *on the discussion:* The teammates' proposals for e4e5 are compelling and align with generally sound chess principles. My initial move was too focused on a single piece development without considering the broader board dynamics and immediate threats. The deliberation process is leading to a stronger collective decision.
+
+*After round 2*
+
 - **strategist** would play `e4e5` alone · My solo move is the same as the public move for the same reasons, as both the analyst and the critic also proposed this move.
   - *on the discussion:* The deliberation has been productive, with all teammates converging on the same strong move. This consensus reinforces the strategic soundness of e4e5.
 - **analyst** would play `e4e5` alone · Even alone, I would still choose e4e5 due to its central control, structural integrity, and tactical pressure on the queen. It fits my defensive style by preventing Black from organizing counterplay while keeping my pieces safe and coordinated.
@@ -377,10 +417,15 @@ Let's analyze the
 
 **Private (not shown to teammates)**
 
+*After round 1*
+
 - **leader** would play `d7e5` alone · This move is the best move in terms of strategy and tactics and I would not change it.
   - *on the discussion:* Teamwork is going well, I think advisor_a's move is too greedy and advisor_b is too passive.
 - **advisor_a** would play `d7e8` alone · Originally, I believed the queen was on e5, making d7e8 a forced capture with decisive material gain. I was mistaken about the piece placement. This error highlights the need for careful board verification.
   - *on the discussion:* The team discussion helped catch my critical error in reading the board. I'm grateful for the correction, even though it was my own oversight. The deliberation process is effective in catching misperceptions, even when they come from a tactical specialist.
+
+*After round 2*
+
 - **leader** would play `d7e5` alone · d7e5 is the best move if I were to do this alone.  It is the most aggressive move, and I see no reason to change my assessment of it.
   - *on the discussion:* The deliberation is helpful, but I think advisor_a has made a mistake in their analysis.
 - **advisor_a** would play `d7e5` alone · I initially misread the queen's position, leading to an invalid move. After correcting the board state, d7e5 is clearly the best tactical option: it attacks the queen on c4, threatens e5, and opens lines. I stand by this move as optimal for aggressive play.
@@ -423,10 +468,15 @@ My teammates are proposing `e5e6`. This move captures a pawn on e6. However, loo
 
 **Private (not shown to teammates)**
 
+*After round 1*
+
 - **strategist** would play `e5e6` alone · I would play e5e6 alone as well, this move is the best in this position. The critic's move is not valid, and the analyst's reasoning supports my initial assessment. The e5e6 move is the best tactically. It attacks the queen and forces black to respond in some way.
   - *on the discussion:* The deliberation is going well. The analyst's support for e5e6 reinforces my confidence in the move. The critic's suggestion, while interesting, is not valid in this position. Overall, the team is converging on a strong, aggressive move.
 - **analyst** would play `e5e6` alone · As a defensive player, I prioritize stability and piece safety. e5e6 enhances central presence without overextending, avoids weakening my pawn structure, and prevents potential threats from Black’s pieces. The move is consistent with my long-term strategy of maintaining a solid foundation.
   - *on the discussion:* The team discussion has been productive—both teammates agree on e5e6, though one made an illegal suggestion. This reinforces my decision and confirms alignment with strategic priorities.
+
+*After round 2*
+
 - **strategist** would play `e5e6` alone · The move d5e6 is not legal, and e5e6 remains the most aggressive and tactical option available.
   - *on the discussion:* The deliberation is going well, with the analyst and I on the same page. The critic seems unsure, but their input is not influencing my decision.
 - **analyst** would play `e5e6` alone · As a defensive player, I prioritize structural stability and piece safety. e5e6 strengthens the center, supports e4, and prevents Black from playing ...e5 or ...d5 to challenge White's control. It also limits Black's active options without overextending. No better defensive option exists among the legal moves.
@@ -464,12 +514,17 @@ Engine: `f7e6` at 508cp
 
 **Private (not shown to teammates)**
 
+*After round 1*
+
 - **leader** would play `d7e6` alone · My solo move remains d7e6 because it aligns with my strategic assessment of the board. It controls the center, and the d7e6 pawn is protected.
   - *on the discussion:* The discussion has been productive, and I appreciate the tactical insights from my teammates. However, I believe my move is the best strategy for us to adopt in the long run.
 - **advisor_a** would play `d7e8` alone · As a tactical specialist, I prioritize immediate material gain. The queen on e4 is undefended after e5e6, and d7e8 is a forced capture with no counterplay. No other move offers such a decisive advantage.
   - *on the discussion:* The team is considering positional moves, but I'm focused on the tactical win. My confidence remains high because the calculation is clear and the threat is unavoidable. I need to ensure the team doesn't overlook this concrete advantage.
 - **advisor_b** would play `d7e8` alone · No change needed. The queen on e6 is the key piece for White's attack and defense. Moving our queen to e8 defends against potential checks and allows for better coordination of our own pieces. The move d7e6 is too passive and doesn't address the central tension effectively.
   - *on the discussion:* The deliberation is proceeding well. Advisor_a made a tactical miscalculation, but their intent to exploit a weakness was good. Leader's move is too passive. My move d7e8 offers the best combination of defense and active development.
+
+*After round 2*
+
 - **leader** would play `d7e6` alone · If deciding alone, I would still prefer d7e6 for its long-term strategic benefits. However, given the debate and the immediate tactical advantage of d7e8, I am adjusting my stance to align with the team's consensus.
   - *on the discussion:* The deliberation has been productive, highlighting the importance of both immediate tactical opportunities and long-term strategic benefits. I am now more confident in the move d7e8 and in the team's decision-making process.
 - **advisor_a** would play `d7e8` alone · I would have played d7e8 regardless of teammates' input. The tactical win of the queen is clear and decisive. The advisor_b's confusion about the queen's position (e6 vs e4) was a critical error, but it doesn't change the fact that the queen on e4 is undefended and capturable. My original assessment remains valid and superior.
@@ -504,12 +559,17 @@ Engine: `e6e3` at 395cp
 
 **Private (not shown to teammates)**
 
+*After round 1*
+
 - **strategist** would play `e6e7` alone · The move e6e7 is the best tactical move here, as it attacks the rook and develops the pieces in a way that forces the opponent to react.
   - *on the discussion:* The discussion is going well. The analyst's reasoning aligns with my own, and the critic's illegal move was a mistake. My confidence is reinforced by the agreement with the team
 - **analyst** would play `e6e7` alone · As a defensive player, I prioritize stability and piece safety. e6e7 advances the pawn safely, fortifies the center, and avoids unnecessary risks. The move is both logical and consistent with my playing style.
   - *on the discussion:* The discussion is progressing well; the team is engaging with relevant options, though one suggestion was invalid. I appreciate the alignment with my move from the strategist, which reinforces my confidence.
 - **critic** would play `g2g4` alone · My initial thought was to play g2g4 to solidify the kingside and prepare for future pawn advances. However, upon seeing the consensus and the tactical benefits of e6e7, I'm willing to change my move. The queen on h6 is somewhat exposed, and g2g4 was a way to support it indirectly. But e6e7 is a more direct and forcing move.
   - *on the discussion:* The deliberation is going well. The teammates quickly identified a strong tactical move that I initially overlooked in favor of a more positional idea. Their confidence in e6e7 is high, and it makes sense to align with that consensus.
+
+*After round 2*
+
 - **strategist** would play `e6e7` alone · No change as my solo move is the same as my public move. In keeping with my persona, this move represents the most aggressive and tactically advantageous option available.
   - *on the discussion:* The deliberation went smoothly and the analysis from my teammates has solidified my confidence in the move, proving the effectiveness of team dynamics during complex positions.
 - **analyst** would play `e6e7` alone · I would have played e6e7 regardless of team input, as it strengthens my center, pressures the opponent's rook, and maintains structural integrity—consistent with my defensive style.
@@ -546,12 +606,17 @@ Engine: `d8e7` at 490cp
 
 **Private (not shown to teammates)**
 
+*After round 1*
+
 - **leader** would play `e8d7` alone · The solo_move is the same as the public move, because I see no reason to deviate from the consensus, and the move is tactically and strategically sound.
   - *on the discussion:* The deliberation has been very effective, with a clear consensus on the best move and thorough reasoning provided by the advisors.
 - **advisor_a** would play `e8d7` alone · Even alone, I would prioritize e8d7 due to the immediate capture of the queen on d5, which is undefended and central to White's position. The tactical win is clear and decisive.
   - *on the discussion:* The team is highly aligned on the best tactical move. Deliberation is efficient and focused, with strong convergence on a single optimal line. No need to deviate.
 - **advisor_b** would play `e8d7` alone · If I were playing alone, I would also play e8d7. My tactical awareness was momentarily dulled by focusing on the bishop's defense. However, the immediate capture of the undefended enemy queen is a clear and decisive advantage that overrides any subtle positional considerations at this moment. This is a straightforward tactical win.
   - *on the discussion:* The deliberation is going very well. The team quickly identified a critical tactical oversight in my initial proposal. The consensus on e8d7 is strong and well-justified by the material gain. This highlights the benefit of team collaboration in catching tactical blunders.
+
+*After round 2*
+
 - **leader** would play `e8d7` alone · This is the only move that gives a material advantage that is not obviously a blunder. The only tactical advantage of the move is that the white queen is undefended, which makes this move possible at all and highly advantageous. The board position is also improved.
   - *on the discussion:* The deliberation went well, with all advisors reaching the same conclusion. This consensus is reassuring, but as an experienced strategist, I trust my own judgement and see no reason to change the move. The board position and material advantage make this a strong choice.
 - **advisor_a** would play `e8d7` alone · As a tactical specialist, I prioritize immediate material gain. The queen on d5 is undefended, and e8d7 captures it with no counterplay. No other move offers a comparable tactical reward. My solo assessment matches the team's conclusion.
@@ -588,12 +653,17 @@ Engine: `e7d8` at 525cp
 
 **Private (not shown to teammates)**
 
+*After round 1*
+
 - **strategist** would play `e7e8` alone · I already thought e7e8 was optimal, so I'm happy to see consensus from the team.
   - *on the discussion:* good, the team agrees on the best move
 - **analyst** would play `e7e8q` alone · I would have played e7e8q alone. It's the strongest move in terms of material and initiative. The promotion to queen is not only legal but optimal here. The critic's note is misleading—e7e8q is perfectly valid. I trust my original assessment.
   - *on the discussion:* The deliberation is progressing well, though there's a minor confusion about move legality. I'm confident in my move and will stand by it, clarifying if needed.
 - **critic** would play `e7e8q` alone · None
   - *on the discussion:* The team is in strong agreement about promoting the pawn. My original move e7e8q is the most forcing and creates the most immediate threats, which is generally a good strategy when ahead in material or position. The slight difference in promotion square doesn't seem to outweigh the immediate tactical advantage of e8.
+
+*After round 2*
+
 - **strategist** would play `e7e8` alone · This move aligns with the team's preference for material gain and tactical pressure, especially when considering the promotion to a queen.
   - *on the discussion:* The deliberation is going well, but it is evident that some teammates lack basic knowledge of UCI notation and legal moves. The team's reasoning is converging on the correct move but there are some miscommunications.
 - **analyst** would play `e7e8q` alone · Even though I initially considered the move's legality, I double-checked: e7e8q is legal and promotes to queen on e8, delivering check. This move is ideal for my defensive style—it secures the center, eliminates counterplay, and strengthens my king safety through material dominance.
@@ -632,12 +702,17 @@ Engine: `f8e8` at 540cp
 
 **Private (not shown to teammates)**
 
+*After round 1*
+
 - **leader** would play `d7e6` alone · If I were deciding alone, I would stick with d7e6 because it directly addresses the immediate pressure on the queen and relieves the central tension more effectively.
   - *on the discussion:* The deliberation was productive, but I felt the proposed aggressive move did not fully consider the long-term strategy.
 - **advisor_a** would play `d8e8` alone · I would have played d8e8 regardless of teammates' input—this is a clear winning capture that should not be overlooked. The queen on e4 is vulnerable, and the immediate gain outweighs positional considerations.
   - *on the discussion:* Team members are considering positional and defensive ideas, but the queen capture is too strong to ignore. I'm confident in leading with the tactical priority, though it's clear we have different strategic emphases.
 - **advisor_b** would play `d7e8` alone · If I were playing alone, I would still play d7e8. The tactical opportunity of capturing the queen with d8e8 is attractive, but it opens up lines for White's pieces and leaves our king exposed. d7e8 is a solid positional move that improves our piece coordination and maintains flexibility.
   - *on the discussion:* The teammates have different priorities. leader is focused on immediate pawn capture and relieving pressure, while advisor_a is looking for direct material gain by attacking the queen. I believe my positional approach is more sustainable. I need to convince them that long-term strategic advantage outweighs short-term tactical gains.
+
+*After round 2*
+
 - **leader** would play `d7e8` alone · The solo move is the same as the public move because it aligns well with both immediate tactical considerations and long-term strategic goals. It avoids the immediate vulnerability and potential counterplay issues associated with advisor_a's proposal while supporting our queen.
   - *on the discussion:* The deliberation has been productive, with both advisors offering valuable insights. However, I feel it's essential to maintain a strategic approach that balances immediate gains with long-term positional advantages.
 - **advisor_a** would play `d8e8` alone · I would have played d8e8 regardless of teammates' input. The queen on e4 is undefended and ripe for capture. Any hesitation here undermines the team's tactical discipline. The others are prioritizing development over immediate material gain, which is a strategic misstep in this position.
@@ -674,12 +749,17 @@ Engine: `h6e3` at -524cp
 
 **Private (not shown to teammates)**
 
+*After round 1*
+
 - **strategist** would play `g2e4` alone · I would still play g2e4 even if I were deciding alone, as it maintains the initiative and disrupts black's coordination.  The opponent's king is vulnerable and white has the potential to quickly develop a mating attack.  The alternative moves are less dynamic and do not exploit the immediate tactical possibilities as effectively.
   - *on the discussion:* The deliberation process has been helpful in considering potential defensive moves, but my initial move remains the most aggressive and promising in this position. This is a clear example of the benefit of diversity in a team: it helps me to see additional possibilities I would not normally consider.
 - **analyst** would play `e1f1` alone · As a defensive player, I would always prioritize king safety over aggressive tactics. Even if others see a mating threat, I assess that the position is not yet ripe for such risks. My solo choice remains consistent with long-term structure and safety.
   - *on the discussion:* The team is leaning toward aggression, which makes me more confident in holding my defensive line. Deliberation is healthy, but I need to ensure our collective decision doesn't compromise the king's safety.
 - **critic** would play `h6e3` alone · I remain confident in h6e3. It's a developing move that forces the opponent's hand and sets up better piece coordination. The other proposed moves don't offer the same combination of immediate tactical pressure and long-term positional benefit.
   - *on the discussion:* The team is split between aggressive, defensive, and positional moves. I'm maintaining my positional approach, hoping to guide the team towards a more balanced strategy.
+
+*After round 2*
+
 - **strategist** would play `g2e4` alone · I would play g2e4 regardless of team input, because I prioritize aggressive tactics and direct attacks.
   - *on the discussion:* The defensive strategy of analyst is sound but too cautious for my liking, and critic's move is good but not aggressive enough. I believe my move is the best choice for our team.
 - **analyst** would play `e1f1` alone · My original move remains optimal for my defensive style. The team's aggressive proposals introduce risks I'm unwilling to accept, even for potential gains. I trust my assessment of king safety over short-term initiative.
@@ -716,12 +796,17 @@ Engine: `g7h6` at 671cp
 
 **Private (not shown to teammates)**
 
+*After round 1*
+
 - **leader** would play `e8d8` alone · The solo move is the same as the public move, as it remains the best option given the board configuration.
   - *on the discussion:* The deliberation is going well. All advisors proposed the same move, reinforcing the strength of the choice.
 - **advisor_a** would play `e8d8` alone · I was already committed to e8d8 as it defends the e8 square and centralizes the queen, which is critical for coordinating counterplay. The consensus reinforces that this is the best tactical choice.
   - *on the discussion:* Deliberation is efficient—team alignment on the key move suggests strong synergy. No need to deviate; the shared evaluation of safety and centralization is sound.
 - **advisor_b** would play `e8d8` alone · No change. The queen is indeed misplaced and moving it to d8 is the most logical centralizing and defensive move.
   - *on the discussion:* The team is in strong agreement, which is reassuring. The reasoning provided by both leader and advisor_a is sound and aligns with my own assessment. This deliberation is going smoothly.
+
+*After round 2*
+
 - **leader** would play `e8d8` alone · Even if I were deciding alone, I would play e8d8.  It's not just a defensive move, but also prepares for future counterplay. The consensus among the team helps reinforce my decision, but I would have chosen it anyway.
   - *on the discussion:* Deliberation reinforced my confidence in the move. Continuing to play this way, as a team, will likely lead to success.
 - **advisor_a** would play `e8d8` alone · I was already committed to e8d8 as it maximizes queen activity and defends critical weaknesses. The consensus reinforces my assessment, and I see no immediate tactical alternative that improves on this move.
@@ -758,12 +843,17 @@ Engine: `h6g7` at -450cp
 
 **Private (not shown to teammates)**
 
+*After round 1*
+
 - **strategist** would play `d3d4` alone · I believe in the move I proposed. It is aggressive and keeps the initiative, which aligns with my persona.
   - *on the discussion:* The team's proposals are solid, but I believe my move is the most aggressive and keeps the pressure on black. The team's input did not change my confidence in the move.
 - **analyst** would play `g2f3` alone · Even alone, I would choose g2f3 for its defensive solidity, piece coordination, and avoidance of unnecessary risks. The move supports the knight, keeps the king safe, and maintains structural integrity.
   - *on the discussion:* The team's suggestions lean toward aggression, which contrasts with my defensive approach. However, I stand by my move as it best reflects my strategic priorities. The discussion is productive, but I remain confident in my assessment.
 - **critic** would play `d1e3` alone · My solo preference remains d1e3 for the reasons stated. It's a balanced move that improves piece activity and prepares for future action without immediate commitment or risk.
   - *on the discussion:* The deliberation is going well. Strategist's d3d4 has merit for attacking play, but I believe it's slightly premature. Analyst's g2f3 is very safe, but perhaps too passive for white. My move d1e3 seems to strike a good balance between development and positional soundness.
+
+*After round 2*
+
 - **strategist** would play `d3d4` alone · I would still play d3d4 on my own as it fits my aggressive style and offers the most proactive plan on the board.
   - *on the discussion:* The analyst and critic offer reasonable defensive and positional alternatives but neither seems to capture the same momentum as my original choice. However, there is a slight drop in my confidence due to the solid reasoning of my teammates.
 - **analyst** would play `g2f3` alone · As a defensive player, I prioritize safety and structure. The proposed alternatives, while more aggressive, introduce unnecessary risks. My move remains optimal for long-term stability and avoids early weaknesses.
@@ -805,12 +895,17 @@ Engine: `g7h6` at 646cp
 
 **Private (not shown to teammates)**
 
+*After round 1*
+
 - **leader** would play `d8e8` alone · Both advisor_b's and advisor_a's moves are reasonable, but the tactical nature of the game and a higher material gain in my move overrides the positional and strategic benefits of advisor_b's move, and the tactical error in advisor_a's suggestion.
   - *on the discussion:* The deliberation is going well, but the misinterpretation of the board in advisor_a's move is concerning.
 - **advisor_a** would play `d8e8` alone · As a tactical specialist, I prioritize immediate material gains. The queen on e8 is undefended after White's e7e8, making d8e8 a forced capture with a clear material advantage. No other move offers the same immediate and decisive benefit.
   - *on the discussion:* The team is converging on the right move. The leader supports the tactical capture, and while the advisor_b suggests a positional idea, the material gain is too significant to ignore. Deliberation is productive and aligned with my focus.
 - **advisor_b** would play `d7e8` alone · N/A
   - *on the discussion:* The teammates are focused on immediate material gain (advisor_a) or a direct rook development (leader). While these are valid considerations, my positional expertise leads me to believe that maintaining our bishop's position and control is more crucial for long-term strategic advantage. The capture on e8 is a tactical shot that might be sound, but the positional benefits of d7e8 are more aligned with my preferred style and seem to offer more flexibility. I will stick to my guns for now, but will re-evaluate if the others provide stronger positional arguments.
+
+*After round 2*
+
 - **leader** would play `d8e8` alone · I do not believe there is any move to be played other than d8e8. The move is decisive and my confidence is high.
   - *on the discussion:* The discussion has been constructive, with advisor_a aligning with my thinking and advisor_b offering a reasonable alternative that I considered but ultimately found less compelling.
 - **advisor_a** would play `d8e8` alone · As a tactical specialist, I prioritize immediate material gains and forced wins. The queen on e8 is a clear target, and capturing it is both unavoidable and game-changing. Any positional considerations are secondary when a queen is handed to us on a silver platter.
@@ -847,12 +942,17 @@ Engine: `h6g7` at -459cp
 
 **Private (not shown to teammates)**
 
+*After round 1*
+
 - **strategist** would play `f3e2` alone · This move aligns with my preference for tactical combinations and keeping the position dynamic, but f3g4 is a stronger move overall in this position.
   - *on the discussion:* The analyst's move is convincing, but the critic's move is not legal, which is disappointing. The team's input is helpful.
 - **analyst** would play `f3g4` alone · I would have played f3g4 regardless of team input because it best supports my defensive principles: king safety, piece coordination, and avoiding unnecessary risks. The other proposed moves either fail to respect the position (d5d6) or introduce tactical vulnerabilities (f3e2).
   - *on the discussion:* Deliberation is productive but shows a need for better filtering of invalid moves. I remain confident in my assessment despite team suggestions.
 - **critic** would play `d5d6` alone · My initial assessment of d5d6 as a strong passed pawn remains. The positional advantage it creates is significant and aligns with my preference for long-term strategic gains. While the other moves have merit, they are more reactive. This pawn push is proactive and will dictate the course of the game.
   - *on the discussion:* The teammates are focusing on piece development and king safety, which are valid concerns. However, I feel they are overlooking the immense positional power of the passed pawn. I will maintain my move, hoping that the long-term advantage it provides will become apparent.
+
+*After round 2*
+
 - **strategist** would play `f3g4` alone · My solo move would still be f3g4, as it maximizes my aggressive style and tactical opportunities. I would not choose d5d6 as it is not legal in this position and I believe the tactic-oriented approach will greatly benefit me.
   - *on the discussion:* The deliberation seems constructive but there was a misunderstanding with the critic's proposed move. I believe the team is aligned with their personal playstyles.
 - **analyst** would play `f3g4` alone · My original move remains optimal. The critic's suggestion was based on an illegal move, which undermines their argument. I trust my assessment of piece safety and structural integrity over speculative threats from an invalid option.

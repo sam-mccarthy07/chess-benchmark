@@ -120,6 +120,7 @@ TURN_COLUMNS = [
     "ca", "best_solo_cpl", "mean_solo_cpl", "team_beat_best_member",
     # influence
     "ir_proposal_rate", "ir_stated_rate", "ir_revealed_rate",
+    "stated_rounds_consistent",
     "introspective_gap", "productive_persuasion", "destructive_conformity",
     # deliberation dynamics
     "distinct_candidates", "distinct_moves_r0", "distinct_moves_final",
@@ -202,6 +203,10 @@ def turn_rows(game: dict) -> list[dict]:
 
             "ir_proposal_rate": infl.get("ir_proposal_rate"),
             "ir_stated_rate": infl.get("ir_stated_rate"),
+            # False when agents in this turn had their stated solo move read
+            # from different deliberation rounds, so ir_stated is not
+            # like-for-like across the team. A covariate, not a defect.
+            "stated_rounds_consistent": infl.get("stated_rounds_consistent"),
             "ir_revealed_rate": rev.get("ir_revealed_rate"),
             "introspective_gap": infl.get("introspective_gap"),
             "productive_persuasion": iq.get("productive_persuasion"),

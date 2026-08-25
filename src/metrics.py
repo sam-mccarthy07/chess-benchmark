@@ -187,10 +187,22 @@ def influence_metrics(turn: dict) -> dict:
     opening = {p["agent_role"]: p.get("proposed_move") or "" for p in rounds[0]["proposals"]}
 
     # Private notes come from the final round in which the agent supplied one.
+    #
+    # Which round that is matters and is therefore recorded. An agent writes one
+    # note per discussion round, and the point of running more than one round is
+    # that positions move: in pilot-03 an agent's private solo move went from
+    # e8g8 after round 1 to d7e6 after round 2. When a later note fails to parse,
+    # this silently falls back to an earlier round *for that agent only*, so two
+    # agents in the same turn can be measured at different points in the
+    # deliberation. At 96% parse success that is a handful of agent-turns rather
+    # than a crisis, but unrecorded it is indistinguishable from clean data, and
+    # nothing downstream could filter or control for it.
     stated: dict[str, str] = {}
+    stated_round: dict[str, object] = {}
     for note in turn.get("private_notes") or []:
         if note.get("present") and note.get("solo_move"):
             stated[note["agent_role"]] = note["solo_move"]
+            stated_round[note["agent_role"]] = note.get("round_index")
 
     by_agent = {}
     for role, first in opening.items():
@@ -200,6 +212,7 @@ def influence_metrics(turn: dict) -> dict:
         by_agent[role] = {
             "round0_move": first,
             "stated_solo_move": solo,
+            "stated_from_round": stated_round.get(role),
             "ir_proposal": ir_proposal,
             "ir_stated": ir_stated,
             "agrees_with_own_opening": (solo == first) if (solo and first) else None,
@@ -218,6 +231,13 @@ def influence_metrics(turn: dict) -> dict:
             round(ir_s - ir_p, 3) if (ir_p is not None and ir_s is not None) else None
         ),
         "private_notes_present": len(stated),
+        # False when agents in this turn were measured at different rounds, so
+        # ir_stated is not a like-for-like comparison across the team. Turn-level
+        # so it can be a covariate or a filter in the pre-registered analysis.
+        "stated_rounds_consistent": (
+            len({r for r in stated_round.values() if r is not None}) <= 1
+            if stated_round else None
+        ),
         "by_agent": by_agent,
     }
 

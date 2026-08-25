@@ -381,3 +381,102 @@ class TestFenceStripping(unittest.TestCase):
         _, private, status = _split_streams(fenced)
         self.assertEqual(status, "split")
         self.assertEqual(json.loads(private)["solo_move"], "d2d4")
+
+
+class TestPrivateNoteRounds(unittest.TestCase):
+    """A private note belongs to a round, and which round must survive.
+
+    An agent writes one note per discussion round, so three agents over two
+    rounds produce six notes per turn. Rendered without round labels they read
+    as each agent repeating itself; in fact they are separate observations, and
+    the difference between them is the measurement. Observed in pilot-03: one
+    agent's private solo move went from e8g8 after round 1 to d7e6 after
+    round 2, while elsewhere a note stayed identical across rounds as the agent
+    publicly conformed.
+    """
+
+    def _turn(self, r1_move, r2_move, r2_present=True):
+        notes = [
+            {"agent_role": "analyst", "round_index": 1, "solo_move": r1_move,
+             "solo_rationale": "round one", "process_note": "", "present": True},
+        ]
+        if r2_present:
+            notes.append(
+                {"agent_role": "analyst", "round_index": 2, "solo_move": r2_move,
+                 "solo_rationale": "round two", "process_note": "", "present": True})
+        return {
+            "rounds": [{"round_index": 0, "proposals": [
+                {"agent_role": "analyst", "proposed_move": "e8g8"}]}],
+            "private_notes": notes,
+            "decision": {"submitted_move": "d7e6"},
+        }
+
+    def test_stated_move_comes_from_the_last_round_and_says_so(self):
+        m = influence_metrics(self._turn("e8g8", "d7e6"))
+        a = m["by_agent"]["analyst"]
+        self.assertEqual(a["stated_solo_move"], "d7e6")
+        self.assertEqual(a["stated_from_round"], 2)
+
+    def test_falls_back_to_an_earlier_round_but_records_which(self):
+        """When round 2's note fails to parse, ir_stated silently falls back to
+        round 1 for that agent. Legitimate, but it must be visible: two agents
+        in one turn can otherwise be measured at different points in the
+        deliberation with nothing on record saying so."""
+        m = influence_metrics(self._turn("e8g8", None, r2_present=False))
+        a = m["by_agent"]["analyst"]
+        self.assertEqual(a["stated_solo_move"], "e8g8")
+        self.assertEqual(a["stated_from_round"], 1)
+
+    def test_mixed_rounds_across_agents_are_flagged(self):
+        turn = {
+            "rounds": [{"round_index": 0, "proposals": [
+                {"agent_role": "a", "proposed_move": "e2e4"},
+                {"agent_role": "b", "proposed_move": "d2d4"}]}],
+            "private_notes": [
+                {"agent_role": "a", "round_index": 1, "solo_move": "e2e4",
+                 "present": True},
+                {"agent_role": "b", "round_index": 2, "solo_move": "d2d4",
+                 "present": True},
+            ],
+            "decision": {"submitted_move": "e2e4"},
+        }
+        self.assertFalse(influence_metrics(turn)["stated_rounds_consistent"])
+
+    def test_same_round_across_agents_is_consistent(self):
+        turn = {
+            "rounds": [{"round_index": 0, "proposals": [
+                {"agent_role": "a", "proposed_move": "e2e4"},
+                {"agent_role": "b", "proposed_move": "d2d4"}]}],
+            "private_notes": [
+                {"agent_role": "a", "round_index": 2, "solo_move": "e2e4",
+                 "present": True},
+                {"agent_role": "b", "round_index": 2, "solo_move": "d2d4",
+                 "present": True},
+            ],
+            "decision": {"submitted_move": "e2e4"},
+        }
+        self.assertTrue(influence_metrics(turn)["stated_rounds_consistent"])
+
+    def test_transcript_labels_each_round(self):
+        """Six notes for three agents must not read as three duplicates."""
+        from report import game_report
+        game = {
+            "game_id": "g1", "manifest": {}, "moves": [{
+                "ply": 1, "move_number": 11, "color": "black", "org_id": "o",
+                "rounds": [{"round_index": 0, "proposals": []}],
+                "private_notes": [
+                    {"agent_role": "analyst", "round_index": 1,
+                     "solo_move": "e8g8", "solo_rationale": "king safety first",
+                     "present": True},
+                    {"agent_role": "analyst", "round_index": 2,
+                     "solo_move": "d7e6", "solo_rationale": "i hesitated",
+                     "present": True},
+                ],
+                "decision": {"submitted_move": "d7e6", "legal": True},
+                "resolution": {}, "integrity": {}, "drift": {},
+            }],
+        }
+        text = game_report(game)
+        self.assertIn("After round 1", text)
+        self.assertIn("After round 2", text)
+        self.assertLess(text.index("After round 1"), text.index("After round 2"))
