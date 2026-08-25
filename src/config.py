@@ -126,12 +126,29 @@ HARNESS_PARAMS = {
 # REQUESTS_PER_MINUTE (or set it to None) on paid tiers.
 # ---------------------------------------------------------------------------
 
-# Raw model output is the JSON blob that move/reasoning/confidence were parsed
-# out of, so on a successful parse it is pure duplication — 27% of a game
-# record by measurement. It is retained whenever parsing did *not* fully
-# succeed, which is exactly when it has debugging value. Set to True to keep
-# everything, e.g. when building a rubric that needs untouched model output.
-RETAIN_RAW_RESPONSES = os.environ.get("RETAIN_RAW_RESPONSES", "").lower() in ("1", "true", "yes")
+# Raw model output — the text a proposal's move/reasoning/confidence were
+# parsed out of.
+#
+# PR 10 pruned this on clean parses, on the grounds that it was exact
+# duplication of fields already stored (27% of a game record by measurement).
+# That reasoning was wrong in one specific way: it is only duplication *given
+# the parser that produced those fields*. PR 11 is the proof — fenced-JSON
+# handling changed private-note capture from 41% to 97%, and the records
+# written before it cannot be re-derived, because the text the new parser would
+# read was discarded. `parser_fingerprint` exists precisely because parsing is
+# a variable; this is the same fact seen from the storage side.
+#
+# It is also the corpus the rubric protocol in Build Plan §6 requires — build a
+# rubric, hand-label a held-out set, report precision/recall — and untouched
+# model output is what "hand-label" means. E3 (public argument vs private
+# assessment) reads the same text.
+#
+# So retention is now the default. Measured cost is ~117KB per game, or roughly
+# 190MB across the full 1,600-game grid, against results/ being gitignored and
+# never entering git history. Set RETAIN_RAW_RESPONSES=0 to restore pruning for
+# throwaway smoke tests where the corpus does not matter.
+_retain = os.environ.get("RETAIN_RAW_RESPONSES", "1").lower()
+RETAIN_RAW_RESPONSES = _retain not in ("0", "false", "no", "")
 
 MAX_RETRIES = 5
 RETRY_BASE_DELAY_S = 2.0
@@ -308,6 +325,13 @@ def build_manifest(seed: int | None = None, extra: dict | None = None) -> dict:
         # Surfaced separately as well as folded into the fingerprint above, so
         # a reader can see *which* input changed when two runs will not pool.
         "parser_fingerprint": parser_fingerprint(),
+        # Whether this run kept raw model output. Not in the fingerprint —
+        # retention changes what was *stored*, not what the models did, so two
+        # runs differing only in this are the same experiment. But a reader
+        # needs to know whether a given run's corpus is complete enough to
+        # hand-label or re-parse, and that cannot be inferred after the fact
+        # from a record whose raw fields are simply absent.
+        "retained_raw_responses": RETAIN_RAW_RESPONSES,
         "harness": HARNESS_PARAMS,
         "seed": seed,
     }

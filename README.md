@@ -210,21 +210,33 @@ so re-processing an earlier run is wasted money rather than just wasted time.
 
 **`results/` is gitignored; `reports/` is committed.** Raw game records are local
 artefacts — a 40-game pilot is ~7MB and a full grid would be hundreds. The
-committed record is the report plus `turns.csv`, which carries every analysable
-field. Raw games are reproducible from the configs and position set, and belong
-in a data release rather than in git history.
+committed record is the report, `turns.csv` (every analysable field), and a
+`game_<id>.md` deliberation transcript per game. Raw games belong in a data
+release rather than in git history.
 
 ### Record size
 
-Roughly 7KB per turn, so ~140KB for a 20-turn game. Two things that were pure
-duplication have been removed, cutting about a quarter:
+Roughly 9KB per turn, so ~180KB for a 20-turn game.
 
-- `raw_response` is the JSON blob that `move`/`reasoning`/`confidence` were
-  parsed out of. It is dropped on a clean parse and **kept whenever anything
-  went wrong** — illegal, unparseable, API error, or a model that ignored the
-  public/private split. Set `RETAIN_RAW_RESPONSES=1` to keep everything.
-- The final round used to be stored twice, once inside `rounds` and again as
-  `proposals`. Consumers now derive it via `metrics.final_proposals()`.
+`raw_response` — the text `move`/`reasoning`/`confidence` were parsed out of —
+is **retained by default**. PR 10 pruned it on clean parses as duplication of
+fields already stored; that holds only *given the parser that produced them*.
+PR 11 changed the parser, moving private-note capture from 41% to 97%, and the
+records written before it cannot be re-derived because the text the new parser
+would read had been discarded. `parser_fingerprint` exists because parsing is a
+variable; retention is the same fact from the storage side. It is also the
+corpus the rubric protocol needs — "hand-label a held-out set" means labelling
+untouched model output.
+
+Cost is ~117KB per game, about 190MB across a full 1,600-game grid, none of
+which enters git history. Set `RETAIN_RAW_RESPONSES=0` to restore pruning for
+throwaway smoke tests. Each run records which mode it used as
+`manifest.retained_raw_responses`, since a record whose raw fields are absent
+cannot tell you afterwards whether they were never kept or never produced.
+
+One genuine duplication is still removed: the final round used to be stored
+twice, once inside `rounds` and again as `proposals`. Consumers derive it via
+`metrics.final_proposals()`.
 
 Derived *summaries* such as `drift.by_agent` and the `integrity` counts are kept
 even though they are recomputable: they make a game file readable without

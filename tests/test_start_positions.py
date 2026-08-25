@@ -308,3 +308,44 @@ class TestOracleHandlesCustomStart(unittest.TestCase):
 
 if __name__ == "__main__":
     unittest.main()
+
+
+class TestResumeIsScopedToRun(unittest.TestCase):
+    """--resume must not skip work done by a *different* run.
+
+    results/ accumulates across runs and the completion key
+    (position_id, white_org, black_org) carries no run identity. Unscoped,
+    starting a 20-position run after a 1-position pilot on the same config
+    silently drops position 1 — including when the pilot ran under a different
+    parser or config fingerprint, whose games are not interchangeable. The run
+    comes up short with a hole in its position set and nothing on disk saying
+    so.
+    """
+
+    def test_other_runs_do_not_count_as_completed(self):
+        from unittest import mock
+        import game as game_mod
+
+        earlier = mock.Mock(position_id="pos1", white_org="a", black_org="b",
+                            run_id="pilot-02")
+        current = mock.Mock(position_id="pos2", white_org="a", black_org="b",
+                            run_id="pilot-03")
+        with mock.patch.object(game_mod, "load_all_games",
+                               return_value=[earlier, current]):
+            done = game_mod.completed_games("pilot-03")
+
+        self.assertIn(("pos2", "a", "b"), done)
+        self.assertNotIn(("pos1", "a", "b"), done,
+                         "a different run's game must not be treated as done")
+
+    def test_unscoped_call_still_sees_everything(self):
+        """None preserves the old cross-run behaviour for any caller that
+        genuinely wants every game on disk."""
+        from unittest import mock
+        import game as game_mod
+
+        earlier = mock.Mock(position_id="pos1", white_org="a", black_org="b",
+                            run_id="pilot-02")
+        with mock.patch.object(game_mod, "load_all_games",
+                               return_value=[earlier]):
+            self.assertIn(("pos1", "a", "b"), game_mod.completed_games(None))
